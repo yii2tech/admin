@@ -1,0 +1,33 @@
+{
+    "name": "yii2tech/admin",
+    "description": "Provides support for ActiveRecord variation via related models in Yii2",
+    "keywords": ["yii2", "admin"],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yii2tech/admin/issues",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "https://github.com/yii2tech/admin/wiki",
+        "source": "https://github.com/yii2tech/admin"
+    },
+    "authors": [
+        {
+            "name": "Paul Klimov",
+            "email": "klimov.paul@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "suggest": {
+        "yiisoft/yii2-bootstrap": "you need this package, if you wish to use provided widgets"
+    },
+    "autoload": {
+        "psr-4": { "yii2tech\\admin\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
