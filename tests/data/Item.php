@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 /**
  * @property integer $id
  * @property string $name
+ * @property boolean $isDeleted
  */
 class Item extends ActiveRecord
 {
@@ -26,5 +27,15 @@ class Item extends ActiveRecord
         return [
             ['name', 'required'],
         ];
+    }
+
+    /**
+     * Emulates soft-delete behavior
+     * @see https://github.com/yii2tech/ar-softdelete
+     * @return integer number of updated records
+     */
+    public function softDelete()
+    {
+        return $this->updateAttributes(['isDeleted' => true]);
     }
 }

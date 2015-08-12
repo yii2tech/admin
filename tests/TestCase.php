@@ -82,6 +82,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $columns = [
             'id' => 'pk',
             'name' => 'string',
+            'isDeleted' => 'boolean DEFAULT 0',
         ];
         $db->createCommand()->createTable($table, $columns)->execute();
 
