@@ -4,6 +4,7 @@ namespace yii2tech\tests\unit\admin;
 
 use yii\helpers\ArrayHelper;
 use Yii;
+use yii\helpers\FileHelper;
 use yii2tech\tests\unit\admin\data\Controller;
 
 /**
@@ -17,10 +18,16 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $this->mockApplication();
 
         $this->setupTestDbData();
+
+        $testFilePath = $this->getTestFilePath();
+        FileHelper::createDirectory($testFilePath);
     }
 
     protected function tearDown()
     {
+        $testFilePath = $this->getTestFilePath();
+        FileHelper::removeDirectory($testFilePath);
+
         $this->destroyApplication();
     }
 
@@ -40,6 +47,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 'db' => [
                     'class' => 'yii\db\Connection',
                     'dsn' => 'sqlite::memory:',
+                ],
+                'assetManager' => [
+                    'basePath' => $this->getTestFilePath(),
+                ],
+                'i18n' => [
+                    'translations' => [
+                        '*' => [
+                            'class' => 'yii\i18n\PhpMessageSource',
+                            'forceTranslation' => false,
+                        ],
+                    ],
                 ],
             ],
         ], $config));
@@ -67,6 +85,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected function createController()
     {
         return new Controller('test', Yii::$app);
+    }
+
+    /**
+     * Returns the test file path.
+     * @return string file path.
+     */
+    protected function getTestFilePath()
+    {
+        return Yii::getAlias('@yii2tech/tests/unit/admin/runtime') . DIRECTORY_SEPARATOR . getmypid();
     }
 
     /**

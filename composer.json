@@ -19,6 +19,9 @@
     "require": {
         "yiisoft/yii2": "*"
     },
+    "require-dev": {
+        "yiisoft/yii2-bootstrap": ">=2.0.x-dev"
+    },
     "suggest": {
         "yiisoft/yii2-bootstrap": "you need this package, if you wish to use provided widgets"
     },
@@ -28,6 +31,10 @@
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
+        },
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
         }
     }
 }
