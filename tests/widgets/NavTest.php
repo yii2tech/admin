@@ -20,4 +20,23 @@ class NavTest extends TestCase
         ]);
         $this->assertContains('<span class="glyphicon glyphicon-pencil"', $output);
     }
+
+    public function testSubItemIcon()
+    {
+        $output = Nav::widget([
+            'items' => [
+                [
+                    'label' => 'group',
+                    'items' => [
+                        [
+                            'label' => 'test',
+                            'url' => '#',
+                            'icon' => 'pencil',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        $this->assertContains('<span class="glyphicon glyphicon-pencil"', $output);
+    }
 }

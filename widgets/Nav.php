@@ -25,6 +25,15 @@ class Nav extends \yii\bootstrap\Nav
      */
     public function renderItem($item)
     {
+        return parent::renderItem($this->normalizeItem($item));
+    }
+
+    /**
+     * @param string|array $item the item to be normalized.
+     * @return string|array normalized item.
+     */
+    protected function normalizeItem($item)
+    {
         if (is_array($item)) {
             if (isset($item['icon'])) {
                 if (isset($item['label'])) {
@@ -40,7 +49,12 @@ class Nav extends \yii\bootstrap\Nav
                 $label = Html::icon($item['icon']) . ' ' . $label;
                 $item['label'] = $label;
             }
+            if (isset($item['items'])) {
+                foreach ($item['items'] as $key => $value) {
+                    $item['items'][$key] = $this->normalizeItem($value);
+                }
+            }
         }
-        return parent::renderItem($item);
+        return $item;
     }
 }
