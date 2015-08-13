@@ -29,14 +29,14 @@ class Nav extends \yii\bootstrap\Nav
             if (isset($item['icon'])) {
                 if (isset($item['label'])) {
                     $label = $item['label'];
-                    $encodeLabel = isset($options['encode']) ? $options['encode'] : $this->encodeLabels;
+                    $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
                     if ($encodeLabel) {
                         $label = Html::encode($label);
                     }
                 } else {
                     $label = '';
                 }
-                $options['encode'] = false;
+                $item['encode'] = false;
                 $label = Html::icon($item['icon']) . ' ' . $label;
                 $item['label'] = $label;
             }

@@ -18,6 +18,6 @@ class NavTest extends TestCase
                 ],
             ],
         ]);
-        $this->assertContains('glyphicon glyphicon-pencil', $output);
+        $this->assertContains('<span class="glyphicon glyphicon-pencil"', $output);
     }
 }
