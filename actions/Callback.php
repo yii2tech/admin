@@ -11,12 +11,12 @@ use Yii;
 use yii\base\InvalidConfigException;
 
 /**
- * CallMethod action allows invocation of specified method of the model.
+ * Callback action allows invocation of specified method of the model.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-class CallMethod extends Action
+class Callback extends Action
 {
     /**
      * @var string|callable name of the model method, which should be invoked
@@ -28,7 +28,7 @@ class CallMethod extends Action
      * }
      * ```
      */
-    public $method;
+    public $modelCallback;
 
 
     /**
@@ -41,13 +41,13 @@ class CallMethod extends Action
     {
         $model = $this->findModel($id);
 
-        if ($this->method === null) {
+        if ($this->modelCallback === null) {
             throw new InvalidConfigException('"' . get_class($this) . '::method" must be set.');
         }
-        if (is_string($this->method)) {
-            call_user_func([$model, $this->method]);
+        if (is_string($this->modelCallback)) {
+            call_user_func([$model, $this->modelCallback]);
         } else {
-            call_user_func($this->method, $model);
+            call_user_func($this->modelCallback, $model);
         }
 
         $url = array_merge(

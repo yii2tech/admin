@@ -4,23 +4,23 @@ namespace yii2tech\tests\unit\admin\actions;
 
 use Yii;
 use yii\web\Response;
-use yii2tech\admin\actions\CallMethod;
+use yii2tech\admin\actions\Callback;
 use yii2tech\tests\unit\admin\data\Item;
 use yii2tech\tests\unit\admin\TestCase;
 
-class CallMethodTest extends TestCase
+class CallbackTest extends TestCase
 {
     /**
      * Runs the action.
      * @param mixed $id
-     * @param string|callable $method
+     * @param string|callable $callback
      * @return array|Response response.
      */
-    protected function runAction($id, $method = 'delete')
+    protected function runAction($id, $callback = 'delete')
     {
-        $action = new CallMethod('call-method', $this->createController());
+        $action = new Callback('callback', $this->createController());
         $action->modelClass = Item::className();
-        $action->method = $method;
+        $action->modelCallback = $callback;
         return $action->run($id);
     }
 

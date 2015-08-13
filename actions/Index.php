@@ -6,6 +6,7 @@
  */
 
 namespace yii2tech\admin\actions;
+
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
@@ -23,9 +24,38 @@ class Index extends Action
      */
     public $searchModelClass;
     /**
+     * @var callable a PHP callable that will be called to create the new search model.
+     * If not set, [[newSearchModel()]] will be used instead.
+     * The signature of the callable should be:
+     *
+     * ```php
+     * function ($action) {
+     *     // $action is the action object currently running
+     * }
+     * ```
+     *
+     * The callable should return the new model instance.
+     */
+    public $newSearchModel;
+    /**
+     * @var callable a PHP callable that will be called to prepare a data provider that
+     * should return a collection of the models. If not set, [[prepareDataProvider()]] will be used instead.
+     * The signature of the callable should be:
+     *
+     * ```php
+     * function ($searchModel, $action) {
+     *     // $searchModel the search model instance
+     *     // $action is the action object currently running
+     * }
+     * ```
+     *
+     * The callable should return an instance of [[\yii\data\DataProviderInterface]].
+     */
+    public $prepareDataProvider;
+    /**
      * @var string name of the view, which should be rendered
      */
-    public $view = 'view';
+    public $view = 'index';
 
 
     /**
@@ -35,25 +65,49 @@ class Index extends Action
      */
     public function newSearchModel()
     {
+        if ($this->newSearchModel !== null) {
+            return call_user_func($this->newSearchModel, $this);
+        } elseif ($this->controller->hasMethod('newSearchModel')) {
+            return call_user_func([$this->controller, 'newSearchModel'], $this);
+        }
+
         $modelClass = $this->searchModelClass;
         if ($modelClass === null) {
             if ($this->modelClass === null) {
                 throw new InvalidConfigException('Either "' . get_class($this) . '::searchModelClass" or "' . get_class($this) . '::modelClass" must be set.');
             }
-            $modelClass = $this->modelClass;
+            $modelClass = $this->modelClass . 'Search';
         }
 
         return new $modelClass();
     }
 
+    /**
+     * Displays models list.
+     * @return mixed response.
+     */
     public function run()
     {
         $searchModel = $this->newSearchModel();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $this->prepareDataProvider($searchModel);
 
         return $this->controller->render($this->view, [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Prepares the data provider that should return the requested collection of the models.
+     * @param Model $searchModel search model instance.
+     * @return \yii\data\DataProviderInterface data provider instance.
+     */
+    protected function prepareDataProvider($searchModel)
+    {
+        if ($this->prepareDataProvider !== null) {
+            return call_user_func($this->prepareDataProvider, $searchModel, $this);
+        }
+
+        return $searchModel->search(Yii::$app->request->queryParams);
     }
 }
