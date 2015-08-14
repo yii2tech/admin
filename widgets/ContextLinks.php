@@ -25,7 +25,7 @@ class ContextLinks extends Widget
      *
      * - url: array, required, the item's URL.
      * - label: string, optional, the item label.
-     * - encodeLabel: boolean, optional, whether to encode item label.
+     * - encode: boolean, optional, whether to encode item label.
      * - icon: string, optional, item label icon short name.
      *
      * Any additional keys will be used as link tag options.
@@ -74,9 +74,9 @@ class ContextLinks extends Widget
         } else {
             $label = $this->detectLabel($url);
         }
-        if (isset($options['encodeLabel'])) {
-            $encodeLabel = $options['encodeLabel'];
-            unset($options['encodeLabel']);
+        if (isset($options['encode'])) {
+            $encodeLabel = $options['encode'];
+            unset($options['encode']);
         } else {
             $encodeLabel = $this->encodeLabels;
         }
