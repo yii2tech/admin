@@ -3,14 +3,14 @@
 namespace yii2tech\tests\unit\admin\widgets;
 
 use Yii;
-use yii2tech\admin\widgets\ContextLinks;
+use yii2tech\admin\widgets\ButtonContextMenu;
 use yii2tech\tests\unit\admin\TestCase;
 
-class ContextLinksTest extends TestCase
+class ButtonContextMenuTest extends TestCase
 {
     public function testEmptyItems()
     {
-        $output = ContextLinks::widget([
+        $output = ButtonContextMenu::widget([
             'items' => [],
         ]);
         $this->assertEmpty($output);
@@ -18,7 +18,7 @@ class ContextLinksTest extends TestCase
 
     public function testRender()
     {
-        $output = ContextLinks::widget([
+        $output = ButtonContextMenu::widget([
             'items' => [
                 ['url' => ['/controller/action1'], 'label' => 'Action 1'],
                 ['url' => ['/controller/action2'], 'label' => 'Action 2'],
@@ -34,7 +34,7 @@ class ContextLinksTest extends TestCase
     {
         Yii::$app->controller = $this->createController();
 
-        $output = ContextLinks::widget([
+        $output = ButtonContextMenu::widget([
             'items' => [
                 ['index']
             ],
@@ -42,7 +42,7 @@ class ContextLinksTest extends TestCase
         $this->assertContains('Back', $output);
         $this->assertContains('glyphicon glyphicon-arrow-left', $output);
 
-        $output = ContextLinks::widget([
+        $output = ButtonContextMenu::widget([
             'items' => [
                 ['create']
             ],

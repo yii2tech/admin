@@ -12,12 +12,13 @@ use yii\bootstrap\Html;
 use yii\base\Widget;
 
 /**
- * ContextLinks simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
+ * ButtonContextMenu simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
+ * This widget renders the menu items as a link buttons.
  *
  * @author Paul Klimov <pklimov@quartsoft.com>
  * @package yii2tech\admin\widgets
  */
-class ContextLinks extends Widget
+class ButtonContextMenu extends Widget
 {
     /**
      * @var array[] list of items. Each array element represents a single menu item, which should be an array.
