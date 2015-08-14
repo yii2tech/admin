@@ -24,7 +24,8 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
+<div class="row">
+    <div class="col-lg-5">
 
     <?= "<?php " ?>$form = ActiveForm::begin(); ?>
 
@@ -39,4 +40,5 @@ use yii\bootstrap\ActiveForm;
 
     <?= "<?php " ?>ActiveForm::end(); ?>
 
+    </div>
 </div>

@@ -20,7 +20,9 @@ use yii2tech\admin\widgets\ContextLinks;
     <h1><?= "<?= " ?> Html::encode(isset($this->params['header']) ? $this->params['header'] : $this->title) ?></h1>
 
     <p>
-        <?= "<?= " ?> ContextLinks::widget() ?>
+        <?= "<?= " ?> ContextLinks::widget([
+            'items' => isset($this->params['contextMenuItems']) ? $this->params['contextMenuItems'] : []
+        ]) ?>
     </p>
 
     <?= "<?= " ?> $content ?>

@@ -20,22 +20,13 @@ use yii\widgets\DetailView;
 $this->title = $model-><?= $generator->getNameAttribute() ?>;
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['contextMenuItems'] = [
+    ['update', <?= $urlParams ?>],
+    ['delete', <?= $urlParams ?>]
+];
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-view">
-
-    <h1><?= "<?= " ?>Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Update') ?>, ['update', <?= $urlParams ?>], ['class' => 'btn btn-primary']) ?>
-        <?= "<?= " ?>Html::a(<?= $generator->generateString('Delete') ?>, ['delete', <?= $urlParams ?>], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => <?= $generator->generateString('Are you sure you want to delete this item?') ?>,
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
+<div class="row">
+    <div class="col-lg-8">
     <?= "<?= " ?>DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -53,5 +44,5 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
         ],
     ]) ?>
-
+    </div>
 </div>

@@ -48,7 +48,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'Admin Main Frame Generator';
+        return 'Admin MainFrame Generator';
     }
 
     /**
