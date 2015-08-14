@@ -16,6 +16,7 @@ use yii\bootstrap\NavBar;
 $webUser = Yii::$app->user;
 
 NavBar::begin([
+    'id' => 'header-nav-bar',
     'brandLabel' => Yii::$app->name,
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
@@ -25,6 +26,7 @@ NavBar::begin([
 
 if (!$webUser->isGuest) {
     echo Nav::widget([
+        'id' => 'header-main-menu',
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             [
@@ -72,6 +74,7 @@ if ($webUser->isGuest) {
     ];
 }
 echo Nav::widget([
+    'id' => 'header-common-menu',
     'options' => ['class' => 'navbar-nav navbar-right'],
     'items' => $menuItems,
 ]);

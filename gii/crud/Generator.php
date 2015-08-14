@@ -60,4 +60,17 @@ class Generator extends \yii\gii\generators\crud\Generator
     {
         return Yii::getAlias('@yii/gii/generators/crud/default');
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getNameAttribute()
+    {
+        foreach ($this->getColumnNames() as $name) {
+            if (!strcasecmp($name, 'username') || !strcasecmp($name, 'email')) {
+                return $name;
+            }
+        }
+        return parent::getNameAttribute();
+    }
 }

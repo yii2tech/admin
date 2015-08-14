@@ -9,8 +9,6 @@ use yii\helpers\StringHelper;
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\Html;
-
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 

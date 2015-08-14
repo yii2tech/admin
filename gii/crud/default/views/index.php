@@ -25,8 +25,8 @@ $this->params['contextMenuItems'] = [
     ['create']
 ];
 ?>
-<?php if(!empty($generator->searchModelClass)): ?>
-<?= "\n    <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php if (!empty($generator->searchModelClass) && $generator->indexWidgetType !== 'grid'): ?>
+<?= "\n    <?php " ?>echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php endif; ?>
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
