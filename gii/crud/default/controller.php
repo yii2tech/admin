@@ -19,7 +19,7 @@ use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for [[<?= $generator->modelClass ?>]] model.
- * @see <?= $generator->modelClass ?>
+ * @see <?= $generator->modelClass . "\n" ?>
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
