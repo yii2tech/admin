@@ -13,7 +13,7 @@ use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 /**
- * Update action supports update of the existing model using web form.
+ * Update action supports updating of the existing model using web form.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
