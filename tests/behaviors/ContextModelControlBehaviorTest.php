@@ -134,4 +134,16 @@ class ContextModelControlBehaviorTest extends TestCase
         $this->assertTrue($model instanceof ItemSearch);
         $this->assertEquals(2, $model->categoryId);
     }
+
+    /**
+     * @depends testGetActiveContexts
+     */
+    public function testGetActiveContextQueryParams()
+    {
+        $behavior = $this->createBehavior();
+
+        Yii::$app->request->setQueryParams(['categoryId' => 2]);
+
+        $this->assertEquals(['categoryId' => 2], $behavior->getActiveContextQueryParams());
+    }
 }

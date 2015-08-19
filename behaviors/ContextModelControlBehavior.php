@@ -11,7 +11,6 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecordInterface;
 use yii\web\NotFoundHttpException;
-use yii2tech\admin\CrudController;
 
 /**
  * ContextModelControlBehavior allows usage of the filtering context.
@@ -134,6 +133,20 @@ class ContextModelControlBehavior extends ModelControlBehavior
         } else {
             throw new NotFoundHttpException(Yii::t('admin', "Context object not found: {id}", ['id' => $id]));
         }
+    }
+
+    /**
+     * Returns query params for currently active contexts, like `['groupId' => 12]`.
+     * This method can be used to compose links.
+     * @return array query params.
+     */
+    public function getActiveContextQueryParams()
+    {
+        $queryParams = [];
+        foreach ($this->getActiveContexts() as $contextName => $activeContext) {
+            $queryParams[$activeContext['attribute']] = $activeContext['model']->getPrimaryKey();
+        }
+        return $queryParams;
     }
 
     // Override :

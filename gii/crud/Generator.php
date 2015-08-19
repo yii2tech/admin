@@ -30,6 +30,17 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        if (!isset($this->templates['context'])) {
+            $this->templates['context'] = dirname($this->defaultTemplate()) . '/context';
+        }
+        parent::init();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getName()
     {
         return 'Admin CRUD Generator';
