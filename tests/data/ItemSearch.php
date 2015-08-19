@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 class ItemSearch extends Model
 {
     public $name;
+    public $categoryId;
 
     /**
      * Creates data provider instance with search query applied
@@ -32,6 +33,7 @@ class ItemSearch extends Model
             return $dataProvider;
         }
 
+        $query->andFilterWhere(['categoryId' => $this->categoryId]);
         $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;

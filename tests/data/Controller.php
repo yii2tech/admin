@@ -2,7 +2,7 @@
 
 namespace yii2tech\tests\unit\admin\data;
 
-use yii2tech\admin\CrudController;
+use yii2tech\admin\behaviors\ModelControlBehavior;
 
 /**
  * Test controller class.
@@ -10,24 +10,19 @@ use yii2tech\admin\CrudController;
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-class Controller extends CrudController
+class Controller extends \yii\web\Controller
 {
-    public $actions = [];
-
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
-        return [];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [];
+        return [
+            'dataModel' => [
+                'class' => ModelControlBehavior::className(),
+                'modelClass' => Item::className(),
+            ],
+        ];
     }
 
     /**

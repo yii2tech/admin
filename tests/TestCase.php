@@ -107,19 +107,32 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         // Structure :
 
+        $table = 'ItemCategory';
+        $columns = [
+            'id' => 'pk',
+            'name' => 'string',
+        ];
+        $db->createCommand()->createTable($table, $columns)->execute();
+
         $table = 'Item';
         $columns = [
             'id' => 'pk',
             'name' => 'string',
+            'categoryId' => 'integer',
             'isDeleted' => 'boolean DEFAULT 0',
         ];
         $db->createCommand()->createTable($table, $columns)->execute();
 
         // Data :
 
-        $db->createCommand()->batchInsert('Item', ['name'], [
-            ['item1'],
-            ['item2'],
+        $db->createCommand()->batchInsert('ItemCategory', ['name'], [
+            ['category1'],
+            ['category2'],
+        ])->execute();
+
+        $db->createCommand()->batchInsert('Item', ['name', 'categoryId'], [
+            ['item1', 1],
+            ['item2', 2],
         ])->execute();
     }
 }

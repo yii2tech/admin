@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 /**
  * @property integer $id
  * @property string $name
+ * @property string $categoryId
  * @property boolean $isDeleted
  */
 class Item extends ActiveRecord
