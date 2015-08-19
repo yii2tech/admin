@@ -18,7 +18,6 @@ class DeleteTest extends TestCase
     protected function runAction($id)
     {
         $action = new Delete('delete', $this->createController());
-        $action->modelClass = Item::className();
         return $action->run($id);
     }
 

@@ -5,7 +5,6 @@ namespace yii2tech\tests\unit\admin\actions;
 use Yii;
 use yii\web\Response;
 use yii2tech\admin\actions\Index;
-use yii2tech\tests\unit\admin\data\Item;
 use yii2tech\tests\unit\admin\TestCase;
 
 class IndexTest extends TestCase
@@ -17,7 +16,6 @@ class IndexTest extends TestCase
     protected function runAction()
     {
         $action = new Index('index', $this->createController());
-        $action->modelClass = Item::className();
         return $action->run();
     }
 

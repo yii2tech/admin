@@ -5,7 +5,6 @@ namespace yii2tech\tests\unit\admin\actions;
 use Yii;
 use yii\web\Response;
 use yii2tech\admin\actions\View;
-use yii2tech\tests\unit\admin\data\Item;
 use yii2tech\tests\unit\admin\TestCase;
 
 class ViewTest extends TestCase
@@ -18,7 +17,6 @@ class ViewTest extends TestCase
     protected function runAction($id)
     {
         $action = new View('view', $this->createController());
-        $action->modelClass = Item::className();
         return $action->run($id);
     }
 

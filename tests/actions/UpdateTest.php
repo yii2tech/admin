@@ -18,7 +18,6 @@ class UpdateTest extends TestCase
     protected function runAction($id)
     {
         $action = new Update('update', $this->createController());
-        $action->modelClass = Item::className();
         return $action->run($id);
     }
 

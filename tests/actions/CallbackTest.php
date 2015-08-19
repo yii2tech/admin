@@ -19,7 +19,6 @@ class CallbackTest extends TestCase
     protected function runAction($id, $callback = 'delete')
     {
         $action = new Callback('callback', $this->createController());
-        $action->modelClass = Item::className();
         $action->modelCallback = $callback;
         return $action->run($id);
     }

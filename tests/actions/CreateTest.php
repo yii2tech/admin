@@ -17,7 +17,6 @@ class CreateTest extends TestCase
     protected function runAction()
     {
         $action = new Create('create', $this->createController());
-        $action->modelClass = Item::className();
         return $action->run();
     }
 

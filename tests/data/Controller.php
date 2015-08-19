@@ -2,15 +2,25 @@
 
 namespace yii2tech\tests\unit\admin\data;
 
+use yii2tech\admin\CrudController;
+
 /**
  * Test controller class.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-class Controller extends \yii\web\Controller
+class Controller extends CrudController
 {
     public $actions = [];
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [];
+    }
 
     /**
      * @inheritdoc

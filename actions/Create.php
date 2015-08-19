@@ -57,13 +57,9 @@ class Create extends Action
             return call_user_func($this->newModel, $this);
         } elseif ($this->controller->hasMethod('newModel')) {
             return call_user_func([$this->controller, 'newModel'], $this);
+        } else {
+            throw new InvalidConfigException('Either "' . get_class($this) . '::newModel" must be set or controller must declare method "newModel()".');
         }
-
-        if ($this->modelClass === null) {
-            throw new InvalidConfigException('"' . get_class($this) . '::modelClass" must be set.');
-        }
-        $modelClass = $this->modelClass;
-        return new $modelClass();
     }
 
     /**

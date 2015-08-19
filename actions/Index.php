@@ -20,10 +20,6 @@ use yii\base\Model;
 class Index extends Action
 {
     /**
-     * @var string class name of the model which should be used as search model.
-     */
-    public $searchModelClass;
-    /**
      * @var callable a PHP callable that will be called to create the new search model.
      * If not set, [[newSearchModel()]] will be used instead.
      * The signature of the callable should be:
@@ -59,7 +55,7 @@ class Index extends Action
 
 
     /**
-     * Creates new model instance.
+     * Creates new search model instance.
      * @return Model new model instance.
      * @throws InvalidConfigException on invalid configuration.
      */
@@ -69,17 +65,9 @@ class Index extends Action
             return call_user_func($this->newSearchModel, $this);
         } elseif ($this->controller->hasMethod('newSearchModel')) {
             return call_user_func([$this->controller, 'newSearchModel'], $this);
+        } else {
+            throw new InvalidConfigException('Either "' . get_class($this) . '::findModel" must be set or controller must declare method "findModel()".');
         }
-
-        $modelClass = $this->searchModelClass;
-        if ($modelClass === null) {
-            if ($this->modelClass === null) {
-                throw new InvalidConfigException('Either "' . get_class($this) . '::searchModelClass" or "' . get_class($this) . '::modelClass" must be set.');
-            }
-            $modelClass = $this->modelClass . 'Search';
-        }
-
-        return new $modelClass();
     }
 
     /**

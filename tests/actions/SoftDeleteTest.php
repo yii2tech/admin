@@ -18,7 +18,6 @@ class SoftDeleteTest extends TestCase
     protected function runAction($id)
     {
         $action = new SoftDelete('delete', $this->createController());
-        $action->modelClass = Item::className();
         return $action->run($id);
     }
 

@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use Yii;
 use yii\helpers\FileHelper;
 use yii2tech\tests\unit\admin\data\Controller;
+use yii2tech\tests\unit\admin\data\Item;
 
 /**
  * Base class for the test cases.
@@ -80,11 +81,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $config controller config.
      * @return Controller controller instance.
      */
-    protected function createController()
+    protected function createController($config = [])
     {
-        return new Controller('test', Yii::$app);
+        return new Controller('test', Yii::$app, array_merge(['modelClass' => Item::className()], $config));
     }
 
     /**
