@@ -75,6 +75,20 @@ class ContextModelControlBehaviorTest extends TestCase
         $this->assertEquals($contextModels['category'], $contextModel);
     }
 
+    public function testIsContextAcitve()
+    {
+        $behavior = $this->createBehavior();
+
+        $this->assertFalse($behavior->isContextActive('category'));
+        $this->assertFalse($behavior->isContextActive());
+
+        $behavior = $this->createBehavior();
+        Yii::$app->request->setQueryParams(['categoryId' => 2]);
+
+        $this->assertTrue($behavior->isContextActive('category'));
+        $this->assertTrue($behavior->isContextActive());
+    }
+
     /**
      * @depends testGetContextModels
      */

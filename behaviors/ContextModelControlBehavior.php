@@ -180,6 +180,23 @@ class ContextModelControlBehavior extends ModelControlBehavior
     }
 
     /**
+     * Checks if named context is active (present in the query params).
+     * If 'null' name provided, checks if at least one context is active.
+     * @param string|null $name context name.
+     * @return boolean whether context is active.
+     */
+    public function isContextActive($name = null)
+    {
+        $contextModels = $this->getContextModels();
+        if ($name === null) {
+            return (!empty($contextModels));
+        }
+        return isset($contextModels[$name]);
+    }
+
+    // URL :
+
+    /**
      * Returns query params for currently active contexts, like `['groupId' => 12]`.
      * This method can be used to compose links.
      * @return array query params.
