@@ -34,20 +34,49 @@ class ContextModelControlBehaviorTest extends TestCase
 
     // Tests :
 
-    public function testGetActiveContexts()
+    public function testGetContext()
+    {
+        $behavior = $this->createBehavior();
+
+        $context = $behavior->getContext('category');
+        $this->assertEquals($behavior->contexts['category'], $context);
+
+        $context = $behavior->getContext();
+        $this->assertEquals($behavior->contexts['category'], $context);
+    }
+
+    public function testGetContextModels()
     {
         $behavior = $this->createBehavior();
 
         Yii::$app->request->setQueryParams(['categoryId' => 2]);
 
-        $activeContexts = $behavior->getActiveContexts();
-        $model = $activeContexts['category']['model'];
+        $contextModels = $behavior->getContextModels();
+        $model = $contextModels['category'];
         $this->assertTrue($model instanceof ItemCategory);
         $this->assertEquals(2, $model->id);
     }
 
     /**
-     * @depends testGetActiveContexts
+     * @depends testGetContextModels
+     */
+    public function testGetContextModel()
+    {
+        $behavior = $this->createBehavior();
+
+        Yii::$app->request->setQueryParams(['categoryId' => 2]);
+
+        $contextModels = $behavior->getContextModels();
+
+        $contextModel = $behavior->getContextModel('category');
+        $this->assertEquals($contextModels['category'], $contextModel);
+
+        $contextModel = $behavior->getContextModel();
+        $this->assertEquals($contextModels['category'], $contextModel);
+    }
+
+    /**
+     * @depends testGetContextModels
      */
     public function testGetActiveContextsNoContext()
     {
@@ -55,8 +84,8 @@ class ContextModelControlBehaviorTest extends TestCase
 
         Yii::$app->request->setQueryParams([]);
 
-        $activeContexts = $behavior->getActiveContexts();
-        $this->assertEmpty($activeContexts);
+        $contextModels = $behavior->getContextModels();
+        $this->assertEmpty($contextModels);
     }
 
     /**
@@ -77,11 +106,11 @@ class ContextModelControlBehaviorTest extends TestCase
         Yii::$app->request->setQueryParams([]);
 
         $this->setExpectedException('yii\web\NotFoundHttpException');
-        $activeContexts = $behavior->getActiveContexts();
+        $contextModels = $behavior->getContextModels();
     }
 
     /**
-     * @depends testGetActiveContexts
+     * @depends testGetContextModels
      */
     public function testFindModel()
     {
@@ -108,7 +137,7 @@ class ContextModelControlBehaviorTest extends TestCase
     }
 
     /**
-     * @depends testGetActiveContexts
+     * @depends testGetContextModels
      */
     public function testNewModel()
     {
@@ -122,7 +151,7 @@ class ContextModelControlBehaviorTest extends TestCase
     }
 
     /**
-     * @depends testGetActiveContexts
+     * @depends testGetContextModels
      */
     public function testNewSearchModel()
     {
@@ -136,14 +165,27 @@ class ContextModelControlBehaviorTest extends TestCase
     }
 
     /**
-     * @depends testGetActiveContexts
+     * @depends testGetContextModels
      */
-    public function testGetActiveContextQueryParams()
+    public function testGetContextQueryParams()
     {
         $behavior = $this->createBehavior();
 
         Yii::$app->request->setQueryParams(['categoryId' => 2]);
 
-        $this->assertEquals(['categoryId' => 2], $behavior->getActiveContextQueryParams());
+        $this->assertEquals(['categoryId' => 2], $behavior->getContextQueryParams());
+    }
+
+    /**
+     * @depends testGetContextModel
+     */
+    public function testGetContextUrl()
+    {
+        $behavior = $this->createBehavior();
+
+        Yii::$app->request->setQueryParams(['categoryId' => 2]);
+
+        $url = $behavior->getContextModelUrl('category');
+        $this->assertEquals(['/category/view', 'id' => 2], $url);
     }
 }

@@ -9,7 +9,11 @@ namespace yii2tech\admin\behaviors;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\base\InvalidParamException;
+use yii\base\Model;
 use yii\db\ActiveRecordInterface;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -17,7 +21,9 @@ use yii\web\NotFoundHttpException;
  * For example: items per specific category, comments by particular user etc.
  * This controller finds and creates models including possible filtering context.
  *
- * @property array $activeContexts
+ * @property ActiveRecordInterface[]|Model[] $contextModels active context models.
+ * @property array $context default context config.
+ * @property array $contextModel default active context model.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
@@ -31,7 +37,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
      *
      * - class: string, class name of context model.
      * - attribute: string, name of model attribute, which refers to the context model primary key.
-     * - controller: string, id of controller, which manage context models.
+     * - url: array|string, URL config or route to the controller, which manage context models.
      * - required: boolean, whether this context is mandatory for this controller or optional.
      *
      * For example:
@@ -41,7 +47,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
      *     'user' => [
      *         'class' => 'User',
      *         'attribute' => 'userId',
-     *         'controller' => 'user',
+     *         'url' => 'user/view',
      *     ]
      * ]
      * ```
@@ -49,41 +55,80 @@ class ContextModelControlBehavior extends ModelControlBehavior
     public $contexts;
 
     /**
-     * @var array stores the active context, which means the ones, which passed through the query params.
-     * Content of this array will be similar to [[contexts]], but each value will contains
-     * key 'model'. This key contains the instance of the context model.
+     * @var ActiveRecordInterface[]|Model[] stores the active context models, which means the ones, which passed
+     * through the query params.
      */
-    private $_activeContexts;
+    private $_contextModels;
 
 
     /**
-     * @return array
+     * Return context info by given name.
+     * If 'null' name provided the first declared context will be returned.
+     * @param string|null $name context name.
+     * @return array context config.
      */
-    public function getActiveContexts()
+    public function getContext($name = null)
     {
-        if (!is_array($this->_activeContexts)) {
-            $this->_activeContexts = $this->findActiveContexts();
+        if ($name === null) {
+            reset($this->contexts);
+            return current($this->contexts);
         }
-        return $this->_activeContexts;
+        if (!isset($this->contexts[$name])) {
+            throw new InvalidParamException("Undefined context '{$name}'");
+        }
+        return $this->contexts[$name];
     }
 
     /**
-     * @param array $activeContexts
+     * @return ActiveRecordInterface[]|Model[] active context models
      */
-    public function setActiveContexts($activeContexts)
+    public function getContextModels()
     {
-        $this->_activeContexts = $activeContexts;
+        if (!is_array($this->_contextModels)) {
+            $this->_contextModels = $this->findContextModels();
+        }
+        return $this->_contextModels;
     }
 
     /**
-     * Initializes all active contexts.
-     * @return array active contexts.
+     * @param ActiveRecordInterface[]|Model[] $contextModels active context models
+     */
+    public function setContextModels($contextModels)
+    {
+        $this->_contextModels = $contextModels;
+    }
+
+    /**
+     * Return active context model by given name.
+     * If 'null' name provided the first active context model will be returned.
+     * @param string|null $name context name.
+     * @return ActiveRecordInterface|Model default active context model.
+     */
+    public function getContextModel($name = null)
+    {
+        $contextModels = $this->getContextModels();
+        if ($name === null) {
+            if (empty($contextModels)) {
+                throw new InvalidParamException("There is no context model.");
+            }
+            reset($contextModels);
+            return current($contextModels);
+        }
+        if (!isset($contextModels[$name])) {
+            throw new InvalidParamException("Undefined context '{$name}'");
+        }
+        return $contextModels[$name];
+    }
+
+    /**
+     * Finds all active context models.
+     * @return ActiveRecordInterface[]|Model[] active contexts.
      * @throws InvalidConfigException on invalid configuration.
      * @throws NotFoundHttpException on missing required context.
      */
-    protected function findActiveContexts()
+    protected function findContextModels()
     {
-        $activeContexts = [];
+        $contextModels = [];
         if (is_array($this->contexts)) {
             $queryParams = Yii::$app->request->getQueryParams();
             foreach ($this->contexts as $name => $config) {
@@ -92,21 +137,20 @@ class ContextModelControlBehavior extends ModelControlBehavior
                 }
                 $attribute = $config['attribute'];
                 if (array_key_exists($attribute, $queryParams)) {
-                    $config['model'] = $this->findContextModel($config, $queryParams[$attribute]);
-                    $activeContexts[$name] = $config;
+                    $contextModels[$name] = $this->findContextModel($config, $queryParams[$attribute]);
                 } elseif (isset($config['required']) && $config['required']) {
-                    throw new NotFoundHttpException(Yii::t('admin', "Context {name} required.", ['name' => $name]));
+                    throw new NotFoundHttpException(Yii::t('admin', "Context '{name}' required.", ['name' => $name]));
                 }
             }
         }
-        return $activeContexts;
+        return $contextModels;
     }
 
     /**
      * Initializes a particular active context.
      * @param array $config context configuration.
      * @param mixed $id context model primary key value.
-     * @return ActiveRecordInterface context model instance.
+     * @return ActiveRecordInterface|Model context model instance.
      * @throws InvalidConfigException on invalid configuration.
      * @throws NotFoundHttpException if context model not found.
      */
@@ -140,13 +184,38 @@ class ContextModelControlBehavior extends ModelControlBehavior
      * This method can be used to compose links.
      * @return array query params.
      */
-    public function getActiveContextQueryParams()
+    public function getContextQueryParams()
     {
         $queryParams = [];
-        foreach ($this->getActiveContexts() as $contextName => $activeContext) {
-            $queryParams[$activeContext['attribute']] = $activeContext['model']->getPrimaryKey();
+        foreach ($this->getContextModels() as $name => $model) {
+            $queryParams[$this->contexts[$name]['attribute']] = $model->getPrimaryKey();
         }
         return $queryParams;
+    }
+
+    /**
+     * Composes URL, which leads to the context model details page.
+     * @param string|null $name context name.
+     * @return array URL config.
+     */
+    public function getContextModelUrl($name = null)
+    {
+        $model = $this->getContextModel($name);
+        $config = $this->getContext($name);
+
+        if (isset($config['url'])) {
+            $url = (array)$config['url'];
+        } else {
+            if ($name !== null) {
+                $controllerId = $name;
+            } else {
+                $controllerId = Inflector::camel2id(StringHelper::basename($model->className()));
+            }
+            $url = ["/{$controllerId}/view"];
+        }
+
+        $url['id'] = $model->getPrimaryKey();
+        return $url;
     }
 
     // Override :
@@ -157,10 +226,8 @@ class ContextModelControlBehavior extends ModelControlBehavior
     public function findModel($id)
     {
         $model = parent::findModel($id);
-        foreach ($this->getActiveContexts() as $contextName => $activeContext) {
-            $attribute = $activeContext['attribute'];
-            /* @var $contextModel ActiveRecordInterface */
-            $contextModel = $activeContext['model'];
+        foreach ($this->getContextModels() as $name => $contextModel) {
+            $attribute = $this->contexts[$name]['attribute'];
             if ($model->$attribute != $contextModel->getPrimaryKey()) {
                 throw new NotFoundHttpException(Yii::t('admin', "Object not found: {id}", ['id' => $contextModel->getPrimaryKey()]));
             }
@@ -174,10 +241,8 @@ class ContextModelControlBehavior extends ModelControlBehavior
     public function newModel()
     {
         $model = parent::newModel();
-        foreach ($this->getActiveContexts() as $activeContext) {
-            $attribute = $activeContext['attribute'];
-            /* @var $contextModel ActiveRecordInterface */
-            $contextModel = $activeContext['model'];
+        foreach ($this->getContextModels() as $name => $contextModel) {
+            $attribute = $this->contexts[$name]['attribute'];
             $model->$attribute = $contextModel->getPrimaryKey();
         }
         return $model;
@@ -189,10 +254,8 @@ class ContextModelControlBehavior extends ModelControlBehavior
     public function newSearchModel()
     {
         $model = parent::newSearchModel();
-        foreach ($this->getActiveContexts() as $activeContext) {
-            $attribute = $activeContext['attribute'];
-            /* @var $contextModel ActiveRecordInterface */
-            $contextModel = $activeContext['model'];
+        foreach ($this->getContextModels() as $name => $contextModel) {
+            $attribute = $this->contexts[$name]['attribute'];
             $model->$attribute = $contextModel->getPrimaryKey();
         }
         return $model;
