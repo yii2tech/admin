@@ -22,9 +22,9 @@ $contextUrlParams = $controller->getContextQueryParams();
 
 $this->title = <?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>;
 <?php if (!empty($contexts)): ?>
-foreach ($controller->getContextModels() as $name => $model) {
+foreach ($controller->getContextModels() as $name => $contextModel) {
     $this->params['breadcrumbs'][] = ['label' => $name, 'url' => $controller->getContextUrl($name)];
-    $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => $controller->getContextModelUrl($name)];
+    $this->params['breadcrumbs'][] = ['label' => $contextModel->id, 'url' => $controller->getContextModelUrl($name)];
 }
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => array_merge(['index'], $contextUrlParams)];
 <?php else: ?>

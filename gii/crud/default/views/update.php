@@ -23,12 +23,12 @@ $contextUrlParams = $controller->getContextQueryParams();
 
 $this->title = <?= $generator->generateString('Update ' . Inflector::camel2words(StringHelper::basename($generator->modelClass)) . ': ') ?> . $model-><?= $generator->getNameAttribute() ?>;
 <?php if (!empty($contexts)): ?>
-foreach ($controller->getContextModels() as $name => $model) {
+foreach ($controller->getContextModels() as $name => $contextModel) {
     $this->params['breadcrumbs'][] = ['label' => $name, 'url' => $controller->getContextUrl($name)];
-    $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => $controller->getContextModelUrl($name)];
+    $this->params['breadcrumbs'][] = ['label' => $contextModel->id, 'url' => $controller->getContextModelUrl($name)];
 }
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => array_merge(['index'], $contextUrlParams)];
-$this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' =>  array_merge(['view', <?= $urlParams ?>], $contextUrlParams)];
+$this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => array_merge(['view', <?= $urlParams ?>], $contextUrlParams)];
 <?php else: ?>
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
