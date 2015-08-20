@@ -9,6 +9,7 @@ use yii\helpers\StringHelper;
 /* @var $generator yii2tech\admin\gii\crud\Generator */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
+$contexts = $generator->getContexts();
 
 echo "<?php\n";
 ?>
@@ -16,6 +17,9 @@ echo "<?php\n";
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
+<?php if (!empty($contexts)): ?>
+use yii2tech\admin\behaviors\ContextModelControlBehavior;
+<?php endif ?>
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for [[<?= $generator->modelClass ?>]] model.
@@ -32,5 +36,39 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * @inheritdoc
      */
     public $searchModelClass = '<?= $generator->searchModelClass ?>';
+<?php endif ?>
+<?php if (!empty($contexts)): ?>
+    /**
+     * Contexts configuration
+     * @see ContextModelControlBehavior::contexts
+     */
+    public $contexts = [
+<?php foreach ($contexts as $name => $class) : ?>
+        // Specify actual contexts :
+        '<?= $name ?>' => [
+            'class' => '<?= $class ?>',
+            'attribute' => '<?= lcfirst(StringHelper::basename($class)) ?>Id',
+            'url' => '/<?= $name ?>/view',
+            'required' => false,
+        ],
+    ];
+<?php endforeach ?>
+
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                'model' => [
+                    'class' => ContextModelControlBehavior::className(),
+                    'contexts' => $this->contexts
+                ]
+            ]
+        );
+    }
 <?php endif ?>
 }

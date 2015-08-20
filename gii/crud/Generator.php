@@ -8,6 +8,8 @@
 namespace yii2tech\admin\gii\crud;
 
 use Yii;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 
 /**
  * Generates admin CRUD
@@ -18,6 +20,10 @@ use Yii;
 class Generator extends \yii\gii\generators\crud\Generator
 {
     /**
+     * @var string controller context model classes.
+     */
+    public $contextClass;
+    /**
      * @inheritdoc
      */
     public $baseControllerClass = 'yii2tech\admin\CrudController';
@@ -26,17 +32,6 @@ class Generator extends \yii\gii\generators\crud\Generator
      */
     public $messageCategory = 'admin';
 
-
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        if (!isset($this->templates['context'])) {
-            $this->templates['context'] = dirname($this->defaultTemplate()) . '/context';
-        }
-        parent::init();
-    }
 
     /**
      * @inheritdoc
@@ -58,9 +53,42 @@ class Generator extends \yii\gii\generators\crud\Generator
     /**
      * @inheritdoc
      */
-    public function formView()
+    public function rules()
     {
-        return Yii::getAlias('@yii/gii/generators/crud') . DIRECTORY_SEPARATOR . 'form.php';
+        return array_merge(parent::rules(), [
+            ['contextClass', 'safe'],
+            ['contextClass', 'match', 'pattern' => '/^[\w\\\\]+(\s*,\s*[\w\\\\]+)*$/', 'message' => 'Only word characters and backslashes are allowed.'],
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return array_merge(parent::attributeLabels(), [
+            'contextClass' => 'Context Class',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function hints()
+    {
+        return array_merge(parent::hints(), [
+            'contextClass' => 'This is the ActiveRecord class, which serves as context for the contoller.
+                You should provide a fully qualified class name, e.g., <code>app\models\User</code>.
+                You may specify several classes separated by comma.',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function stickyAttributes()
+    {
+        return array_merge(parent::stickyAttributes(), ['contextClass']);
     }
 
     /**
@@ -83,5 +111,21 @@ class Generator extends \yii\gii\generators\crud\Generator
             }
         }
         return parent::getNameAttribute();
+    }
+
+    /**
+     * @return array contexts in format: contextName => contextClassName.
+     */
+    public function getContexts()
+    {
+        if (empty($this->contextClass)) {
+            return [];
+        }
+        $result = [];
+        $classes = preg_split('/,/', $this->contextClass, -1, PREG_SPLIT_NO_EMPTY);
+        foreach ($classes as $class) {
+            $result[Inflector::camel2id(StringHelper::basename($class))] = $class;
+        }
+        return $result;
     }
 }

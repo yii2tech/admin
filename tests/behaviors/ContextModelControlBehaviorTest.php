@@ -179,7 +179,7 @@ class ContextModelControlBehaviorTest extends TestCase
     /**
      * @depends testGetContextModel
      */
-    public function testGetContextUrl()
+    public function testGetContextModelUrl()
     {
         $behavior = $this->createBehavior();
 
@@ -187,5 +187,16 @@ class ContextModelControlBehaviorTest extends TestCase
 
         $url = $behavior->getContextModelUrl('category');
         $this->assertEquals(['/category/view', 'id' => 2], $url);
+    }
+
+    /**
+     * @depends testGetContext
+     */
+    public function testGetContextUrl()
+    {
+        $behavior = $this->createBehavior();
+
+        $url = $behavior->getContextUrl('category');
+        $this->assertEquals(['/category/index'], $url);
     }
 }

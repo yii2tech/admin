@@ -194,6 +194,33 @@ class ContextModelControlBehavior extends ModelControlBehavior
     }
 
     /**
+     * Composes URL, which leads to the context model index page.
+     * @param string|null $name context name.
+     * @return array URL config.
+     */
+    public function getContextUrl($name = null)
+    {
+        $config = $this->getContext($name);
+
+        if (isset($config['indexUrl'])) {
+            $url = (array)$config['indexUrl'];
+        } else {
+            if (isset($config['controller'])) {
+                $controllerId = $config['controller'];
+            } else {
+                if ($name !== null) {
+                    $controllerId = $name;
+                } else {
+                    $controllerId = trim(substr($config['attribute'], 0, -2), '_');
+                }
+            }
+            $url = ["/{$controllerId}/index"];
+        }
+
+        return $url;
+    }
+
+    /**
      * Composes URL, which leads to the context model details page.
      * @param string|null $name context name.
      * @return array URL config.
@@ -203,13 +230,17 @@ class ContextModelControlBehavior extends ModelControlBehavior
         $model = $this->getContextModel($name);
         $config = $this->getContext($name);
 
-        if (isset($config['url'])) {
-            $url = (array)$config['url'];
+        if (isset($config['viewUrl'])) {
+            $url = (array)$config['viewUrl'];
         } else {
-            if ($name !== null) {
-                $controllerId = $name;
+            if (isset($config['controller'])) {
+                $controllerId = $config['controller'];
             } else {
-                $controllerId = Inflector::camel2id(StringHelper::basename($model->className()));
+                if ($name !== null) {
+                    $controllerId = $name;
+                } else {
+                    $controllerId = Inflector::camel2id(StringHelper::basename($model->className()));
+                }
             }
             $url = ["/{$controllerId}/view"];
         }
