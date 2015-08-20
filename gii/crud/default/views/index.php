@@ -13,13 +13,21 @@ $contexts = $generator->getContexts();
 echo "<?php\n";
 ?>
 
-use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
+<?php if ($generator->indexWidgetType === 'grid'): ?>
+use yii\grid\GridView;
+use yii\grid\ActionColumn;
+<?php else: ?>
+use yii\widgets\ListView;
+<?php endif ?>
+<?php if (!empty($contexts)): ?>
+use yii\helpers\Url;
+<?php endif ?>
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
 /* @var $dataProvider yii\data\ActiveDataProvider */
 <?php if (!empty($contexts)): ?>
-/* @var $controller yii\web\Controller|yii2tech\admin\behaviors\ContextModelControlBehavior */
+/* @var $controller <?= $generator->controllerClass ?>|yii2tech\admin\behaviors\ContextModelControlBehavior */
 
 $controller = $this->context;
 $contextUrlParams = $controller->getContextQueryParams();
@@ -75,7 +83,14 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 }
 ?>
 
-        ['class' => 'yii\grid\ActionColumn'],
+        [
+            'class' => ActionColumn::className(),
+<?php if (!empty($contexts)): ?>
+            'urlCreator' => function($action, $model, $key, $index) use ($contextUrlParams) {
+                return Url::toRoute(array_merge([$action, 'id' => (string) $key], $contextUrlParams));
+            }
+<?php endif ?>
+        ],
     ],
 ]); ?>
 <?php else: ?>

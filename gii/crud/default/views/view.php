@@ -18,7 +18,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 <?php if (!empty($contexts)): ?>
-/* @var $controller yii\web\Controller|yii2tech\admin\behaviors\ContextModelControlBehavior */
+/* @var $controller <?= $generator->controllerClass ?>|yii2tech\admin\behaviors\ContextModelControlBehavior */
 
 $controller = $this->context;
 $contextUrlParams = $controller->getContextQueryParams();

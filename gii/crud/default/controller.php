@@ -18,6 +18,7 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 <?php if (!empty($contexts)): ?>
+use yii\helpers\ArrayHelper;
 use yii2tech\admin\behaviors\ContextModelControlBehavior;
 <?php endif ?>
 
@@ -48,7 +49,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         '<?= $name ?>' => [
             'class' => '<?= $class ?>',
             'attribute' => '<?= lcfirst(StringHelper::basename($class)) ?>Id',
-            'url' => '/<?= $name ?>/view',
+            'controller' => '<?= $name ?>',
             'required' => false,
         ],
     ];
