@@ -39,4 +39,14 @@ class Item extends ActiveRecord
     {
         return $this->updateAttributes(['isDeleted' => true]);
     }
+
+    /**
+     * Emulates soft-delete restoration behavior
+     * @see https://github.com/yii2tech/ar-softdelete
+     * @return integer number of updated records
+     */
+    public function restore()
+    {
+        return $this->updateAttributes(['isDeleted' => false]);
+    }
 }

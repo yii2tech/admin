@@ -47,6 +47,7 @@ This extension provides several independent action classes, which provides parti
  - [[yii2tech\admin\actions\Delete]] - performs the deleting of the existing record.
  - [[yii2tech\admin\actions\View]] - displays an existing model.
  - [[yii2tech\admin\actions\SoftDelete]] - performs the "soft" deleting of the existing record.
+ - [[yii2tech\admin\actions\Restore]] - performs the restoration of the "soft" deleted record.
  - [[yii2tech\admin\actions\Callback]] - allows invocation of specified method of the model.
 
 Please refer to the particular action class for more details.
