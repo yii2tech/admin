@@ -197,6 +197,11 @@ class ButtonContextMenu extends Widget
                     'confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                     'method' => 'post',
                 ];
+            case 'restore':
+                return [
+                    'confirm' => Yii::t('admin', 'Are you sure you want to restore this item?'),
+                    'method' => 'post',
+                ];
             case 'default':
                 return [
                     'confirm' => Yii::t('admin', 'Are you sure you want to restore defaults?'),
