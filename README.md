@@ -103,7 +103,7 @@ Please refer to the particular controller class for more details.
 
 ## Widgets <span id="widgets"></span>
 
-This  extension provides sevral widgets, which simplifies view composition for the typical use cases:
+This  extension provides several widgets, which simplifies view composition for the typical use cases:
 
  - [[yii2tech\admin\widgets\Alert]] - renders a message from session flash.
  - [[yii2tech\admin\widgets\ButtonContextMenu]] - simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
@@ -136,7 +136,7 @@ return [
 ```
 
 "MainFrame" generator creates a basic admin panel code, which includes layout files, main controller
-file and basic view files. The created strucutre is necessary for the correct rendering of the code created
+file and basic view files. The created structure is necessary for the correct rendering of the code created
 by "Admin CRUD" generator.
 
 "Admin CRUD" generator is similar to regular "CRUD" generator, but it generates code, which use tools from
