@@ -15,7 +15,7 @@ echo "<?php\n";
 
 <?php if ($generator->indexWidgetType === 'grid'): ?>
 use yii\grid\GridView;
-use yii\grid\ActionColumn;
+use yii2tech\admin\grid\ActionColumn;
 <?php else: ?>
 use yii\widgets\ListView;
 <?php endif ?>
