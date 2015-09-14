@@ -132,6 +132,8 @@ class ButtonContextMenu extends Widget
                 return Yii::t('admin', 'View');
             case 'default':
                 return Yii::t('admin', 'Restore Defaults');
+            case 'import':
+                return Yii::t('admin', 'Import');
             default:
                 return ucfirst($url[0]);
         }
@@ -156,6 +158,8 @@ class ButtonContextMenu extends Widget
                 return 'eye-open';
             case 'default':
                 return 'btn-repeat';
+            case 'import':
+                return 'import';
             default:
                 return false;
         }
@@ -180,6 +184,8 @@ class ButtonContextMenu extends Widget
                 return 'btn-info';
             case 'default':
                 return 'btn-danger';
+            case 'import':
+                return 'btn-success';
             default:
                 return 'btn-default';
         }
