@@ -39,11 +39,19 @@ class VariationUpdate extends Update
                 return call_user_func_array([ActiveForm::className(), 'validate'], array_merge([$model, $model->getVariationModels()]));
             }
             if ($model->save()) {
+                $actionId = $this->getReturnAction('view');
+                $queryParams = Yii::$app->request->getQueryParams();
+                unset($queryParams['id']);
                 $url = array_merge(
-                    ['view'],
-                    Yii::$app->request->getQueryParams(),
-                    ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+                    [$actionId],
+                    $queryParams
                 );
+                if ($actionId === 'view') {
+                    $url = array_merge(
+                        $url,
+                        ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+                    );
+                }
                 return $this->controller->redirect($url);
             }
         }

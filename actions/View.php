@@ -30,6 +30,8 @@ class View extends Action
     {
         $model = $this->findModel($id);
 
+        $this->setReturnAction();
+
         return $this->controller->render($this->view, [
             'model' => $model,
         ]);

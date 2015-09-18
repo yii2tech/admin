@@ -46,11 +46,19 @@ class Update extends Action
                 return ActiveForm::validate($model);
             }
             if ($model->save()) {
+                $actionId = $this->getReturnAction('view');
+                $queryParams = Yii::$app->request->getQueryParams();
+                unset($queryParams['id']);
                 $url = array_merge(
-                    ['view'],
-                    Yii::$app->request->getQueryParams(),
-                    ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+                    [$actionId],
+                    $queryParams
                 );
+                if ($actionId === 'view') {
+                    $url = array_merge(
+                        $url,
+                        ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+                    );
+                }
                 return $this->controller->redirect($url);
             }
         }

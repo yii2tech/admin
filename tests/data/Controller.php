@@ -13,6 +13,11 @@ use yii2tech\admin\behaviors\ModelControlBehavior;
 class Controller extends \yii\web\Controller
 {
     /**
+     * @var array actions configuration, which will be returned by [[actions()]] method.
+     */
+    public $actions = [];
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -45,5 +50,32 @@ class Controller extends \yii\web\Controller
             'url' => $url,
             'statusCode' => $statusCode,
         ];
+    }
+
+    /**
+     * Test inline action.
+     * @return mixed response
+     */
+    public function actionInlineAction()
+    {
+        return '';
+    }
+
+    /**
+     * View action stub.
+     * @param integer $id
+     * @return mixed response
+     */
+    public function actionView($id)
+    {
+        return '';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return $this->actions;
     }
 }

@@ -79,6 +79,8 @@ class Index extends Action
         $searchModel = $this->newSearchModel();
         $dataProvider = $this->prepareDataProvider($searchModel);
 
+        $this->setReturnAction();
+
         return $this->controller->render($this->view, [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -7,9 +7,12 @@
 
 namespace yii2tech\admin\actions;
 
+use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\db\ActiveRecordInterface;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -58,5 +61,65 @@ class Action extends \yii\base\Action
         } else {
             throw new InvalidConfigException('Either "' . get_class($this) . '::findModel" must be set or controller must declare method "findModel()".');
         }
+    }
+
+    /**
+     * Checks whether action with specified ID exists in owner controller.
+     * @param string $id action ID.
+     * @return boolean whether action exists or not.
+     */
+    public function actionExists($id)
+    {
+        $inlineActionMethodName = 'action' . Inflector::camelize($id);
+        if (method_exists($this->controller, $inlineActionMethodName)) {
+            return true;
+        }
+        if (array_key_exists($id, $this->controller->actions())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Sets the return action ID.
+     * @param string|null $actionId action ID, if not set current action will be used.
+     */
+    public function setReturnAction($actionId = null)
+    {
+        if ($actionId === null) {
+            $actionId = $this->id;
+        }
+        if (strpos($actionId, '/') === false) {
+            $actionId = $this->controller->getUniqueId() . '/' . $actionId;
+        }
+        $sessionKey = '__adminReturnAction';
+        Yii::$app->getSession()->set($sessionKey, $actionId);
+    }
+
+    /**
+     * Returns the ID of action, which should be used for return redirect.
+     * If action belongs to another controller or does not exist in current controller - 'index' is returned.
+     * @param string $defaultActionId default action ID.
+     * @return string action ID.
+     */
+    public function getReturnAction($defaultActionId = 'index')
+    {
+        $sessionKey = '__adminReturnAction';
+        $actionId = Yii::$app->getSession()->get($sessionKey, $defaultActionId);
+        $actionId = trim($actionId, '/');
+        if ($actionId === 'index') {
+            return $actionId;
+        }
+        if (strpos($actionId, '/') !== false) {
+            $controllerId = StringHelper::dirname($actionId);
+            if ($controllerId !== $this->controller->getUniqueId()) {
+                return 'index';
+            }
+            $actionId = StringHelper::basename($actionId);
+        }
+        if (!$this->actionExists($actionId)) {
+            return 'index';
+        }
+        return $actionId;
     }
 }
