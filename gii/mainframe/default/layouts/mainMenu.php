@@ -22,6 +22,9 @@ NavBar::begin([
     'options' => [
         'class' => 'navbar-inverse navbar-fixed-top',
     ],
+    'innerContainerOptions' => [
+        'class' => 'container-fluid'
+    ],
 ]);
 
 if (!$webUser->isGuest) {

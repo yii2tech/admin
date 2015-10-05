@@ -35,7 +35,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?= "<?= " ?> $this->render('/layouts/mainMenu'); ?>
 
-    <div class="container">
+    <div class="container-fluid">
         <?= "<?php " ?> if (!Yii::$app->user->isGuest) : ?>
         <?= "<?= " ?> Breadcrumbs::widget([
                 'homeLink' => [
