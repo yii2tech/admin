@@ -66,7 +66,7 @@ class ModelControlBehavior extends Behavior
         if (isset($model)) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('admin', "Object not found: {id}", ['id' => $id]));
+            throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Object not found: {id}", ['id' => $id]));
         }
     }
 

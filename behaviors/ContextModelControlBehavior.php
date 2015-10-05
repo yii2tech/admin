@@ -139,7 +139,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
                 if (array_key_exists($attribute, $queryParams)) {
                     $contextModels[$name] = $this->findContextModel($config, $queryParams[$attribute]);
                 } elseif (isset($config['required']) && $config['required']) {
-                    throw new NotFoundHttpException(Yii::t('admin', "Context '{name}' required.", ['name' => $name]));
+                    throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Context '{name}' required.", ['name' => $name]));
                 }
             }
         }
@@ -175,7 +175,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
         if (isset($model)) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('admin', "Context object not found: {id}", ['id' => $id]));
+            throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Context object not found: {id}", ['id' => $id]));
         }
     }
 
@@ -277,7 +277,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
         foreach ($this->getContextModels() as $name => $contextModel) {
             $attribute = $this->contexts[$name]['attribute'];
             if ($model->$attribute != $contextModel->getPrimaryKey()) {
-                throw new NotFoundHttpException(Yii::t('admin', "Object not found: {id}", ['id' => $contextModel->getPrimaryKey()]));
+                throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Object not found: {id}", ['id' => $contextModel->getPrimaryKey()]));
             }
         }
         return $model;

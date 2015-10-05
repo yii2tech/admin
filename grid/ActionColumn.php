@@ -86,9 +86,9 @@ class ActionColumn extends \yii\grid\ActionColumn
                         return false;
                     },
                     'options' => [
-                        'title' => Yii::t('admin', 'Restore'),
-                        'aria-label' => Yii::t('admin', 'Restore'),
-                        'data-confirm' => Yii::t('admin', 'Are you sure you want to restore this item?'),
+                        'title' => Yii::t('yii2tech-admin', 'Restore'),
+                        'aria-label' => Yii::t('yii2tech-admin', 'Restore'),
+                        'data-confirm' => Yii::t('yii2tech-admin', 'Are you sure you want to restore this item?'),
                         'data-method' => 'post',
                         'data-pjax' => '0',
                     ],

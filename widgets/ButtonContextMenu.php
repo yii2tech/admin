@@ -121,19 +121,19 @@ class ButtonContextMenu extends Widget
     {
         switch ($url[0]) {
             case 'index':
-                return Yii::t('admin', 'Back');
+                return Yii::t('yii2tech-admin', 'Back');
             case 'create':
-                return Yii::t('admin', 'Create');
+                return Yii::t('yii2tech-admin', 'Create');
             case 'update':
-                return Yii::t('admin', 'Update');
+                return Yii::t('yii2tech-admin', 'Update');
             case 'delete':
-                return Yii::t('admin', 'Delete');
+                return Yii::t('yii2tech-admin', 'Delete');
             case 'view':
-                return Yii::t('admin', 'View');
+                return Yii::t('yii2tech-admin', 'View');
             case 'default':
-                return Yii::t('admin', 'Restore Defaults');
+                return Yii::t('yii2tech-admin', 'Restore Defaults');
             case 'import':
-                return Yii::t('admin', 'Import');
+                return Yii::t('yii2tech-admin', 'Import');
             default:
                 return ucfirst($url[0]);
         }
@@ -205,12 +205,12 @@ class ButtonContextMenu extends Widget
                 ];
             case 'restore':
                 return [
-                    'confirm' => Yii::t('admin', 'Are you sure you want to restore this item?'),
+                    'confirm' => Yii::t('yii2tech-admin', 'Are you sure you want to restore this item?'),
                     'method' => 'post',
                 ];
             case 'default':
                 return [
-                    'confirm' => Yii::t('admin', 'Are you sure you want to restore defaults?'),
+                    'confirm' => Yii::t('yii2tech-admin', 'Are you sure you want to restore defaults?'),
                 ];
             default:
                 return null;
