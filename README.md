@@ -141,3 +141,27 @@ by "Admin CRUD" generator.
 
 "Admin CRUD" generator is similar to regular "CRUD" generator, but it generates code, which use tools from
 this extension, so the result code is much more easier.
+
+
+## Internationalization <span id="internationalization"></span>
+
+All text and messages introduced in this extension are translatable under category 'yii2tech-admin'.
+You may use translations provided within this extension, using following application configuration:
+
+```php
+return [
+    'components' => [
+        'i18n' => [
+            'translations' => [
+                'yii2tech-admin' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@yii2tech/admin/messages',
+                ],
+                // ...
+            ],
+        ],
+        // ...
+    ],
+    // ...
+];
+```
