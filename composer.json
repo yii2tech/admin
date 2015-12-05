@@ -1,6 +1,6 @@
 {
     "name": "yii2tech/admin",
-    "description": "Provides support for ActiveRecord variation via related models in Yii2",
+    "description": "Admin pack (actions, widgets, etc) for Yii2",
     "keywords": ["yii2", "admin"],
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
