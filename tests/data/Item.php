@@ -49,4 +49,14 @@ class Item extends ActiveRecord
     {
         return $this->updateAttributes(['isDeleted' => false]);
     }
+
+    /**
+     * Emulates safe-delete behavior
+     * @see https://github.com/yii2tech/ar-softdelete
+     * @return integer number of updated records
+     */
+    public function safeDelete()
+    {
+        return $this->delete();
+    }
 }
