@@ -135,4 +135,57 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ['item2', 2],
         ])->execute();
     }
+
+    /**
+     * Setup tables for test ActiveRecord with `yii2tech\ar\variation\VariationBehavior`
+     */
+    protected function setupTestVariationDbData()
+    {
+        $db = Yii::$app->getDb();
+
+        // Structure :
+
+        $table = 'Article';
+        $columns = [
+            'id' => 'pk',
+            'name' => 'string',
+        ];
+        $db->createCommand()->createTable($table, $columns)->execute();
+
+        $table = 'Language';
+        $columns = [
+            'id' => 'pk',
+            'name' => 'string',
+            'locale' => 'string',
+        ];
+        $db->createCommand()->createTable($table, $columns)->execute();
+
+        $table = 'ArticleTranslation';
+        $columns = [
+            'articleId' => 'integer',
+            'languageId' => 'integer',
+            'title' => 'string',
+            'content' => 'string',
+            'PRIMARY KEY(articleId, languageId)'
+        ];
+        $db->createCommand()->createTable($table, $columns)->execute();
+
+        // Data :
+
+        $db->createCommand()->batchInsert('Language', ['name', 'locale'], [
+            ['English', 'en'],
+            ['German', 'de'],
+        ])->execute();
+
+        $db->createCommand()->batchInsert('Article', ['name'], [
+            ['article1'],
+            ['article2'],
+        ])->execute();
+
+        $db->createCommand()->batchInsert('ArticleTranslation', ['articleId', 'languageId', 'title', 'content'], [
+            [1, 1, 'article1-en', 'article1-content-en'],
+            [1, 2, 'article1-de', 'article1-content-de'],
+            [2, 2, 'article2-de', 'article2-content-de'],
+        ])->execute();
+    }
 }
