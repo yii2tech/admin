@@ -11,18 +11,20 @@ use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecordInterface;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 /**
  * VariationUpdate action supports updating of the existing model with [yii2tech/ar-variation](https://github.com/yii2tech/ar-variation) behavior applied.
  *
  * @see https://github.com/yii2tech/ar-variation
+ * @see VariationTrait
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
 class VariationUpdate extends Update
 {
+    use VariationTrait;
+
     /**
      * @inheritdoc
      */
@@ -32,11 +34,10 @@ class VariationUpdate extends Update
         $model = $this->findModel($id);
         $model->scenario = $this->scenario;
 
-        $post = Yii::$app->request->post();
-        if ($model->load($post) && Model::loadMultiple($model->getVariationModels(), $post)) {
+        if ($this->load($model, Yii::$app->request->post())) {
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return call_user_func_array([ActiveForm::className(), 'validate'], array_merge([$model, $model->getVariationModels()]));
+                return $this->performAjaxValidation($model);
             }
             if ($model->save()) {
                 $actionId = $this->getReturnAction('view');
