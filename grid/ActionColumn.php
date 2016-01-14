@@ -138,9 +138,9 @@ class ActionColumn extends \yii\grid\ActionColumn
             if ($button['visible'] instanceof \Closure) {
                 if (!call_user_func($button['visible'], $model, $key, $index)) {
                     return '';
-                } elseif (!$button['visible']) {
-                    return '';
                 }
+            } elseif (!$button['visible']) {
+                return '';
             }
         }
 
