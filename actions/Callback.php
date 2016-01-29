@@ -28,7 +28,7 @@ class Callback extends Action
      * }
      * ```
      */
-    public $modelCallback;
+    public $callback;
 
 
     /**
@@ -41,13 +41,13 @@ class Callback extends Action
     {
         $model = $this->findModel($id);
 
-        if ($this->modelCallback === null) {
-            throw new InvalidConfigException('"' . get_class($this) . '::method" must be set.');
+        if ($this->callback === null) {
+            throw new InvalidConfigException('"' . get_class($this) . '::callback" must be set.');
         }
-        if (is_string($this->modelCallback)) {
-            call_user_func([$model, $this->modelCallback]);
+        if (is_string($this->callback)) {
+            call_user_func([$model, $this->callback]);
         } else {
-            call_user_func($this->modelCallback, $model);
+            call_user_func($this->callback, $model);
         }
 
 
