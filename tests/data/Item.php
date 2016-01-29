@@ -30,6 +30,8 @@ class Item extends ActiveRecord
         ];
     }
 
+    // Soft Delete :
+
     /**
      * Emulates soft-delete behavior
      * @see https://github.com/yii2tech/ar-softdelete
@@ -58,5 +60,58 @@ class Item extends ActiveRecord
     public function safeDelete()
     {
         return $this->delete();
+    }
+
+    // Position :
+
+    /**
+     * Emulates position behavior
+     * @see https://github.com/yii2tech/ar-position
+     * @return boolean success
+     */
+    public function movePrev()
+    {
+        return $this->updateAttributes(['name' => 'prev']) > 0;
+    }
+
+    /**
+     * Emulates position behavior
+     * @see https://github.com/yii2tech/ar-position
+     * @return boolean success
+     */
+    public function moveNext()
+    {
+        return $this->updateAttributes(['name' => 'next']) > 0;
+    }
+
+    /**
+     * Emulates position behavior
+     * @see https://github.com/yii2tech/ar-position
+     * @return boolean success
+     */
+    public function moveFirst()
+    {
+        return $this->updateAttributes(['name' => 'first']) > 0;
+    }
+
+    /**
+     * Emulates position behavior
+     * @see https://github.com/yii2tech/ar-position
+     * @return boolean success
+     */
+    public function moveLast()
+    {
+        return $this->updateAttributes(['name' => 'last']) > 0;
+    }
+
+    /**
+     * Emulates position behavior
+     * @see https://github.com/yii2tech/ar-position
+     * @param integer $position
+     * @return boolean success
+     */
+    public function moveToPosition($position)
+    {
+        return $this->updateAttributes(['name' => $position]) > 0;
     }
 }
