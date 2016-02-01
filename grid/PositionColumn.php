@@ -88,7 +88,7 @@ class PositionColumn extends DataColumn
                     ],
                 ],
                 'last' => [
-                    'icon' => 'triangle-down',
+                    'icon' => 'triangle-bottom',
                     'visible' => function ($model) {
                         /* @var $model \yii\db\BaseActiveRecord */
                         if ($this->attribute !== null && isset($model[$this->attribute])) {
