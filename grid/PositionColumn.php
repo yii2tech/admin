@@ -101,7 +101,7 @@ class PositionColumn extends DataColumn
                         'aria-label' => Yii::t('yii2tech-admin', 'Move bottom'),
                     ],
                 ],
-                'up' => [
+                'prev' => [
                     'icon' => 'arrow-up',
                     'visible' => function ($model) {
                         /* @var $model \yii\db\BaseActiveRecord */
@@ -115,7 +115,7 @@ class PositionColumn extends DataColumn
                         'aria-label' => Yii::t('yii2tech-admin', 'Move up'),
                     ],
                 ],
-                'down' => [
+                'next' => [
                     'icon' => 'arrow-down',
                     'visible' => function ($model) {
                         /* @var $model \yii\db\BaseActiveRecord */
@@ -155,9 +155,9 @@ class PositionColumn extends DataColumn
     /**
      * Renders button.
      * @param string $name button name.
-     * @param $model
-     * @param $key
-     * @param $index
+     * @param mixed $model
+     * @param string $key
+     * @param integer $index
      * @return string rendered HTML
      * @throws InvalidConfigException on invalid button format.
      */
