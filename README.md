@@ -36,6 +36,14 @@ Usage
 This extension provides actions, widgets and other tools for admin panel creation in Yii2 project.
 These tools are meant to be used together for the rapid web application administration panel composition.
 
+This package supports usage of following extensions:
+
+ - [yii2tech/ar-position](https://github.com/yii2tech/ar-position)
+ - [yii2tech/ar-softdelete](https://github.com/yii2tech/ar-softdelete)
+ - [yii2tech/ar-variation](https://github.com/yii2tech/ar-variation)
+
+> Note: none of these extensions is required by default, you'll need to install them yourself, if needed.
+
 
 ## Actions <span id="actions"></span>
 
@@ -47,8 +55,12 @@ This extension provides several independent action classes, which provides parti
  - [[yii2tech\admin\actions\Delete]] - performs the deleting of the existing record.
  - [[yii2tech\admin\actions\View]] - displays an existing model.
  - [[yii2tech\admin\actions\SoftDelete]] - performs the "soft" deleting of the existing record.
+ - [[yii2tech\admin\actions\SafeDelete]] - performs the "safe" deleting of the existing record.
  - [[yii2tech\admin\actions\Restore]] - performs the restoration of the "soft" deleted record.
  - [[yii2tech\admin\actions\Callback]] - allows invocation of specified method of the model.
+ - [[yii2tech\admin\actions\Position]] - allows change custom sort position of the particular model.
+ - [[yii2tech\admin\actions\VariationCreate]] - supports creation of the new model with variations using web form.
+ - [[yii2tech\admin\actions\VariationUpdate]] - supports updating of the new model with variations using web form.
 
 Please refer to the particular action class for more details.
 
@@ -108,6 +120,13 @@ This  extension provides several widgets, which simplifies view composition for 
  - [[yii2tech\admin\widgets\Alert]] - renders a message from session flash.
  - [[yii2tech\admin\widgets\ButtonContextMenu]] - simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
  - [[yii2tech\admin\widgets\Nav]] - enhanced version of [[\yii\bootstrap\Nav]], which simplifies icon rendering.
+
+Also several enhancements for the [[\yii\grid\GridView]] are available:
+
+- [[yii2tech\admin\grid\ActionColumn]] - simplifies composition of the action buttons
+- [[yii2tech\admin\grid\DeleteStatusColumn]] - serves for the 'soft-deleted' status displaying
+- [[yii2tech\admin\grid\PositionColumn]] - provides simple interface for the model custom sort position switching
+- [[yii2tech\admin\grid\VariationColumn]] - allows displaying of the variation column values
 
 
 ## Using Gii <span id="using-gii"></span>
