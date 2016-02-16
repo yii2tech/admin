@@ -12,11 +12,12 @@ class CreateTest extends TestCase
 {
     /**
      * Runs the action.
+     * @param array $config
      * @return array|Response response.
      */
-    protected function runAction()
+    protected function runAction(array $config = [])
     {
-        $action = new Create('create', $this->createController());
+        $action = new Create('create', $this->createController(), $config);
         return $action->run();
     }
 
@@ -56,5 +57,19 @@ class CreateTest extends TestCase
         ];
         $response = $this->runAction();
         $this->assertEquals('create', $response['view']);
+    }
+
+    /**
+     * @depends testViewForm
+     */
+    public function testLoadDefaultValues()
+    {
+        $response = $this->runAction([
+            'loadDefaultValues' => function (Item $model) {
+                $model->name = 'default name';
+            }
+        ]);
+        $model = $response['params']['model'];
+        $this->assertEquals('default name', $model->name);
     }
 }

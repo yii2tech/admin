@@ -31,11 +31,12 @@ class VariationCreateTest extends TestCase
 
     /**
      * Runs the action.
+     * @param array $config
      * @return array|Response response.
      */
-    protected function runAction()
+    protected function runAction(array $config = [])
     {
-        $action = new VariationCreate('create', $this->createController(['modelClass' => Article::className()]));
+        $action = new VariationCreate('create', $this->createController(['modelClass' => Article::className()]), $config);
         return $action->run();
     }
 
@@ -87,5 +88,19 @@ class VariationCreateTest extends TestCase
         ];
         $response = $this->runAction();
         $this->assertEquals('create', $response['view']);
+    }
+
+    /**
+     * @depends testViewForm
+     */
+    public function testLoadDefaultValues()
+    {
+        $response = $this->runAction([
+            'loadDefaultValues' => function (Article $model) {
+                $model->name = 'default name';
+            }
+        ]);
+        $model = $response['params']['model'];
+        $this->assertEquals('default name', $model->name);
     }
 }

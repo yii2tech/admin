@@ -53,6 +53,8 @@ class VariationCreate extends Create
                 }
                 return $this->controller->redirect($url);
             }
+        } else {
+            $this->loadModelDefaultValues($model);
         }
 
         return $this->controller->render($this->view, [
