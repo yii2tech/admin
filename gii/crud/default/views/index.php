@@ -85,11 +85,6 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 
         [
             'class' => ActionColumn::className(),
-<?php if (!empty($contexts)): ?>
-            'urlCreator' => function($action, $model, $key, $index) use ($contextUrlParams) {
-                return Url::toRoute(array_merge([$action, 'id' => (string) $key], $contextUrlParams));
-            }
-<?php endif ?>
         ],
     ],
 ]); ?>
