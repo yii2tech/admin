@@ -16,7 +16,7 @@ use yii\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
 
 /**
- * Action is a base class for
+ * Action is a base class for administration panel actions.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
@@ -39,6 +39,12 @@ class Action extends \yii\base\Action
      * The callable should return the model found, or throw an exception if not found.
      */
     public $findModel;
+    /**
+     * @var string ID of the controller action, which user should be redirected to on success.
+     * This property overrides the value set by [[setReturnAction()]] method.
+     * @see getReturnAction()
+     */
+    public $returnAction;
 
 
     /**
@@ -104,6 +110,10 @@ class Action extends \yii\base\Action
      */
     public function getReturnAction($defaultActionId = 'index')
     {
+        if ($this->returnAction !== null) {
+            return $this->returnAction;
+        }
+
         $sessionKey = '__adminReturnAction';
         $actionId = Yii::$app->getSession()->get($sessionKey, $defaultActionId);
         $actionId = trim($actionId, '/');
