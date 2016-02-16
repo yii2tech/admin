@@ -20,7 +20,7 @@
         "yiisoft/yii2": "*"
     },
     "require-dev": {
-        "yiisoft/yii2-bootstrap": ">=2.0.x-dev"
+        "yiisoft/yii2-bootstrap": ">=2.0.5"
     },
     "suggest": {
         "yiisoft/yii2-bootstrap": "you need this package, if you wish to use provided widgets"
