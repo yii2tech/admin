@@ -11,6 +11,7 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /**
  * ActionColumn is a variation of [[\yii\grid\ActionColumn]], which allows to specify [[buttons]] as array configurations.
@@ -177,5 +178,20 @@ class ActionColumn extends \yii\grid\ActionColumn
         $options = array_merge(ArrayHelper::getValue($button, 'options', []), $this->buttonOptions);
 
         return Html::a($label, $url, $options);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createUrl($action, $model, $key, $index)
+    {
+        if (is_callable($this->urlCreator)) {
+            return call_user_func($this->urlCreator, $action, $model, $key, $index);
+        } else {
+            $params = is_array($key) ? $key : ['id' => (string) $key];
+            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+            $params = $params + Yii::$app->request->getQueryParams(); // preserve numeric keys
+            return Url::toRoute($params);
+        }
     }
 }
