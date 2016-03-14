@@ -45,6 +45,12 @@ class Action extends \yii\base\Action
      * @see getReturnAction()
      */
     public $returnAction;
+    /**
+     * @var callable route, which user should be redirected to on success.
+     * This property overrides default behavior of [[returnAction]]
+     * @see getReturnRoute()
+     */
+    public $returnRoute;
 
 
     /**
@@ -111,7 +117,11 @@ class Action extends \yii\base\Action
     public function getReturnAction($defaultActionId = 'index')
     {
         if ($this->returnAction !== null) {
-            return $this->returnAction;
+            if (is_callable($this->returnAction)) {
+                return call_user_func($this->returnAction, $this);
+            } else {
+                return $this->returnAction;
+            }
         }
 
         $sessionKey = '__adminReturnAction';
@@ -131,5 +141,28 @@ class Action extends \yii\base\Action
             return 'index';
         }
         return $actionId;
+    }
+
+    public function getReturnRoute($model, $defaultActionId, $excludeParams = ['id'])
+    {
+        if (is_callable($this->returnRoute)) {
+            return call_user_func($this->returnRoute, $model, $defaultActionId);
+        }
+        $actionId = $this->getReturnAction($defaultActionId);
+        $queryParams = Yii::$app->request->getQueryParams();
+        foreach($excludeParams as $param) {
+            unset($queryParams[$param]);
+        }
+        $url = array_merge(
+            [$actionId],
+            $queryParams
+        );
+        if ($actionId === 'view') {
+            $url = array_merge(
+                $url,
+                ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+            );
+        }
+        return $url;
     }
 }

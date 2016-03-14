@@ -40,18 +40,7 @@ class VariationCreate extends Create
                 return $this->performAjaxValidation($model);
             }
             if ($model->save()) {
-                $actionId = $this->getReturnAction('view');
-                $url = array_merge(
-                    [$actionId],
-                    Yii::$app->request->getQueryParams()
-                );
-                if ($actionId === 'view') {
-                    $url = array_merge(
-                        $url,
-                        ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
-                    );
-                }
-                return $this->controller->redirect($url);
+                return $this->controller->redirect($this->getReturnRoute($model, 'view'));
             }
         } else {
             $this->loadModelDefaultValues($model);
