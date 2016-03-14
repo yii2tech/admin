@@ -29,6 +29,8 @@ class SoftDelete extends Action
     {
         $model = $this->findModel($id);
 
+        $model->softDelete();
+
         return $this->controller->redirect($this->getReturnRoute($model, 'index'));
     }
 }
