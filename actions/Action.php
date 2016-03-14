@@ -150,7 +150,7 @@ class Action extends \yii\base\Action
         }
         $actionId = $this->getReturnAction($defaultActionId);
         $queryParams = Yii::$app->request->getQueryParams();
-        foreach($excludeParams as $param) {
+        foreach ($excludeParams as $param) {
             unset($queryParams[$param]);
         }
         $url = array_merge(
