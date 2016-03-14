@@ -162,6 +162,13 @@ class Action extends \yii\base\Action
         return $actionId;
     }
 
+    /**
+     * Returns the route or string url, which should be used for return redirect.
+     * @param ActiveRecordInterface $model model being updated, created or deleted
+     * @param string $defaultActionId default action ID.
+     * @param array $excludeParams query parameters to exclude from generated url
+     * @return array|string url route
+     */
     public function getReturnRoute($model, $defaultActionId, $excludeParams = ['id'])
     {
         if (is_callable($this->returnRoute)) {
