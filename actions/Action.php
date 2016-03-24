@@ -40,11 +40,36 @@ class Action extends \yii\base\Action
      */
     public $findModel;
     /**
-     * @var string ID of the controller action, which user should be redirected to on success.
+     * @var string|callable ID of the controller action or callable, which user should be redirected to on success.
      * This property overrides the value set by [[setReturnAction()]] method.
      * @see getReturnAction()
+     * The signature of the callable should be:
+     *
+     * ```php
+     * function ($action) {
+     *     // $action is the action object currently running
+     * }
+     * ```
+     *
+     * The callable should return action id.
      */
     public $returnAction;
+    /**
+     * @var callable route, which user should be redirected to on success.
+     * This property overrides default behavior of [[returnAction]]
+     * @see getReturnRoute()
+     * The signature of the callable should be:
+     *
+     * ```php
+     * function ($model, $action) {
+     *     // $model model being updated, created or deleted
+     *     // $action is the action object currently running
+     * }
+     * ```
+     *
+     * The callable should return route to action or url as string.
+     */
+    public $returnRoute;
 
 
     /**
@@ -111,7 +136,11 @@ class Action extends \yii\base\Action
     public function getReturnAction($defaultActionId = 'index')
     {
         if ($this->returnAction !== null) {
-            return $this->returnAction;
+            if (is_callable($this->returnAction)) {
+                return call_user_func($this->returnAction, $this);
+            } else {
+                return $this->returnAction;
+            }
         }
 
         $sessionKey = '__adminReturnAction';
@@ -131,5 +160,35 @@ class Action extends \yii\base\Action
             return 'index';
         }
         return $actionId;
+    }
+
+    /**
+     * Returns the route or string url, which should be used for return redirect.
+     * @param ActiveRecordInterface $model model being updated, created or deleted
+     * @param string $defaultActionId default action ID.
+     * @param array $excludeParams query parameters to exclude from generated url
+     * @return array|string url route
+     */
+    public function getReturnRoute($model, $defaultActionId, $excludeParams = ['id'])
+    {
+        if (is_callable($this->returnRoute)) {
+            return call_user_func($this->returnRoute, $model, $this);
+        }
+        $actionId = $this->getReturnAction($defaultActionId);
+        $queryParams = Yii::$app->request->getQueryParams();
+        foreach ($excludeParams as $param) {
+            unset($queryParams[$param]);
+        }
+        $url = array_merge(
+            [$actionId],
+            $queryParams
+        );
+        if ($actionId === 'view') {
+            $url = array_merge(
+                $url,
+                ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+            );
+        }
+        return $url;
     }
 }

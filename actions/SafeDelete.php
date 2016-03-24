@@ -31,12 +31,6 @@ class SafeDelete extends Action
 
         $model->safeDelete();
 
-        $queryParams = Yii::$app->request->getQueryParams();
-        unset($queryParams['id']);
-        $url = array_merge(
-            ['index'],
-            $queryParams
-        );
-        return $this->controller->redirect($url);
+        return $this->controller->redirect($this->getReturnRoute($model, 'index'));
     }
 }
