@@ -36,4 +36,23 @@ class ActionTest extends TestCase
         $action->setReturnAction('unexisting-action');
         $this->assertEquals('index', $action->getReturnAction());
     }
+
+    public function testCreateReturnUrl()
+    {
+        $action = new View('view-test', $this->createController());
+
+        $this->assertEquals(['index'], $action->createReturnUrl('index'));
+        $this->assertEquals(['view'], $action->createReturnUrl('view'));
+
+        $action->returnUrl = 'http://some.url';
+        $this->assertEquals($action->returnUrl, $action->createReturnUrl('view'));
+
+        $action->returnUrl = ['some/action', 'param' => 'foo'];
+        $this->assertEquals($action->returnUrl, $action->createReturnUrl('view'));
+
+        $action->returnUrl = function ($model) {
+            return ['callback', 'model' => $model];
+        };
+        $this->assertEquals(['callback', 'model' => 'test'], $action->createReturnUrl('view', 'test'));
+    }
 }

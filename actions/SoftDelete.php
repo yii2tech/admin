@@ -18,7 +18,7 @@ use Yii;
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-class SoftDelete extends Action
+class SoftDelete extends Delete
 {
     /**
      * Deletes a model.
@@ -31,12 +31,6 @@ class SoftDelete extends Action
 
         $model->softDelete();
 
-        $queryParams = Yii::$app->request->getQueryParams();
-        unset($queryParams['id']);
-        $url = array_merge(
-            ['index'],
-            $queryParams
-        );
-        return $this->controller->redirect($url);
+        return $this->controller->redirect($this->createReturnUrl('index', $model));
     }
 }

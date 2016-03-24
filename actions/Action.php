@@ -43,8 +43,25 @@ class Action extends \yii\base\Action
      * @var string ID of the controller action, which user should be redirected to on success.
      * This property overrides the value set by [[setReturnAction()]] method.
      * @see getReturnAction()
+     * @see returnUrl
      */
     public $returnAction;
+    /**
+     * @var string|array|callable URL, which user should be redirected to on success.
+     * This could be a plain string URL, URL array configuration or callable, which returns actual URL.
+     * The signature for the callable is following:
+     *
+     * ```
+     * string|array function (Model $model) {}
+     * ```
+     *
+     * Note: actual list of the callable arguments may vary depending on particular action class.
+     *
+     * Note: this option takes precedence over [[returnAction]] related logic.
+     *
+     * @see returnAction
+     */
+    public $returnUrl;
 
 
     /**
@@ -131,5 +148,41 @@ class Action extends \yii\base\Action
             return 'index';
         }
         return $actionId;
+    }
+
+    /**
+     * @param string $defaultActionId default action ID.
+     * @param ActiveRecordInterface|Model|null $model model being processed by action.
+     * @return array|string URL
+     */
+    public function createReturnUrl($defaultActionId = 'index', $model = null)
+    {
+        if ($this->returnUrl !== null) {
+            if (is_string($this->returnUrl)) {
+                return $this->returnUrl;
+            }
+            if (!is_callable($this->returnUrl, true)) {
+                return $this->returnUrl;
+            }
+
+            $args = func_get_args();
+            array_shift($args);
+            return call_user_func_array($this->returnUrl, $args);
+        }
+
+        $actionId = $this->getReturnAction($defaultActionId);
+        $queryParams = Yii::$app->request->getQueryParams();
+        unset($queryParams['id']);
+        $url = array_merge(
+            [$actionId],
+            $queryParams
+        );
+        if (is_object($model) && in_array($actionId, ['view', 'update'], true)) {
+            $url = array_merge(
+                $url,
+                ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
+            );
+        }
+        return $url;
     }
 }

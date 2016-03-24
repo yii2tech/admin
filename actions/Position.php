@@ -95,20 +95,20 @@ class Position extends Action
             ];
         }
 
-        $actionId = $this->getReturnAction('view');
-        $queryParams = Yii::$app->request->getQueryParams();
-        unset($queryParams['id']);
-        unset($queryParams[$this->positionParam]);
-        $url = array_merge(
-            [$actionId],
-            $queryParams
-        );
-        if ($actionId === 'view') {
-            $url = array_merge(
-                $url,
-                ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
-            );
+        return $this->controller->redirect($this->createReturnUrl('view', $model));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createReturnUrl($defaultActionId = 'index', $model = null)
+    {
+        if ($this->returnUrl !== null) {
+            return parent::createReturnUrl($defaultActionId, $model);
         }
-        return $this->controller->redirect($url);
+
+        $url = parent::createReturnUrl($defaultActionId, $model);
+        unset($url[$this->positionParam]);
+        return $url;
     }
 }

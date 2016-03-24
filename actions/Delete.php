@@ -18,6 +18,11 @@ use Yii;
 class Delete extends Action
 {
     /**
+     * @inheritdoc
+     */
+    public $returnAction = 'index';
+
+    /**
      * Deletes a model.
      * @param mixed $id id of the model to be deleted.
      * @return mixed response.
@@ -28,12 +33,6 @@ class Delete extends Action
 
         $model->delete();
 
-        $queryParams = Yii::$app->request->getQueryParams();
-        unset($queryParams['id']);
-        $url = array_merge(
-            ['index'],
-            $queryParams
-        );
-        return $this->controller->redirect($url);
+        return $this->controller->redirect($this->createReturnUrl('index', $model));
     }
 }

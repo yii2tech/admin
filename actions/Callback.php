@@ -50,21 +50,6 @@ class Callback extends Action
             call_user_func($this->callback, $model);
         }
 
-
-        $actionId = $this->getReturnAction('view');
-        $queryParams = Yii::$app->request->getQueryParams();
-        unset($queryParams['id']);
-        $url = array_merge(
-            [$actionId],
-            $queryParams
-        );
-        if ($actionId === 'view') {
-            $url = array_merge(
-                $url,
-                ['id' => implode(',', array_values($model->getPrimaryKey(true)))]
-            );
-        }
-
-        return $this->controller->redirect($url);
+        return $this->controller->redirect($this->createReturnUrl('view', $model));
     }
 }
