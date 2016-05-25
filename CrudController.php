@@ -68,18 +68,29 @@ class CrudController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
+                'rules' => $this->accessRules(),
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * Returns the access rules for this controller.
+     * This is method is a shortcut, allowing quick adjustment of the [[AccessControl]] filter attached at [[behaviors()]].
+     * Be careful in case you override [[behaviors()]] method, since it may loose configuration provided by this method.
+     * @return array list of access rules. See [[AccessControl::rules]] for details about rule specification.
+     */
+    public function accessRules()
+    {
+        return [
+            [
+                'allow' => true,
+                'roles' => ['@'],
             ],
         ];
     }
