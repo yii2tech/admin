@@ -20,6 +20,13 @@ use Yii;
 class Restore extends Action
 {
     /**
+     * @var string|array|null flash message to be set on success.
+     * @see Action::setFlash() for details on how setup flash.
+     */
+    public $flash;
+
+
+    /**
      * Deletes a model.
      * @param mixed $id id of the model to be deleted.
      * @return mixed response.
@@ -29,6 +36,8 @@ class Restore extends Action
         $model = $this->findModel($id);
 
         $model->restore();
+
+        $this->setFlash($this->flash);
 
         return $this->controller->redirect($this->createReturnUrl('view', $model));
     }

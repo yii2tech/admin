@@ -55,4 +55,60 @@ class ActionTest extends TestCase
         };
         $this->assertEquals(['callback', 'model' => 'test'], $action->createReturnUrl('view', 'test'));
     }
+
+    /**
+     * Data provider for [[testSetFlash()]]
+     * @return array test data
+     */
+    public function dataProviderSetFlash()
+    {
+        return [
+            [
+                'test flash',
+                [
+                    'success' => 'test flash',
+                ]
+            ],
+            [
+                null,
+                []
+            ],
+            [
+                [
+                    'some' => 'test flash 1',
+                    'another' => 'test flash 2',
+                ],
+                [
+                    'some' => 'test flash 1',
+                    'another' => 'test flash 2',
+                ]
+            ],
+            [
+                [
+                    'test default',
+                    'some' => 'test key',
+                ],
+                [
+                    'success' => 'test default',
+                    'some' => 'test key',
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderSetFlash
+     *
+     * @param string|array|null $message
+     * @param array $expectedFlashes
+     */
+    public function testSetFlash($message, $expectedFlashes)
+    {
+        $action = new View('view-test', $this->createController());
+
+        $action->setFlash($message);
+
+        $flashes = Yii::$app->session->getAllFlashes();
+        $this->assertEquals($expectedFlashes, $flashes);
+    }
 }

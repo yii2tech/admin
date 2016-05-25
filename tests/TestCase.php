@@ -7,6 +7,7 @@ use Yii;
 use yii\helpers\FileHelper;
 use yii2tech\tests\unit\admin\data\Controller;
 use yii2tech\tests\unit\admin\data\Item;
+use yii2tech\tests\unit\admin\data\Session;
 
 /**
  * Base class for the test cases.
@@ -51,6 +52,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 ],
                 'assetManager' => [
                     'basePath' => $this->getTestFilePath(),
+                ],
+                'session' => [
+                    'class' => Session::className(),
                 ],
                 'i18n' => [
                     'translations' => [

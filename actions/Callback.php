@@ -29,6 +29,11 @@ class Callback extends Action
      * ```
      */
     public $callback;
+    /**
+     * @var string|array|null flash message to be set on success.
+     * @see Action::setFlash() for details on how setup flash.
+     */
+    public $flash;
 
 
     /**
@@ -49,6 +54,8 @@ class Callback extends Action
         } else {
             call_user_func($this->callback, $model);
         }
+
+        $this->setFlash($this->flash);
 
         return $this->controller->redirect($this->createReturnUrl('view', $model));
     }

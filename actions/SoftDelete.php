@@ -31,6 +31,8 @@ class SoftDelete extends Delete
 
         $model->softDelete();
 
+        $this->setFlash($this->flash);
+
         return $this->controller->redirect($this->createReturnUrl('index', $model));
     }
 }

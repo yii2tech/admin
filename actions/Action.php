@@ -185,4 +185,29 @@ class Action extends \yii\base\Action
         }
         return $url;
     }
+
+    /**
+     * Sets a flash message.
+     * @param string|array|null $message flash message(s) to be set.
+     * If plain string is passed, it will be used as a message with the key 'success'.
+     * You may specify multiple messages as an array, if element name is not integer, it will be used as a key,
+     * otherwise 'success' will be used as key.
+     * If empty value passed, no flash will be set.
+     */
+    public function setFlash($message)
+    {
+        if (empty($message)) {
+            return;
+        }
+
+        $session = Yii::$app->session;
+
+        foreach ((array)$message as $key => $value) {
+            if (is_int($key)) {
+                $session->setFlash('success', $value);
+            } else {
+                $session->setFlash($key, $value);
+            }
+        }
+    }
 }

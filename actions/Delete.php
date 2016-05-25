@@ -21,6 +21,12 @@ class Delete extends Action
      * @inheritdoc
      */
     public $returnAction = 'index';
+    /**
+     * @var string|array|null flash message to be set on success.
+     * @see Action::setFlash() for details on how setup flash.
+     */
+    public $flash;
+
 
     /**
      * Deletes a model.
@@ -32,6 +38,8 @@ class Delete extends Action
         $model = $this->findModel($id);
 
         $model->delete();
+
+        $this->setFlash($this->flash);
 
         return $this->controller->redirect($this->createReturnUrl('index', $model));
     }
