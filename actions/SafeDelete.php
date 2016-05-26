@@ -31,7 +31,7 @@ class SafeDelete extends Delete
 
         $model->safeDelete();
 
-        $this->setFlash($this->flash);
+        $this->setFlash($this->flash, ['id' => $id, 'model' => $model]);
 
         return $this->controller->redirect($this->createReturnUrl('index', $model));
     }

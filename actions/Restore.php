@@ -37,7 +37,7 @@ class Restore extends Action
 
         $model->restore();
 
-        $this->setFlash($this->flash);
+        $this->setFlash($this->flash, ['id' => $id, 'model' => $model]);
 
         return $this->controller->redirect($this->createReturnUrl('view', $model));
     }

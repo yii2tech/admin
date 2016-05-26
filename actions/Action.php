@@ -193,8 +193,18 @@ class Action extends \yii\base\Action
      * You may specify multiple messages as an array, if element name is not integer, it will be used as a key,
      * otherwise 'success' will be used as key.
      * If empty value passed, no flash will be set.
+     * Particular message value can be a PHP callback, which should return actual message. Such callback, should
+     * have following signature:
+     *
+     * ```php
+     * function (array $params) {
+     *     // return string
+     * }
+     * ```
+     *
+     * @param array $params extra params for the message parsing in format: key => value.
      */
-    public function setFlash($message)
+    public function setFlash($message, $params = [])
     {
         if (empty($message)) {
             return;
@@ -203,6 +213,15 @@ class Action extends \yii\base\Action
         $session = Yii::$app->session;
 
         foreach ((array)$message as $key => $value) {
+            if (is_scalar($value)) {
+                $value = preg_replace_callback("/{(\\w+)}/", function ($matches) use ($params) {
+                    $paramName = $matches[1];
+                    return isset($params[$paramName]) ? $params[$paramName] : $paramName;
+                }, $value);
+            } else {
+                $value = call_user_func($value, $params);
+            }
+
             if (is_int($key)) {
                 $session->setFlash('success', $value);
             } else {

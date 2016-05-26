@@ -65,12 +65,14 @@ class ActionTest extends TestCase
         return [
             [
                 'test flash',
+                [],
                 [
                     'success' => 'test flash',
                 ]
             ],
             [
                 null,
+                [],
                 []
             ],
             [
@@ -78,6 +80,7 @@ class ActionTest extends TestCase
                     'some' => 'test flash 1',
                     'another' => 'test flash 2',
                 ],
+                [],
                 [
                     'some' => 'test flash 1',
                     'another' => 'test flash 2',
@@ -88,9 +91,30 @@ class ActionTest extends TestCase
                     'test default',
                     'some' => 'test key',
                 ],
+                [],
                 [
                     'success' => 'test default',
                     'some' => 'test key',
+                ]
+            ],
+            [
+                'parse content {id}',
+                [
+                    'id' => 56
+                ],
+                [
+                    'success' => 'parse content 56',
+                ]
+            ],
+            [
+                function ($params) {
+                    return 'callback id = ' . $params['id'];
+                },
+                [
+                    'id' => 56
+                ],
+                [
+                    'success' => 'callback id = 56',
                 ]
             ],
         ];
@@ -100,13 +124,14 @@ class ActionTest extends TestCase
      * @dataProvider dataProviderSetFlash
      *
      * @param string|array|null $message
+     * @param array $params
      * @param array $expectedFlashes
      */
-    public function testSetFlash($message, $expectedFlashes)
+    public function testSetFlash($message, $params, $expectedFlashes)
     {
         $action = new View('view-test', $this->createController());
 
-        $action->setFlash($message);
+        $action->setFlash($message, $params);
 
         $flashes = Yii::$app->session->getAllFlashes();
         $this->assertEquals($expectedFlashes, $flashes);
