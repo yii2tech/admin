@@ -56,6 +56,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
                 'session' => [
                     'class' => Session::className(),
                 ],
+                'user' => [
+                    'identityClass' => 'app\models\User',
+                ],
+                'request' => [
+                    'hostInfo' => 'http://domain.com',
+                ],
                 'i18n' => [
                     'translations' => [
                         '*' => [
