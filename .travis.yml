@@ -20,6 +20,8 @@ install:
   - travis_retry composer global require "fxp/composer-asset-plugin:^1.2.0"
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - travis_retry composer install --prefer-dist --no-interaction
+  - travis_retry composer require "yii2tech/ar-variation" --prefer-dist --no-interaction
+  - travis_retry composer require "yii2tech/ar-role" --prefer-dist --no-interaction
 
 script:
   - phpunit --verbose $PHPUNIT_FLAGS
