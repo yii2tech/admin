@@ -78,26 +78,37 @@ class ItemController extends Controller
         return [
             'index' => [
                 'class' => 'yii2tech\admin\actions\Index',
-                'modelClass' => $this->modelClass,
-                'searchModelClass' => 'app\models\ItemSearch',
+                'newSearchModel' => function () {
+                    return new ItemSearch();
+                },
             ],
             'view' => [
                 'class' => 'yii2tech\admin\actions\View',
-                'modelClass' => 'app\models\Item',
             ],
             'create' => [
                 'class' => 'yii2tech\admin\actions\Create',
-                'modelClass' => 'app\models\Item',
             ],
             'update' => [
                 'class' => 'yii2tech\admin\actions\Update',
-                'modelClass' => 'app\models\Item',
             ],
             'delete' => [
                 'class' => 'yii2tech\admin\actions\Delete',
-                'modelClass' => 'app\models\Item',
             ],
         ];
+    }
+
+    public function findModel($id)
+    {
+        if (($model = Item::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function newModel()
+    {
+        return new Item();
     }
 }
 ```

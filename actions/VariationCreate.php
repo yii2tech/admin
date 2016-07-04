@@ -40,6 +40,7 @@ class VariationCreate extends Create
                 return $this->performAjaxValidation($model);
             }
             if ($model->save()) {
+                $this->setFlash($this->flash, ['model' => $model]);
                 return $this->controller->redirect($this->createReturnUrl('view', $model));
             }
         } else {

@@ -57,6 +57,11 @@ class Create extends Action
      * ```
      */
     public $loadDefaultValues = false;
+    /**
+     * @var string|array|null flash message to be set on success.
+     * @see Action::setFlash() for details on how setup flash.
+     */
+    public $flash;
 
 
     /**
@@ -90,6 +95,7 @@ class Create extends Action
                 return ActiveForm::validate($model);
             }
             if ($model->save()) {
+                $this->setFlash($this->flash, ['model' => $model]);
                 return $this->controller->redirect($this->createReturnUrl('view', $model));
             }
         } else {

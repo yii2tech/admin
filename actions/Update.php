@@ -28,6 +28,11 @@ class Update extends Action
      * @var string name of the view, which should be rendered
      */
     public $view = 'update';
+    /**
+     * @var string|array|null flash message to be set on success.
+     * @see Action::setFlash() for details on how setup flash.
+     */
+    public $flash;
 
 
     /**
@@ -46,6 +51,7 @@ class Update extends Action
                 return ActiveForm::validate($model);
             }
             if ($model->save()) {
+                $this->setFlash($this->flash, ['id' => $id, 'model' => $model]);
                 return $this->controller->redirect($this->createReturnUrl('view', $model));
             }
         }

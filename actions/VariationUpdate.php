@@ -40,6 +40,7 @@ class VariationUpdate extends Update
                 return $this->performAjaxValidation($model);
             }
             if ($model->save()) {
+                $this->setFlash($this->flash, ['id' => $id, 'model' => $model]);
                 return $this->controller->redirect($this->createReturnUrl('view', $model));
             }
         }
