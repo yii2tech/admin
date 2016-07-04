@@ -5,27 +5,31 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-namespace yii2tech\admin\actions;
+namespace yii2tech\admin\behaviors\action;
 
+use Yii;
+use yii\base\Behavior;
 use yii\base\Model;
 use yii\db\ActiveRecordInterface;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii2tech\ar\variation\VariationBehavior;
+use yii2tech\admin\ActionEvent;
 
 /**
- * VariationTrait provides common functionality for the actions, which handle models with [[VariationBehavior]] attached.
+ * VariationBehavior provides common functionality for the actions, which handle models with [[\yii2tech\ar\variation\VariationBehavior]] attached.
+ * This behavior should be attached to [[\yii2tech\admin\actions\Action]] instance.
+ * This behavior relies on events triggered by [[\yii2tech\admin\actions\ModelFormTrait]].
  *
  * @see https://github.com/yii2tech/ar-variation
+ * @see \yii2tech\admin\actions\ModelFormTrait
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-trait VariationTrait
+class VariationBehavior extends Behavior
 {
     /**
      * @var array list of model variation behavior names, which should be affected by the action.
-     * If empty - all instances of [[VariationBehavior]] will be picked up.
+     * If empty - all instances of [[\yii2tech\ar\variation\VariationBehavior]] will be picked up.
      */
     public $variationNames = [];
 
@@ -57,40 +61,57 @@ trait VariationTrait
     {
         $variationModels = [];
         foreach ($model->getBehaviors() as $name => $behavior) {
-            if ((empty($this->variationNames) && ($behavior instanceof VariationBehavior)) || in_array($name, $this->variationNames)) {
+            if ((empty($this->variationNames) && ($behavior instanceof \yii2tech\ar\variation\VariationBehavior)) || in_array($name, $this->variationNames)) {
                 $variationModels[$name] = $behavior->getVariationModels();
             }
         }
         return $variationModels;
     }
 
+    // Events :
+
     /**
-     * Populates the main model and variation models with input data.
-     * @param Model $model main model instance.
-     * @param array $data the data array to load, typically `$_POST` or `$_GET`.
-     * @return boolean whether expected forms are found in `$data`.
+     * @inheritdoc
      */
-    protected function load($model, $data)
+    public function events()
     {
-        if (!$model->load($data)) {
-            return false;
-        }
-        foreach ($this->getVariationModelBatches($model) as $variationName => $variationModels) {
-            if (!Model::loadMultiple($variationModels, $data)) {
-                return false;
-            }
-        }
-        return true;
+        return [
+            'afterDataLoad' => 'afterDataLoad',
+            'afterAjaxValidate' => 'afterAjaxValidate',
+        ];
     }
 
     /**
-     * Performs AJAX validation of the main model and variation models via [[ActiveForm::validate()]].
-     * @param Model $model main model.
-     * @return array the error message array indexed by the attribute IDs.
+     * Handles `afterDataLoad` event.
+     * Populates the variation models with input data.
+     * @param ActionEvent $event event instance.
      */
-    protected function performAjaxValidation($model)
+    public function afterDataLoad($event)
     {
-        $response = ActiveForm::validate($model);
+        if (!$event->result) {
+            return;
+        }
+
+        $model = $event->model;
+        $data = Yii::$app->request->post();
+
+        foreach ($this->getVariationModelBatches($model) as $variationName => $variationModels) {
+            if (!Model::loadMultiple($variationModels, $data)) {
+                $event->result = false;
+                return;
+            }
+        }
+    }
+
+    /**
+     * Handles `afterAjaxValidate` event.
+     * Performs AJAX validation of the variation models via [[ActiveForm::validate()]].
+     * @param ActionEvent $event event instance.
+     */
+    protected function afterAjaxValidate($event)
+    {
+        $model = $event->model;
+        $response = $event->result;
 
         // validate variations manually for tabular input matching :
         foreach ($this->getVariationModelBatches($model) as $variationModels) {
@@ -103,6 +124,7 @@ trait VariationTrait
                 }
             }
         }
-        return $response;
+
+        $event->data['result'] = $response;
     }
 }

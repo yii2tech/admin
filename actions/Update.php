@@ -8,31 +8,24 @@
 namespace yii2tech\admin\actions;
 
 use Yii;
-use yii\base\Model;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 /**
  * Update action supports updating of the existing model using web form.
+ *
+ * @see ModelFormTrait
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
 class Update extends Action
 {
-    /**
-     * @var string the scenario to be assigned to the new model before it is validated and saved.
-     */
-    public $scenario = Model::SCENARIO_DEFAULT;
+    use ModelFormTrait;
+
     /**
      * @var string name of the view, which should be rendered
      */
     public $view = 'update';
-    /**
-     * @var string|array|null flash message to be set on success.
-     * @see Action::setFlash() for details on how setup flash.
-     */
-    public $flash;
 
 
     /**
@@ -45,10 +38,10 @@ class Update extends Action
         $model = $this->findModel($id);
         $model->scenario = $this->scenario;
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($this->load($model, Yii::$app->request->post())) {
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
+                return $this->performAjaxValidation($model);
             }
             if ($model->save()) {
                 $this->setFlash($this->flash, ['id' => $id, 'model' => $model]);

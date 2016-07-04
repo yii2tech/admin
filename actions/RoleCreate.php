@@ -7,48 +7,28 @@
 
 namespace yii2tech\admin\actions;
 
-use Yii;
-use yii\base\Model;
-use yii\db\ActiveRecordInterface;
-use yii\web\Response;
+use yii2tech\admin\behaviors\action\RoleBehavior;
 
 /**
  * RoleCreate action supports creation of the new model with [yii2tech/ar-role](https://github.com/yii2tech/ar-role) behavior applied.
  *
  * @see https://github.com/yii2tech/ar-role
- * @see RoleTrait
+ * @see RoleBehavior
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
 class RoleCreate extends Create
 {
-    use RoleTrait;
-
     /**
      * @inheritdoc
      */
-    public function run()
+    public function behaviors()
     {
-        /* @var $model Model|ActiveRecordInterface|\yii2tech\ar\role\RoleBehavior */
-        $model = $this->newModel();
-        $model->scenario = $this->scenario;
-
-        if ($this->load($model, Yii::$app->request->post())) {
-            if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return $this->performAjaxValidation($model);
-            }
-            if ($model->save()) {
-                $this->setFlash($this->flash, ['model' => $model]);
-                return $this->controller->redirect($this->createReturnUrl('view', $model));
-            }
-        } else {
-            $this->loadModelDefaultValues($model);
-        }
-
-        return $this->controller->render($this->view, [
-            'model' => $model,
-        ]);
+        return [
+            [
+                'class' => RoleBehavior::className()
+            ]
+        ];
     }
 }

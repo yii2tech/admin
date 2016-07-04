@@ -5,22 +5,27 @@
  * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
-namespace yii2tech\admin\actions;
+namespace yii2tech\admin\behaviors\action;
 
+use Yii;
+use yii\base\Behavior;
 use yii\base\Model;
 use yii\db\ActiveRecordInterface;
 use yii\widgets\ActiveForm;
-use yii2tech\ar\role\RoleBehavior;
+use yii2tech\admin\ActionEvent;
 
 /**
- * RoleTrait provides common functionality for the actions, which handle models with [[RoleBehavior]] attached.
+ * RoleBehavior provides common functionality for the actions, which handle models with [[\yii2tech\ar\role\RoleBehavior]] attached.
+ * This behavior should be attached to [[\yii2tech\admin\actions\Action]] instance.
+ * This behavior relies on events triggered by [[\yii2tech\admin\actions\ModelFormTrait]].
  *
  * @see https://github.com/yii2tech/ar-role
+ * @see \yii2tech\admin\actions\ModelFormTrait
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-trait RoleTrait
+class RoleBehavior extends Behavior
 {
     /**
      * @var array list of model role behavior names, which should be affected by the action.
@@ -56,41 +61,60 @@ trait RoleTrait
     {
         $roleModels = [];
         foreach ($model->getBehaviors() as $name => $behavior) {
-            if ((empty($this->roleNames) && ($behavior instanceof RoleBehavior)) || in_array($name, $this->roleNames)) {
+            if ((empty($this->roleNames) && ($behavior instanceof \yii2tech\ar\role\RoleBehavior)) || in_array($name, $this->roleNames)) {
                 $roleModels[$name] = $behavior->getRoleRelationModel();
             }
         }
         return $roleModels;
     }
 
+    // Events :
+
     /**
-     * Populates the main model and variation models with input data.
-     * @param Model $model main model instance.
-     * @param array $data the data array to load, typically `$_POST` or `$_GET`.
-     * @return boolean whether expected forms are found in `$data`.
+     * @inheritdoc
      */
-    protected function load($model, $data)
+    public function events()
     {
-        if (!$model->load($data)) {
-            return false;
-        }
-        foreach ($this->getRoleModels($model) as $roleModel) {
-            if (!$roleModel->load($data)) {
-                return false;
-            }
-        }
-        return true;
+        return [
+            'afterDataLoad' => 'afterDataLoad',
+            'afterAjaxValidate' => 'afterAjaxValidate',
+        ];
     }
 
     /**
-     * Performs AJAX validation of the main model and role models via [[ActiveForm::validate()]].
-     * @param Model $model main model.
-     * @return array the error message array indexed by the attribute IDs.
+     * Handles `afterDataLoad` event.
+     * Populates the role models with input data.
+     * @param ActionEvent $event event instance.
      */
-    protected function performAjaxValidation($model)
+    public function afterDataLoad($event)
     {
+        if (!$event->result) {
+            return;
+        }
+
+        $model = $event->model;
+        $data = Yii::$app->request->post();
+
+        foreach ($this->getRoleModels($model) as $roleModel) {
+            if (!$roleModel->load($data)) {
+                return;
+            }
+        }
+    }
+
+    /**
+     * Performs AJAX validation of the role models via [[ActiveForm::validate()]].
+     * @param ActionEvent $event event instance.
+     */
+    public function afterAjaxValidate($event)
+    {
+        $model = $event->model;
+
         $roleModels = $this->getRoleModels($model);
-        $models = array_merge([$model], $roleModels);
-        return call_user_func_array([ActiveForm::className(), 'validate'], $models);
+
+        $event->result = array_merge(
+            $event->result,
+            call_user_func_array([ActiveForm::className(), 'validate'], $roleModels)
+        );
     }
 }
