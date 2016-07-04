@@ -198,4 +198,42 @@ class TestCase extends \PHPUnit_Framework_TestCase
             [2, 2, 'article2-de', 'article2-content-de'],
         ])->execute();
     }
+
+    /**
+     * Setup tables for test ActiveRecord with `yii2tech\ar\role\RoleBehavior`
+     */
+    protected function setupTestRoleDbData()
+    {
+        $db = Yii::$app->getDb();
+
+        // Structure :
+
+        $table = 'User';
+        $columns = [
+            'id' => 'pk',
+            'username' => 'string',
+            'email' => 'string',
+        ];
+        $db->createCommand()->createTable($table, $columns)->execute();
+
+        $table = 'UserProfile';
+        $columns = [
+            'userId' => 'integer',
+            'address' => 'string',
+            'bio' => 'string',
+            'PRIMARY KEY(userId)'
+        ];
+        $db->createCommand()->createTable($table, $columns)->execute();
+
+        // Data :
+
+        $db->createCommand()->batchInsert('User', ['username', 'email'], [
+            ['John Doe', 'johndoe@domain.com'],
+            ['Michael Smith', 'michael-smith@domain.com'],
+        ])->execute();
+
+        $db->createCommand()->batchInsert('UserProfile', ['userId', 'address', 'bio'], [
+            [1, 'Wall street, 17', 'Ordinary life'],
+        ])->execute();
+    }
 }

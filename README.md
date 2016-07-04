@@ -61,6 +61,8 @@ This extension provides several independent action classes, which provides parti
  - [[yii2tech\admin\actions\Position]] - allows change custom sort position of the particular model.
  - [[yii2tech\admin\actions\VariationCreate]] - supports creation of the new model with variations using web form.
  - [[yii2tech\admin\actions\VariationUpdate]] - supports updating of the new model with variations using web form.
+  - [[yii2tech\admin\actions\RoleCreate]] - supports creation of the new model with role using web form.
+  - [[yii2tech\admin\actions\RoleUpdate]] - supports updating of the new model with role using web form.
 
 Please refer to the particular action class for more details.
 
