@@ -48,7 +48,7 @@ $this->params['contextMenuItems'] = [
 <?php endif ?>
 ?>
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-8 detail-view-wrap">
     <?= "<?= " ?>DetailView::widget([
         'model' => $model,
         'attributes' => [

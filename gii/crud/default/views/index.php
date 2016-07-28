@@ -19,9 +19,6 @@ use yii2tech\admin\grid\ActionColumn;
 <?php else: ?>
 use yii\widgets\ListView;
 <?php endif ?>
-<?php if (!empty($contexts)): ?>
-use yii\helpers\Url;
-<?php endif ?>
 
 /* @var $this yii\web\View */
 <?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
