@@ -22,6 +22,12 @@ use yii\grid\DataColumn;
 class VariationColumn extends DataColumn
 {
     /**
+     * @var string model variation behavior name, which should be used by this column.
+     * It should refer to [[\yii2tech\ar\variation\VariationBehavior]] instance.
+     * If not set - model itself will be used for the method invocations.
+     */
+    public $variationName;
+    /**
      * @var string name of the variation model attribute.
      * If not set [[attribute]] value will be used.
      */
@@ -56,13 +62,14 @@ class VariationColumn extends DataColumn
     {
         if ($this->content === null) {
             $contentParts = [];
-            foreach ($model->getVariationModels() as $variationModel) {
+            $variationBehavior = $this->getVariationBehavior($model);
+            foreach ($variationBehavior->getVariationModels() as $variationModel) {
                 $contentParts[] = '<tr><td><b>' . $this->getVariationLabel($model, $variationModel) . '</b></td><td>' . $this->getVariationValue($variationModel) . '</td>';
             }
             return Html::tag('table', implode("\n", $contentParts), $this->tableOptions);
-        } else {
-            return parent::renderDataCellContent($model, $key, $index);
         }
+
+        return parent::renderDataCellContent($model, $key, $index);
     }
 
     /**
@@ -94,7 +101,8 @@ class VariationColumn extends DataColumn
 
         $variationLabels = $this->getVariationLabels($mainModel, $this->variationLabel);
 
-        $referenceAttribute = $mainModel->variationOptionReferenceAttribute;
+        $variationBehavior = $this->getVariationBehavior($mainModel);
+        $referenceAttribute = $variationBehavior->variationOptionReferenceAttribute;
         $variationPk = $variationModel->$referenceAttribute;
 
         if (isset($variationLabels[$variationPk])) {
@@ -106,7 +114,7 @@ class VariationColumn extends DataColumn
 
     /**
      * Returns all available variation labels.
-     * @param \yii\base\Model|\yii2tech\ar\variation\VariationBehavior $mainModel main model instance.
+     * @param \yii\base\Model $mainModel main model instance.
      * @param string $labelAttribute name of the attribute, which is used as label source.
      * @return array list labels in format: optionPk => label
      */
@@ -114,12 +122,23 @@ class VariationColumn extends DataColumn
     {
         if (!isset($this->_variationLabels[$labelAttribute])) {
             /* @var $optionClass \yii\db\ActiveRecordInterface */
-            $optionClass = $mainModel->optionModelClass;
+            $variationBehavior = $this->getVariationBehavior($mainModel);
+            $optionClass = $variationBehavior->optionModelClass;
             foreach ($optionClass::find()->all() as $optionModel) {
                 /* @var $optionModel \yii\db\ActiveRecordInterface */
                 $this->_variationLabels[$labelAttribute][$optionModel->getPrimaryKey()] = $optionModel->$labelAttribute;
             }
         }
         return $this->_variationLabels[$labelAttribute];
+    }
+
+    /**
+     * Gets the variation behavior from model.
+     * @param \yii\base\Model $model model instance.
+     * @return \yii2tech\ar\variation\VariationBehavior variation behavior instance.
+     */
+    protected function getVariationBehavior($model)
+    {
+        return $this->variationName === null ? $model : $model->getBehavior($this->variationName);
     }
 }
