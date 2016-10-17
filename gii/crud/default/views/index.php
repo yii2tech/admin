@@ -21,7 +21,7 @@ use yii\widgets\ListView;
 <?php endif ?>
 
 /* @var $this yii\web\View */
-<?= !empty($generator->searchModelClass) ? "/* @var \$searchModel " . ltrim($generator->searchModelClass, '\\') . " */\n" : '' ?>
+/* @var $searchModel <?= !empty($generator->searchModelClass) ? ltrim($generator->searchModelClass, '\\') : 'yii\base\Model' ?> */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 <?php if (!empty($contexts)): ?>
 /* @var $controller <?= $generator->controllerClass ?>|yii2tech\admin\behaviors\ContextModelControlBehavior */

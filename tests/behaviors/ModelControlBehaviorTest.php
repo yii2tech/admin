@@ -44,6 +44,25 @@ class ModelControlBehaviorTest extends TestCase
     /**
      * @depends testNewSearchModel
      */
+    public function testNewSearchModelCallback()
+    {
+        $behavior = new ModelControlBehavior();
+        $controller = new \stdClass();
+        $controller->id = 'search';
+        $behavior->owner = $controller;
+
+        $behavior->searchModelClass = function ($controller) {
+            return new ItemSearch(['scenario' => $controller->id]);
+        };
+
+        $model = $behavior->newSearchModel();
+        $this->assertTrue($model instanceof ItemSearch);
+        $this->assertEquals('search', $model->scenario);
+    }
+
+    /**
+     * @depends testNewSearchModel
+     */
     public function testNewSearchModelAutoDetectSearchModel()
     {
         $behavior = new ModelControlBehavior();

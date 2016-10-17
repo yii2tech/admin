@@ -39,6 +39,7 @@ These tools are meant to be used together for the rapid web application administ
 This package supports usage of following extensions:
 
  - [yii2tech/ar-position](https://github.com/yii2tech/ar-position)
+ - [yii2tech/ar-search](https://github.com/yii2tech/ar-search)
  - [yii2tech/ar-softdelete](https://github.com/yii2tech/ar-softdelete)
  - [yii2tech/ar-variation](https://github.com/yii2tech/ar-variation)
 

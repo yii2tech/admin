@@ -17,9 +17,12 @@ use yii\helpers\StringHelper;
 use yii\web\NotFoundHttpException;
 
 /**
- * ContextModelControlBehavior allows usage of the filtering context.
+ * ContextModelControlBehavior is an enhanced version of [[ModelControlBehavior]], which allows
+ * usage of the filtering context.
  * For example: items per specific category, comments by particular user etc.
  * This controller finds and creates models including possible filtering context.
+ *
+ * @see ModelControlBehavior
  *
  * @property ActiveRecordInterface[]|Model[] $contextModels active context models.
  * @property array $context default context config.

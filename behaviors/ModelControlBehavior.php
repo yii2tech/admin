@@ -15,7 +15,10 @@ use yii\db\ActiveRecordInterface;
 use yii\web\NotFoundHttpException;
 
 /**
- * ModelControlBehavior
+ * ModelControlBehavior model management for the CRUD operations. It allows funding and creating target model,
+ * as well as creating search model for the listing.
+ *
+ * This behavior should be attached to [[\yii\web\Controller]] instance.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
@@ -25,11 +28,25 @@ class ModelControlBehavior extends Behavior
     /**
      * @var string the model class name. This property must be set.
      * The model class must implement [[ActiveRecordInterface]].
+     * @see newModel()
+     * @see findModel()
      */
     public $modelClass;
     /**
-     * @var string class name of the model which should be used as search model.
+     * @var string|callable class name of the model which should be used as search model.
+     * This can be a PHP callback of following signature:
+     *
+     * ```php
+     * function (\yii\web\Controller $controller) {
+     *     //return new \yii\base\Model;
+     * }
+     * ```
+     *
      * If not set it will be composed using [[modelClass]].
+     * If [yii2tech/ar-search](https://github.com/yii2tech/ar-search) extension is installed -
+     * [[\yii2tech\ar\search\ActiveSearchModel]] instance will be used as a search model.
+     *
+     * @see newSearchModel()
      */
     public $searchModelClass;
 
@@ -85,8 +102,8 @@ class ModelControlBehavior extends Behavior
     }
 
     /**
-     * Creates new model instance.
-     * @return Model new model instance.
+     * Creates new search model instance.
+     * @return Model new search model instance.
      * @throws InvalidConfigException on invalid configuration.
      */
     public function newSearchModel()
@@ -96,7 +113,16 @@ class ModelControlBehavior extends Behavior
             if ($this->modelClass === null) {
                 throw new InvalidConfigException('Either "' . get_class($this) . '::searchModelClass" or "' . get_class($this) . '::modelClass" must be set.');
             }
+
+            if (class_exists('yii2tech\ar\search\ActiveSearchModel')) {
+                $searchModel = new \yii2tech\ar\search\ActiveSearchModel();
+                $searchModel->setModel($this->modelClass);
+                return $searchModel;
+            }
+
             $modelClass = $this->modelClass . 'Search';
+        } elseif (!is_string($modelClass)) {
+            return call_user_func($modelClass, $this->owner);
         }
 
         return new $modelClass();
