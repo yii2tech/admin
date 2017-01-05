@@ -96,9 +96,11 @@ class VariationBehavior extends Behavior
         $data = Yii::$app->request->post();
 
         foreach ($this->getVariationModelBatches($model) as $variationName => $variationModels) {
+            if (empty($variationModels)) {
+                continue;
+            }
             if (!Model::loadMultiple($variationModels, $data)) {
                 $event->result = false;
-                return;
             }
         }
     }
