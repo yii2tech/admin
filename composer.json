@@ -1,7 +1,7 @@
 {
     "name": "yii2tech/admin",
     "description": "Admin pack (actions, widgets, etc) for Yii2",
-    "keywords": ["yii2", "admin", "crud"],
+    "keywords": ["yii2", "admin", "administration", "crud"],
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
