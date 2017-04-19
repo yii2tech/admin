@@ -132,6 +132,7 @@ Please refer to the particular controller class for more details.
 This  extension provides several widgets, which simplifies view composition for the typical use cases:
 
  - [[yii2tech\admin\widgets\Alert]] - renders a message from session flash.
+ - [[yii2tech\admin\widgets\ActionAlert]] - renders an action proposition based on particular condition, usually a session flag.
  - [[yii2tech\admin\widgets\ButtonContextMenu]] - simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
  - [[yii2tech\admin\widgets\Nav]] - enhanced version of [[\yii\bootstrap\Nav]], which simplifies icon rendering.
 

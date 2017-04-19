@@ -14,7 +14,7 @@ use yii\helpers\Html;
 use yii\helpers\Inflector;
 
 /**
- * ActionAlert renders an action proposition to the web user based on particular condition, usually session flag.
+ * ActionAlert renders an action proposition to the web user based on particular condition, usually a session flag.
  * Each alert consists of text message and a link to the related action.
  * Each alert is rendered using [[\yii\bootstrap\Alert]] widget.
  *
