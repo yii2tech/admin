@@ -57,14 +57,13 @@ class Alert extends Widget
     /**
      * @inheritdoc
      */
-    public function init()
+    public function run()
     {
-        parent::init();
-
         $session = Yii::$app->session;
         $flashes = $session->getAllFlashes();
         $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
 
+        $alerts = [];
         foreach ($flashes as $type => $data) {
             if (isset($this->alertTypes[$type])) {
                 $data = (array) $data;
@@ -75,7 +74,7 @@ class Alert extends Widget
                     /* assign unique id to each alert box */
                     $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
 
-                    echo \yii\bootstrap\Alert::widget([
+                    $alerts[] = \yii\bootstrap\Alert::widget([
                         'body' => $message,
                         'closeButton' => $this->closeButton,
                         'options' => $this->options,
@@ -85,5 +84,7 @@ class Alert extends Widget
                 $session->removeFlash($type);
             }
         }
+
+        return implode("\n", $alerts);
     }
 }
