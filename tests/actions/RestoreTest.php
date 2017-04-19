@@ -33,7 +33,7 @@ class RestoreTest extends TestCase
 
     public function testMissingModel()
     {
-        $this->setExpectedException('yii\web\NotFoundHttpException');
+        $this->expectException('yii\web\NotFoundHttpException');
         $response = $this->runAction(9999);
     }
 }

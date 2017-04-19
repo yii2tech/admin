@@ -12,7 +12,7 @@ use yii2tech\tests\unit\admin\data\Session;
 /**
  * Base class for the test cases.
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

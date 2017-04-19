@@ -50,13 +50,13 @@ class PositionTest extends TestCase
 
     public function testMoveUnknownPosition()
     {
-        $this->setExpectedException('yii\web\BadRequestHttpException');
+        $this->expectException('yii\web\BadRequestHttpException');
         $response = $this->runAction(1, 'invalid');
     }
 
     public function testMissingModel()
     {
-        $this->setExpectedException('yii\web\NotFoundHttpException');
+        $this->expectException('yii\web\NotFoundHttpException');
         $response = $this->runAction(9999, 'prev');
     }
 }
