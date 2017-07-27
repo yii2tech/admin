@@ -1,5 +1,10 @@
-Admin pack for Yii 2
-====================
+<p align="center">
+    <a href="https://github.com/yii2tech" target="_blank">
+        <img src="https://avatars2.githubusercontent.com/u/12951949" height="100px">
+    </a>
+    <h1 align="center">Admin pack for Yii 2</h1>
+    <br>
+</p>
 
 This extension provides actions, widgets and other tools for admin panel creation in Yii2 project.
 
@@ -39,6 +44,7 @@ These tools are meant to be used together for the rapid web application administ
 This package supports usage of following extensions:
 
  - [yii2tech/ar-position](https://github.com/yii2tech/ar-position)
+ - [yii2tech/ar-role](https://github.com/yii2tech/ar-role)
  - [yii2tech/ar-search](https://github.com/yii2tech/ar-search)
  - [yii2tech/ar-softdelete](https://github.com/yii2tech/ar-softdelete)
  - [yii2tech/ar-variation](https://github.com/yii2tech/ar-variation)
