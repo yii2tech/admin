@@ -25,6 +25,12 @@
     "suggest": {
         "yiisoft/yii2-bootstrap": "you need this package, if you wish to use provided widgets"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "autoload": {
         "psr-4": { "yii2tech\\admin\\": "" }
     },
