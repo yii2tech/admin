@@ -21,7 +21,7 @@ use yii2tech\admin\behaviors\action\RoleBehavior;
 class RoleCreate extends Create
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {

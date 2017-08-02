@@ -272,7 +272,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
     // Override :
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function findModel($id)
     {
@@ -287,7 +287,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function newModel()
     {
@@ -300,7 +300,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function newSearchModel()
     {

@@ -24,17 +24,17 @@ class Generator extends \yii\gii\generators\crud\Generator
      */
     public $contextClass;
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $baseControllerClass = 'yii2tech\admin\CrudController';
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $messageCategory = 'admin';
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -42,7 +42,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -51,7 +51,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -62,7 +62,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
@@ -72,7 +72,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function hints()
     {
@@ -84,7 +84,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function stickyAttributes()
     {
@@ -101,7 +101,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getNameAttribute()
     {

@@ -56,7 +56,7 @@ class VariationColumn extends DataColumn
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderDataCellContent($model, $key, $index)
     {

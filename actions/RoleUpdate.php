@@ -21,7 +21,7 @@ use yii2tech\admin\behaviors\action\RoleBehavior;
 class RoleUpdate extends Update
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {

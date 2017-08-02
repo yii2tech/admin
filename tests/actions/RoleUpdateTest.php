@@ -11,7 +11,7 @@ use yii2tech\tests\unit\admin\TestCase;
 class RoleUpdateTest extends TestCase
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setUp()
     {
@@ -22,7 +22,7 @@ class RoleUpdateTest extends TestCase
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function setupTestDbData()
     {

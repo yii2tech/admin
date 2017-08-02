@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
 class ItemCategory extends ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {

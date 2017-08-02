@@ -8,7 +8,7 @@ namespace yii2tech\tests\unit\admin\data;
 class Session extends \yii\web\Session
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {

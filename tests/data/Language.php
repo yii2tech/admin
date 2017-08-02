@@ -12,7 +12,7 @@ use yii\db\ActiveRecord;
 class Language extends ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {

@@ -50,7 +50,7 @@ use yii\helpers\Html;
 class DeleteStatusColumn extends DataColumn
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $format = null;
     /**
@@ -60,7 +60,7 @@ class DeleteStatusColumn extends DataColumn
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -75,7 +75,7 @@ class DeleteStatusColumn extends DataColumn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderFilterCellContent()
     {

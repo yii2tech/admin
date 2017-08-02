@@ -41,7 +41,7 @@ class ButtonContextMenu extends Widget
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

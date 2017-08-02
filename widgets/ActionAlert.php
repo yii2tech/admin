@@ -86,7 +86,7 @@ class ActionAlert extends Widget
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

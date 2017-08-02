@@ -99,7 +99,7 @@ class Position extends Action
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createReturnUrl($defaultActionId = 'index', $model = null)
     {

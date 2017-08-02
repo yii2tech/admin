@@ -21,7 +21,7 @@ use yii2tech\admin\behaviors\action\VariationBehavior;
 class VariationCreate extends Create
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {

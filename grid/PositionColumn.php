@@ -25,7 +25,7 @@ use yii\helpers\Url;
 class PositionColumn extends DataColumn
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $headerOptions = ['class' => 'position-column'];
     /**
@@ -58,7 +58,7 @@ class PositionColumn extends DataColumn
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -135,7 +135,7 @@ class PositionColumn extends DataColumn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderDataCellContent($model, $key, $index)
     {

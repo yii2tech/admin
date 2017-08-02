@@ -71,7 +71,7 @@ class RoleBehavior extends Behavior
     // Events :
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function events()
     {

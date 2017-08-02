@@ -18,7 +18,7 @@ use Yii;
 class Delete extends Action
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $returnAction = 'index';
     /**

@@ -17,8 +17,9 @@ class Controller extends \yii\web\Controller
      */
     public $actions = [];
 
+
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
@@ -31,7 +32,7 @@ class Controller extends \yii\web\Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function render($view, $params = [])
     {
@@ -42,7 +43,7 @@ class Controller extends \yii\web\Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function redirect($url, $statusCode = 302)
     {
@@ -72,7 +73,7 @@ class Controller extends \yii\web\Controller
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function actions()
     {

@@ -6,7 +6,7 @@
     <br>
 </p>
 
-This extension provides actions, widgets and other tools for admin panel creation in Yii2 project.
+This extension provides controllers, actions, widgets and other tools for administration panel creation in Yii2 project.
 
 For license information check the [LICENSE](LICENSE.md)-file.
 
@@ -38,7 +38,7 @@ to the require section of your composer.json.
 Usage
 -----
 
-This extension provides actions, widgets and other tools for admin panel creation in Yii2 project.
+This extension provides controllers, actions, widgets and other tools for administration panel creation in Yii2 project.
 These tools are meant to be used together for the rapid web application administration panel composition.
 
 This package supports usage of following extensions:
@@ -56,20 +56,20 @@ This package supports usage of following extensions:
 
 This extension provides several independent action classes, which provides particular operation support:
 
- - [[yii2tech\admin\actions\Index]] - displays the models listing with search support.
- - [[yii2tech\admin\actions\Create]] - supports creation of the new model using web form.
- - [[yii2tech\admin\actions\Update]] - supports updating of the existing model using web form.
- - [[yii2tech\admin\actions\Delete]] - performs the deleting of the existing record.
- - [[yii2tech\admin\actions\View]] - displays an existing model.
- - [[yii2tech\admin\actions\SoftDelete]] - performs the "soft" deleting of the existing record.
- - [[yii2tech\admin\actions\SafeDelete]] - performs the "safe" deleting of the existing record.
- - [[yii2tech\admin\actions\Restore]] - performs the restoration of the "soft" deleted record.
- - [[yii2tech\admin\actions\Callback]] - allows invocation of specified method of the model.
- - [[yii2tech\admin\actions\Position]] - allows change custom sort position of the particular model.
- - [[yii2tech\admin\actions\VariationCreate]] - supports creation of the new model with variations using web form.
- - [[yii2tech\admin\actions\VariationUpdate]] - supports updating of the new model with variations using web form.
- - [[yii2tech\admin\actions\RoleCreate]] - supports creation of the new model with role using web form.
- - [[yii2tech\admin\actions\RoleUpdate]] - supports updating of the new model with role using web form.
+ - [[\yii2tech\admin\actions\Index]] - displays the models listing with search support.
+ - [[\yii2tech\admin\actions\Create]] - supports creation of the new model using web form.
+ - [[\yii2tech\admin\actions\Update]] - supports updating of the existing model using web form.
+ - [[\yii2tech\admin\actions\Delete]] - performs the deleting of the existing record.
+ - [[\yii2tech\admin\actions\View]] - displays an existing model.
+ - [[\yii2tech\admin\actions\SoftDelete]] - performs the "soft" deleting of the existing record.
+ - [[\yii2tech\admin\actions\SafeDelete]] - performs the "safe" deleting of the existing record.
+ - [[\yii2tech\admin\actions\Restore]] - performs the restoration of the "soft" deleted record.
+ - [[\yii2tech\admin\actions\Callback]] - allows invocation of specified method of the model.
+ - [[\yii2tech\admin\actions\Position]] - allows change custom sort position of the particular model.
+ - [[\yii2tech\admin\actions\VariationCreate]] - supports creation of the new model with variations using web form.
+ - [[\yii2tech\admin\actions\VariationUpdate]] - supports updating of the new model with variations using web form.
+ - [[\yii2tech\admin\actions\RoleCreate]] - supports creation of the new model with role using web form.
+ - [[\yii2tech\admin\actions\RoleUpdate]] - supports updating of the new model with role using web form.
 
 Please refer to the particular action class for more details.
 
@@ -128,7 +128,7 @@ class ItemController extends Controller
 This extension provides several predefined controllers, which can be used as a base controller classes
 while creating particular controllers:
 
-- [[yii2tech\admin\CrudController]] - implements a common set of actions for supporting CRUD for ActiveRecord.
+- [[\yii2tech\admin\CrudController]] - implements a common set of actions for supporting CRUD for ActiveRecord.
 
 Please refer to the particular controller class for more details.
 
@@ -137,17 +137,17 @@ Please refer to the particular controller class for more details.
 
 This  extension provides several widgets, which simplifies view composition for the typical use cases:
 
- - [[yii2tech\admin\widgets\Alert]] - renders a message from session flash.
- - [[yii2tech\admin\widgets\ActionAlert]] - renders an action proposition based on particular condition, usually a session flag.
- - [[yii2tech\admin\widgets\ButtonContextMenu]] - simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
- - [[yii2tech\admin\widgets\Nav]] - enhanced version of [[\yii\bootstrap\Nav]], which simplifies icon rendering.
+ - [[\yii2tech\admin\widgets\Alert]] - renders a message from session flash.
+ - [[\yii2tech\admin\widgets\ActionAlert]] - renders an action proposition based on particular condition, usually a session flag.
+ - [[\yii2tech\admin\widgets\ButtonContextMenu]] - simplifies rendering of the context links such as 'update', 'view', 'delete' etc.
+ - [[\yii2tech\admin\widgets\Nav]] - enhanced version of [[\yii\bootstrap\Nav]], which simplifies icon rendering.
 
 Also several enhancements for the [[\yii\grid\GridView]] are available:
 
-- [[yii2tech\admin\grid\ActionColumn]] - simplifies composition of the action buttons
-- [[yii2tech\admin\grid\DeleteStatusColumn]] - serves for the 'soft-deleted' status displaying
-- [[yii2tech\admin\grid\PositionColumn]] - provides simple interface for the model custom sort position switching
-- [[yii2tech\admin\grid\VariationColumn]] - allows displaying of the variation column values
+- [[\yii2tech\admin\grid\ActionColumn]] - simplifies composition of the action buttons
+- [[\yii2tech\admin\grid\DeleteStatusColumn]] - serves for the 'soft-deleted' status displaying
+- [[\yii2tech\admin\grid\PositionColumn]] - provides simple interface for the model custom sort position switching
+- [[\yii2tech\admin\grid\VariationColumn]] - allows displaying of the variation column values
 
 
 ## Using Gii <span id="using-gii"></span>
@@ -179,8 +179,8 @@ return [
 file and basic view files. The created structure is necessary for the correct rendering of the code created
 by "Admin CRUD" generator.
 
-"Admin CRUD" generator is similar to regular "CRUD" generator, but it generates code, which use tools from
-this extension, so the result code is much more easier.
+"Admin CRUD" generator is similar to regular "CRUD" generator, but it generates code, which uses tools from
+this extension, so the result code is much more clean.
 
 
 ## Internationalization <span id="internationalization"></span>

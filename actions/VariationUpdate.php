@@ -21,7 +21,7 @@ use yii2tech\admin\behaviors\action\VariationBehavior;
 class VariationUpdate extends Update
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {

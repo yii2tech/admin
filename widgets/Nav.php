@@ -21,7 +21,7 @@ use yii\bootstrap\Html;
 class Nav extends \yii\bootstrap\Nav
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function renderItem($item)
     {

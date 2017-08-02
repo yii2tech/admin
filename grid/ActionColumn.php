@@ -32,7 +32,7 @@ use yii\helpers\Url;
 class ActionColumn extends \yii\grid\ActionColumn
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $template = '{view} {update} {delete}{restore}';
 
@@ -100,7 +100,7 @@ class ActionColumn extends \yii\grid\ActionColumn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function renderDataCellContent($model, $key, $index)
     {
@@ -181,7 +181,7 @@ class ActionColumn extends \yii\grid\ActionColumn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createUrl($action, $model, $key, $index)
     {

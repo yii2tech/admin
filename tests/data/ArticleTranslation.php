@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
 class ArticleTranslation extends ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc]
      */
     public static function tableName()
     {
@@ -21,7 +21,7 @@ class ArticleTranslation extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {

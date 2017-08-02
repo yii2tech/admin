@@ -29,12 +29,12 @@ use yii2tech\admin\behaviors\ContextModelControlBehavior;
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $modelClass = '<?= $generator->modelClass ?>';
 <?php if (!empty($generator->searchModelClass)): ?>
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public $searchModelClass = '<?= $generator->searchModelClass ?>';
 <?php endif ?>
@@ -57,7 +57,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function behaviors()
     {
