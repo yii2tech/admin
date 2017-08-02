@@ -10,6 +10,12 @@ $contexts = $generator->getContexts();
 
 echo "<?php\n";
 ?>
+/**
+ * @see <?= $generator->controllerClass . "\n" ?>
+<?php if (is_subclass_of($generator->controllerClass, 'yii2tech\admin\CrudController')): ?>
+ * @see yii2tech\admin\actions\Create
+<?php endif ?>
+ */
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
@@ -36,4 +42,3 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= "<?= " ?>$this->render('_form', [
     'model' => $model,
 ]) ?>
-

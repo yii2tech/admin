@@ -11,6 +11,12 @@ $contexts = $generator->getContexts();
 
 echo "<?php\n";
 ?>
+/**
+ * @see <?= $generator->controllerClass . "\n" ?>
+<?php if (is_subclass_of($generator->controllerClass, 'yii2tech\admin\CrudController')): ?>
+ * @see yii2tech\admin\actions\View
+<?php endif ?>
+ */
 
 use yii\bootstrap\Html;
 use yii\widgets\DetailView;

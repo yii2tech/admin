@@ -1,8 +1,5 @@
 <?php
 
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
-
 /* @var $this yii\web\View */
 /* @var $generator yii2tech\admin\gii\crud\Generator */
 
@@ -15,6 +12,13 @@ if (empty($safeAttributes)) {
 
 echo "<?php\n";
 ?>
+/**
+ * @see <?= $generator->controllerClass . "\n" ?>
+<?php if (is_subclass_of($generator->controllerClass, 'yii2tech\admin\CrudController')): ?>
+ * @see yii2tech\admin\actions\Create
+ * @see yii2tech\admin\actions\Update
+<?php endif ?>
+ */
 
 use yii\bootstrap\Html;
 use yii\bootstrap\ActiveForm;
