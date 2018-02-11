@@ -36,7 +36,11 @@ class ActionColumn extends \yii\grid\ActionColumn
      */
     public $template = '{view} {update} {delete}{restore}';
 
-
+    /**
+     * @var string Set your model's attribute for `SoftDeleteBehavior`.
+     */
+    public $softDeleteAttribute = 'isDeleted';
+    
     /**
      * Merges buttons with default configurations.
      */
@@ -64,8 +68,8 @@ class ActionColumn extends \yii\grid\ActionColumn
                     'icon' => 'trash',
                     'visible' => function ($model) {
                         /* @var $model \yii\db\BaseActiveRecord */
-                        if (is_object($model) && $model->canGetProperty('isDeleted')) {
-                            return !$model->isDeleted;
+                        if (is_object($model) && $model->canGetProperty($this->softDeleteAttribute)) {
+                            return !$model->{$this->softDeleteAttribute};
                         }
                         return true;
                     },
@@ -81,8 +85,8 @@ class ActionColumn extends \yii\grid\ActionColumn
                     'icon' => 'repeat',
                     'visible' => function ($model) {
                         /* @var $model \yii\db\BaseActiveRecord */
-                        if (is_object($model) && $model->canGetProperty('isDeleted')) {
-                            return $model->isDeleted;
+                        if (is_object($model) && $model->canGetProperty($this->softDeleteAttribute)) {
+                            return $model->{$this->softDeleteAttribute};
                         }
                         return false;
                     },
