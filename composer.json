@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "~2.0.0"
     },
     "require-dev": {
         "yiisoft/yii2-bootstrap": ">=2.0.5"
@@ -32,7 +32,7 @@
         }
     ],
     "autoload": {
-        "psr-4": { "yii2tech\\admin\\": "" }
+        "psr-4": {"yii2tech\\admin\\": "src"}
     },
     "extra": {
         "branch-alias": {
