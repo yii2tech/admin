@@ -36,7 +36,7 @@ class VariationCreateTest extends TestCase
      */
     protected function runAction(array $config = [])
     {
-        $action = new VariationCreate('create', $this->createController(['modelClass' => Article::className()]), $config);
+        $action = new VariationCreate('create', $this->createController(['modelClass' => Article::class]), $config);
         return $action->run();
     }
 

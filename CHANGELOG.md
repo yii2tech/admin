@@ -1,6 +1,12 @@
 Yii 2 Admin pack extension Change Log
 =====================================
 
+2.0.0 under development
+-----------------------
+
+- Chg: Required Yii framework version has been raised to '2.1.0' (klimov-paul)
+
+
 1.0.2, November 3, 2017
 -----------------------
 

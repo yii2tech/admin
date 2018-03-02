@@ -34,7 +34,7 @@ class FlushCache extends Action
      * [
      *     'cache',
      *     'frontendCache' => [
-     *         'class' => 'yii\caching\DbCache',
+     *         '__class' => \yii\caching\DbCache::class,
      *         'cacheTable' => '{{%frontendCache}}',
      *     ],
      *     'objectCache' => new \yii\caching\DbCache(['cacheTable' => '{{%objectCache}}']),
@@ -108,7 +108,7 @@ class FlushCache extends Action
 
             if ($component instanceof Cache) {
                 $caches[] = $name;
-            } elseif (is_array($component) && isset($component['class']) && $this->isCacheClass($component['class'])) {
+            } elseif (is_array($component) && isset($component['__class']) && $this->isCacheClass($component['__class'])) {
                 $caches[] = $name;
             } elseif (is_string($component) && $this->isCacheClass($component)) {
                 $caches[] = $name;
@@ -125,7 +125,7 @@ class FlushCache extends Action
      */
     private function isCacheClass($className)
     {
-        return is_subclass_of($className, Cache::className());
+        return is_subclass_of($className, Cache::class);
     }
 
     /**
@@ -136,11 +136,11 @@ class FlushCache extends Action
     {
         foreach ($caches as $cache) {
             if (is_scalar($cache)) {
-                Yii::$app->get($cache)->flush();
+                Yii::$app->get($cache)->clear();
             } elseif ($cache instanceof Cache) {
-                $cache->flush();
+                $cache->clear();
             } else {
-                Yii::createObject($cache)->flush();
+                Yii::createObject($cache)->clear();
             }
         }
     }

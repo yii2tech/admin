@@ -36,7 +36,7 @@ class VariationUpdateTest extends TestCase
      */
     protected function runAction($id)
     {
-        $action = new VariationUpdate('update', $this->createController(['modelClass' => Article::className()]));
+        $action = new VariationUpdate('update', $this->createController(['modelClass' => Article::class]));
         return $action->run($id);
     }
 

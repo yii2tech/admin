@@ -36,7 +36,7 @@ class RoleUpdateTest extends TestCase
      */
     protected function runAction($id)
     {
-        $action = new RoleUpdate('update', $this->createController(['modelClass' => UserProfile::className()]));
+        $action = new RoleUpdate('update', $this->createController(['modelClass' => UserProfile::class]));
         return $action->run($id);
     }
 

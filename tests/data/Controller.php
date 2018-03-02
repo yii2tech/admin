@@ -25,8 +25,8 @@ class Controller extends \yii\web\Controller
     {
         return [
             'dataModel' => [
-                'class' => ModelControlBehavior::className(),
-                'modelClass' => Item::className(),
+                '__class' => ModelControlBehavior::class,
+                'modelClass' => Item::class,
             ],
         ];
     }
@@ -45,7 +45,7 @@ class Controller extends \yii\web\Controller
     /**
      * {@inheritdoc}
      */
-    public function redirect($url, $statusCode = 302)
+    public function redirect($url, $statusCode = 302, $checkAjax = true)
     {
         return [
             'url' => $url,

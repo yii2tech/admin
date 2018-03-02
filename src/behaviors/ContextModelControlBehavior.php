@@ -9,7 +9,7 @@ namespace yii2tech\admin\behaviors;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use yii\db\ActiveRecordInterface;
 use yii\helpers\Inflector;
@@ -38,7 +38,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
      * The array key is considered as context name, value - as context config.
      * Config should contain following keys:
      *
-     * - class: string, class name of context model.
+     * - __class: string, class name of context model.
      * - attribute: string, name of model attribute, which refers to the context model primary key.
      * - url: array|string, URL config or route to the controller, which manage context models.
      * - required: boolean, whether this context is mandatory for this controller or optional.
@@ -48,7 +48,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
      * ```php
      * [
      *     'user' => [
-     *         'class' => 'User',
+     *         'class' => \app\models\User::class,
      *         'attribute' => 'userId',
      *         'url' => 'user/view',
      *     ]
@@ -77,7 +77,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
             return current($this->contexts);
         }
         if (!isset($this->contexts[$name])) {
-            throw new InvalidParamException("Undefined context '{$name}'");
+            throw new InvalidArgumentException("Undefined context '{$name}'");
         }
         return $this->contexts[$name];
     }
@@ -112,13 +112,13 @@ class ContextModelControlBehavior extends ModelControlBehavior
         $contextModels = $this->getContextModels();
         if ($name === null) {
             if (empty($contextModels)) {
-                throw new InvalidParamException("There is no context model.");
+                throw new InvalidArgumentException("There is no context model.");
             }
             reset($contextModels);
             return current($contextModels);
         }
         if (!isset($contextModels[$name])) {
-            throw new InvalidParamException("Undefined context '{$name}'");
+            throw new InvalidArgumentException("Undefined context '{$name}'");
         }
         return $contextModels[$name];
     }
@@ -259,7 +259,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
                 if ($name !== null) {
                     $controllerId = $name;
                 } else {
-                    $controllerId = Inflector::camel2id(StringHelper::basename($model->className()));
+                    $controllerId = Inflector::camel2id(StringHelper::basename(get_class($model)));
                 }
             }
             $url = ["/{$controllerId}/view"];

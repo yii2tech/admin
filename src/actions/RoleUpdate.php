@@ -27,7 +27,7 @@ class RoleUpdate extends Update
     {
         return [
             [
-                'class' => RoleBehavior::className()
+                '__class' => RoleBehavior::class
             ]
         ];
     }

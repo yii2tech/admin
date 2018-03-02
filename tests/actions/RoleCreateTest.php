@@ -36,7 +36,7 @@ class RoleCreateTest extends TestCase
      */
     protected function runAction(array $config = [])
     {
-        $action = new RoleCreate('create', $this->createController(['modelClass' => UserProfile::className()]), $config);
+        $action = new RoleCreate('create', $this->createController(['modelClass' => UserProfile::class]), $config);
         return $action->run();
     }
 

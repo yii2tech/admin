@@ -16,11 +16,13 @@
             "email": "klimov.paul@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "yiisoft/yii2": "~2.0.0"
+        "yiisoft/yii2": "2.1.x-dev"
     },
     "require-dev": {
-        "yiisoft/yii2-bootstrap": ">=2.0.5"
+        "yiisoft/yii2-bootstrap": "2.2.x-dev"
     },
     "suggest": {
         "yiisoft/yii2-bootstrap": "you need this package, if you wish to use provided widgets"
@@ -33,6 +35,9 @@
     ],
     "autoload": {
         "psr-4": {"yii2tech\\admin\\": "src"}
+    },
+    "autoload-dev": {
+        "psr-4": {"yii2tech\\tests\\unit\\admin\\": "tests"}
     },
     "extra": {
         "branch-alias": {

@@ -27,7 +27,7 @@ class VariationCreate extends Create
     {
         return [
             [
-                'class' => VariationBehavior::className()
+                '__class' => VariationBehavior::class
             ]
         ];
     }

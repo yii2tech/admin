@@ -39,7 +39,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected function mockApplication($config = [], $appClass = '\yii\web\Application')
+    protected function mockApplication($config = [], $appClass = \yii\web\Application::class)
     {
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
@@ -51,14 +51,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ],
             'components' => [
                 'db' => [
-                    'class' => 'yii\db\Connection',
+                    '__class' => \yii\db\Connection::class,
                     'dsn' => 'sqlite::memory:',
                 ],
                 'assetManager' => [
                     'basePath' => $this->getTestFilePath(),
                 ],
                 'session' => [
-                    'class' => Session::className(),
+                    '__class' => Session::class,
                 ],
                 'user' => [
                     'identityClass' => 'app\models\User',
@@ -69,7 +69,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 'i18n' => [
                     'translations' => [
                         '*' => [
-                            'class' => 'yii\i18n\PhpMessageSource',
+                            '__class' => \yii\i18n\PhpMessageSource::class,
                             'forceTranslation' => false,
                         ],
                     ],
@@ -100,7 +100,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createController($config = [])
     {
-        return new Controller('test', Yii::$app, array_merge(['modelClass' => Item::className()], $config));
+        return new Controller('test', Yii::$app, array_merge(['modelClass' => Item::class], $config));
     }
 
     /**
