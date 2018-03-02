@@ -61,7 +61,7 @@ class RoleUpdateTest extends TestCase
     {
         $newUserAddress = 'new user address';
         $newUserName = 'newuser';
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'UserProfile' => [
                 'address' => $newUserAddress
             ],
@@ -69,7 +69,7 @@ class RoleUpdateTest extends TestCase
                 'username' => $newUserName,
                 'email' => 'newuser@domain.com',
             ]
-        ];
+        ]);
         $response = $this->runAction(1);
         $this->assertEquals('view', $response['url'][0]);
 
@@ -85,11 +85,11 @@ class RoleUpdateTest extends TestCase
      */
     public function testSubmitError()
     {
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'UserProfile' => [
                 'address' => ''
             ]
-        ];
+        ]);
         $response = $this->runAction(1);
         $this->assertEquals('update', $response['view']);
     }

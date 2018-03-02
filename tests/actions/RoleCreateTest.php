@@ -55,7 +55,7 @@ class RoleCreateTest extends TestCase
     {
         $newUserAddress = 'new user address';
         $newUserName = 'newuser';
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'UserProfile' => [
                 'address' => $newUserAddress
             ],
@@ -63,7 +63,7 @@ class RoleCreateTest extends TestCase
                 'username' => $newUserName,
                 'email' => 'newuser@domain.com',
             ]
-        ];
+        ]);
         $response = $this->runAction();
         //var_dump($response['params']['model']->getErrors());
         $this->assertEquals('view', $response['url'][0]);
@@ -80,11 +80,11 @@ class RoleCreateTest extends TestCase
      */
     public function testSubmitError()
     {
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'UserProfile' => [
                 'address' => ''
             ]
-        ];
+        ]);
         $response = $this->runAction();
         $this->assertEquals('create', $response['view']);
     }

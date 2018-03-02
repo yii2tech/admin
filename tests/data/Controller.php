@@ -50,6 +50,7 @@ class Controller extends \yii\web\Controller
         return [
             'url' => $url,
             'statusCode' => $statusCode,
+            'checkAjax' => $checkAjax,
         ];
     }
 

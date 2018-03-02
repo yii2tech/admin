@@ -7,8 +7,8 @@
 
 namespace yii2tech\admin\actions;
 
+use Psr\SimpleCache\CacheInterface;
 use Yii;
-use yii\caching\Cache;
 
 /**
  * FlushCache allows you to flush cache.
@@ -25,7 +25,7 @@ use yii\caching\Cache;
 class FlushCache extends Action
 {
     /**
-     * @var array|Cache|string|null cache component(s), which should be flushed.
+     * @var array|CacheInterface|string|null cache component(s), which should be flushed.
      * If not set action will flush all cache components found in current application.
      * Each cache component can be specified as application component name, instance of [[Cache]] or its configuration.
      * For example:
@@ -106,7 +106,7 @@ class FlushCache extends Action
                 continue;
             }
 
-            if ($component instanceof Cache) {
+            if ($component instanceof CacheInterface) {
                 $caches[] = $name;
             } elseif (is_array($component) && isset($component['__class']) && $this->isCacheClass($component['__class'])) {
                 $caches[] = $name;
@@ -125,7 +125,7 @@ class FlushCache extends Action
      */
     private function isCacheClass($className)
     {
-        return is_subclass_of($className, Cache::class);
+        return is_subclass_of($className, CacheInterface::class);
     }
 
     /**
@@ -137,7 +137,7 @@ class FlushCache extends Action
         foreach ($caches as $cache) {
             if (is_scalar($cache)) {
                 Yii::$app->get($cache)->clear();
-            } elseif ($cache instanceof Cache) {
+            } elseif ($cache instanceof CacheInterface) {
                 $cache->clear();
             } else {
                 Yii::createObject($cache)->clear();

@@ -41,11 +41,12 @@ class UpdateTest extends TestCase
     public function testSubmitSuccess()
     {
         $newItemName = 'new item name';
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'Item' => [
                 'name' => $newItemName
             ]
-        ];
+        ]);
+
         $response = $this->runAction(1);
         $this->assertEquals('view', $response['url'][0]);
         $this->assertEquals($newItemName, Item::findOne(1)->name);
@@ -56,11 +57,11 @@ class UpdateTest extends TestCase
      */
     public function testSubmitError()
     {
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'Item' => [
                 'name' => ''
             ]
-        ];
+        ]);
         $response = $this->runAction(1);
         $this->assertEquals('update', $response['view']);
     }

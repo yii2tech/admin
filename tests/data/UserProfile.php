@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 use yii2tech\ar\role\RoleBehavior;
 
 /**
- * @property integer $userId
+ * @property int $userId
  * @property string $address
  * @property string $bio
  *

@@ -23,7 +23,7 @@ class ContextModelControlBehaviorTest extends TestCase
                 'searchModelClass' => ItemSearch::class,
                 'contexts' => [
                     'category' => [
-                        '__class' => ItemCategory::class,
+                        'class' => ItemCategory::class,
                         'attribute' => 'categoryId',
                     ],
                 ],
@@ -110,7 +110,7 @@ class ContextModelControlBehaviorTest extends TestCase
         $behavior = new ContextModelControlBehavior([
             'contexts' => [
                 'category' => [
-                    '__class' => ItemCategory::class,
+                    'class' => ItemCategory::class,
                     'attribute' => 'categoryId',
                     'required' => true,
                 ],

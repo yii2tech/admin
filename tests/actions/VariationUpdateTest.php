@@ -61,7 +61,7 @@ class VariationUpdateTest extends TestCase
     {
         $newItemName = 'new article name';
         $newItemTitle = 'new item title';
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'Article' => [
                 'name' => $newItemName
             ],
@@ -70,7 +70,7 @@ class VariationUpdateTest extends TestCase
                     'title' => $newItemTitle,
                 ]
             ]
-        ];
+        ]);
         $response = $this->runAction(1);
         $this->assertEquals('view', $response['url'][0]);
 
@@ -85,11 +85,11 @@ class VariationUpdateTest extends TestCase
      */
     public function testSubmitError()
     {
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'Article' => [
                 'name' => ''
             ]
-        ];
+        ]);
         $response = $this->runAction(1);
         $this->assertEquals('update', $response['view']);
     }

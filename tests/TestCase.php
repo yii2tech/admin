@@ -65,6 +65,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 ],
                 'request' => [
                     'hostInfo' => 'http://domain.com',
+                    'method' => 'GET',
                 ],
                 'i18n' => [
                     'translations' => [

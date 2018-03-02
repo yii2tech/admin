@@ -35,11 +35,12 @@ class CreateTest extends TestCase
     public function testSubmitSuccess()
     {
         $newItemName = 'new item name';
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->setParsedBody([
             'Item' => [
                 'name' => $newItemName
             ]
-        ];
+        ]);
+
         $response = $this->runAction();
         $this->assertEquals('view', $response['url'][0]);
         $this->assertTrue(Item::find()->where(['name' => $newItemName])->exists());
@@ -50,11 +51,11 @@ class CreateTest extends TestCase
      */
     public function testSubmitError()
     {
-        Yii::$app->request->bodyParams = [
+        Yii::$app->request->withParsedBody([
             'Item' => [
                 'name' => ''
             ]
-        ];
+        ]);
         $response = $this->runAction();
         $this->assertEquals('create', $response['view']);
     }

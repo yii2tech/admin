@@ -14,8 +14,8 @@ class FlushCacheTest extends TestCase
     {
         parent::setUp();
 
-        Yii::$app->set('firstCache', 'yii\caching\ArrayCache');
-        Yii::$app->set('secondCache', 'yii\caching\ArrayCache');
+        Yii::$app->set('firstCache', \yii\caching\ArrayCache::class);
+        Yii::$app->set('secondCache', \yii\caching\ArrayCache::class);
     }
 
     /**
@@ -40,8 +40,8 @@ class FlushCacheTest extends TestCase
 
         $this->runAction();
 
-        $this->assertFalse(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
-        $this->assertFalse(Yii::$app->secondCache->get('secondKey'), 'Second cache data should be flushed');
+        $this->assertNull(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
+        $this->assertNull(Yii::$app->secondCache->get('secondKey'), 'Second cache data should be flushed');
     }
 
     /**
@@ -54,7 +54,7 @@ class FlushCacheTest extends TestCase
 
         $this->runAction('firstCache');
 
-        $this->assertFalse(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
+        $this->assertNull(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
         $this->assertEquals('secondValue', Yii::$app->secondCache->get('secondKey'), 'Second cache data should NOT be flushed');
     }
 
@@ -67,8 +67,8 @@ class FlushCacheTest extends TestCase
 
         $this->runAction(null, ['firstCache', $objectCache]);
 
-        $this->assertFalse($objectCache->get('objectKey'), 'Object cache data should be flushed');
-        $this->assertFalse(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
+        $this->assertNull($objectCache->get('objectKey'), 'Object cache data should be flushed');
+        $this->assertNull(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
         $this->assertEquals('secondValue', Yii::$app->secondCache->get('secondKey'), 'Second cache data should NOT be flushed');
     }
 
@@ -82,7 +82,7 @@ class FlushCacheTest extends TestCase
 
         $this->runAction('firstCache', ['firstCache', 'secondCache']);
 
-        $this->assertFalse(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
+        $this->assertNull(Yii::$app->firstCache->get('firstKey'), 'First cache data should be flushed');
         $this->assertEquals('secondValue', Yii::$app->secondCache->get('secondKey'), 'Second cache data should NOT be flushed');
     }
 }
