@@ -13,3 +13,6 @@ Upgrade from admin 1.0.2
 
 * Version constraint for "yiisoft/yii2" package has been raised to "~2.1.0". Make sure your code
   matches this version of the Yii framework. 
+
+* Action `FlushCache` has been renamed to `ClearCache`. Make sure you are using correct class name
+ for this action setup.

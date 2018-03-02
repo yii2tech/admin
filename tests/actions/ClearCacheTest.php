@@ -5,10 +5,10 @@ namespace yii2tech\tests\unit\admin\actions;
 use Yii;
 use yii\caching\ArrayCache;
 use yii\web\Response;
-use yii2tech\admin\actions\FlushCache;
+use yii2tech\admin\actions\ClearCache;
 use yii2tech\tests\unit\admin\TestCase;
 
-class FlushCacheTest extends TestCase
+class ClearCacheTest extends TestCase
 {
     protected function setUp()
     {
@@ -26,7 +26,7 @@ class FlushCacheTest extends TestCase
      */
     protected function runAction($name = null, $cache = null)
     {
-        $action = new FlushCache('flush-cache', $this->createController());
+        $action = new ClearCache('flush-cache', $this->createController());
         $action->cache = $cache;
         return $action->run($name);
     }

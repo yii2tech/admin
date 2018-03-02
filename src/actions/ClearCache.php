@@ -11,23 +11,23 @@ use Psr\SimpleCache\CacheInterface;
 use Yii;
 
 /**
- * FlushCache allows you to flush cache.
+ * ClearCache allows you to clear cache.
  *
- * The cache component to be flushed can be explicitly defined via [[cache]] or fetched automatically.
+ * The cache component to be cleared can be explicitly defined via [[cache]] or fetched automatically.
  *
  * Note that the action uses cache components defined in your current web application configuration file.
- * If you wish to flush cache defined at other application, you should duplicate its definition in the configuration file,
+ * If you wish to clear cache defined at other application, you should duplicate its definition in the configuration file,
  * or setup it explicitly via [[cache]] property.
  *
  * @author Paul Klimov <klimov.paul@gmail.com>
  * @since 1.0
  */
-class FlushCache extends Action
+class ClearCache extends Action
 {
     /**
-     * @var array|CacheInterface|string|null cache component(s), which should be flushed.
-     * If not set action will flush all cache components found in current application.
-     * Each cache component can be specified as application component name, instance of [[Cache]] or its configuration.
+     * @var array|CacheInterface|string|null cache component(s), which should be cleared.
+     * If not set action will clear all cache components found in current application.
+     * Each cache component can be specified as application component name, instance of [[CacheInterface]] or its configuration.
      * For example:
      *
      * ```php
@@ -56,7 +56,7 @@ class FlushCache extends Action
 
     /**
      * Flushes associated cache components.
-     * @param string|array|null $name name of the cache component(s), which should be flushed.
+     * @param string|array|null $name name of the cache component(s), which should be cleared.
      * @return mixed response.
      */
     public function run($name = null)
@@ -83,7 +83,7 @@ class FlushCache extends Action
             }
         }
 
-        $this->flushCaches($caches);
+        $this->clearCaches($caches);
 
         $this->setFlash($this->flash);
 
@@ -132,7 +132,7 @@ class FlushCache extends Action
      * Flushes given caches list.
      * @param array $caches caches list
      */
-    private function flushCaches(array $caches)
+    private function clearCaches(array $caches)
     {
         foreach ($caches as $cache) {
             if (is_scalar($cache)) {
