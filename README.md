@@ -86,22 +86,22 @@ class ItemController extends Controller
     {
         return [
             'index' => [
-                'class' => 'yii2tech\admin\actions\Index',
+                'class' => \yii2tech\admin\actions\Index::class,
                 'newSearchModel' => function () {
                     return new ItemSearch();
                 },
             ],
             'view' => [
-                'class' => 'yii2tech\admin\actions\View',
+                'class' => \yii2tech\admin\actions\View::class,
             ],
             'create' => [
-                'class' => 'yii2tech\admin\actions\Create',
+                'class' => \yii2tech\admin\actions\Create::class,
             ],
             'update' => [
-                'class' => 'yii2tech\admin\actions\Update',
+                'class' => \yii2tech\admin\actions\Update::class,
             ],
             'delete' => [
-                'class' => 'yii2tech\admin\actions\Delete',
+                'class' => \yii2tech\admin\actions\Delete::class,
             ],
         ];
     }
@@ -110,9 +110,8 @@ class ItemController extends Controller
     {
         if (($model = Item::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
     public function newModel()
@@ -161,13 +160,13 @@ return [
     'modules' => [
         // ...
         'gii' => [
-            'class' => 'yii\gii\Module',
+            'class' => yii\gii\Module::class,
             'generators' => [
                 'adminMainFrame' => [
-                    'class' => 'yii2tech\admin\gii\mainframe\Generator'
+                    'class' => yii2tech\admin\gii\mainframe\Generator::class
                 ],
                 'adminCrud' => [
-                    'class' => 'yii2tech\admin\gii\crud\Generator'
+                    'class' => yii2tech\admin\gii\crud\Generator::class
                 ]
             ],
         ],
@@ -194,7 +193,7 @@ return [
         'i18n' => [
             'translations' => [
                 'yii2tech-admin' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
+                    'class' => yii\i18n\PhpMessageSource::class,
                     'basePath' => '@yii2tech/admin/messages',
                 ],
                 // ...
