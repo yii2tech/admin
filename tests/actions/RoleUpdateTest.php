@@ -15,7 +15,7 @@ class RoleUpdateTest extends TestCase
      */
     protected function setUp()
     {
-        if (!class_exists('yii2tech\ar\role\RoleBehavior')) {
+        if (!class_exists(\yii2tech\ar\role\RoleBehavior::class)) {
             $this->markTestSkipped('"yii2tech/ar-role" extension is required.');
         }
         parent::setUp();
@@ -50,7 +50,7 @@ class RoleUpdateTest extends TestCase
 
     public function testMissingModel()
     {
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $response = $this->runAction(9999);
     }
 

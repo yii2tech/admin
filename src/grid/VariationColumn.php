@@ -93,7 +93,7 @@ class VariationColumn extends DataColumn
     protected function getVariationLabel($mainModel, $variationModel)
     {
         if (empty($this->variationLabel)) {
-            throw new InvalidConfigException('"' . get_class($this) . '::variationLabel" must be specified');
+            throw new InvalidConfigException('"' . get_class($this) . '::$variationLabel" must be specified');
         }
         if (!is_string($this->variationLabel)) {
             return call_user_func($this->variationLabel, $mainModel, $variationModel);

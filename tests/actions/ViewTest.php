@@ -30,7 +30,7 @@ class ViewTest extends TestCase
 
     public function testMissingModel()
     {
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $response = $this->runAction(9999);
     }
 }

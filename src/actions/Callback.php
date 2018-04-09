@@ -47,7 +47,7 @@ class Callback extends Action
         $model = $this->findModel($id);
 
         if ($this->callback === null) {
-            throw new InvalidConfigException('"' . get_class($this) . '::callback" must be set.');
+            throw new InvalidConfigException('"' . get_class($this) . '::$callback" must be set.');
         }
         if (is_string($this->callback)) {
             call_user_func([$model, $this->callback]);

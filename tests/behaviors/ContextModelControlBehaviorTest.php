@@ -146,7 +146,7 @@ class ContextModelControlBehaviorTest extends TestCase
 
         Yii::$app->request->setQueryParams(['categoryId' => 1]);
 
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $model = $behavior->findModel(2);
     }
 

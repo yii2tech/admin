@@ -147,9 +147,9 @@ class PositionColumn extends DataColumn
                 }
                 return $this->renderButton($name, $model, $key, $index);
             }, $this->template);
-        } else {
-            return parent::renderDataCellContent($model, $key, $index);
         }
+
+        return parent::renderDataCellContent($model, $key, $index);
     }
 
     /**
@@ -235,15 +235,15 @@ class PositionColumn extends DataColumn
     {
         if (is_callable($this->urlCreator)) {
             return call_user_func($this->urlCreator, $position, $model, $key, $index);
-        } else {
-            $params = array_merge(
-                Yii::$app->getRequest()->getQueryParams(),
-                is_array($key) ? $key : ['id' => (string) $key]
-            );
-            $params[$this->positionParam] = $position;
-            $params[0] = $this->route;
-
-            return Url::toRoute($params);
         }
+
+        $params = array_merge(
+            Yii::$app->getRequest()->getQueryParams(),
+            is_array($key) ? $key : ['id' => (string) $key]
+        );
+        $params[$this->positionParam] = $position;
+        $params[0] = $this->route;
+
+        return Url::toRoute($params);
     }
 }

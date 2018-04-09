@@ -13,10 +13,10 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 /**
- * @see <?= $generator->controllerClass . "\n" ?>
+ * @see \<?= $generator->controllerClass . "\n" ?>
 <?php if (is_subclass_of($generator->controllerClass, 'yii2tech\admin\CrudController')): ?>
- * @see yii2tech\admin\actions\Create
- * @see yii2tech\admin\actions\Update
+ * @see \yii2tech\admin\actions\Create
+ * @see \yii2tech\admin\actions\Update
 <?php endif ?>
  */
 

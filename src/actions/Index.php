@@ -65,9 +65,8 @@ class Index extends Action
             return call_user_func($this->newSearchModel, $this);
         } elseif ($this->controller->hasMethod('newSearchModel')) {
             return call_user_func([$this->controller, 'newSearchModel'], $this);
-        } else {
-            throw new InvalidConfigException('Either "' . get_class($this) . '::newSearchModel" must be set or controller must declare method "newSearchModel()".');
         }
+        throw new InvalidConfigException('Either "' . get_class($this) . '::$newSearchModel" must be set or controller must declare method "newSearchModel()".');
     }
 
     /**

@@ -14,6 +14,9 @@ use yii2tech\tests\unit\admin\data\Session;
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -25,6 +28,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
         FileHelper::createDirectory($testFilePath);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function tearDown()
     {
         $testFilePath = $this->getTestFilePath();
@@ -61,7 +67,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                     '__class' => Session::class,
                 ],
                 'user' => [
-                    'identityClass' => 'app\models\User',
+                    'identityClass' => \app\models\User::class,
                 ],
                 'request' => [
                     'hostInfo' => 'http://domain.com',

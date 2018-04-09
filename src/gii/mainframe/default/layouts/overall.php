@@ -9,13 +9,13 @@
 echo "<?php\n";
 ?>
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use app\assets\admin\AppAsset;
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use yii2tech\admin\widgets\Alert;
+
+/* @var $this \yii\web\View */
+/* @var $content string */
 
 AppAsset::register($this);
 ?>

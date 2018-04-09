@@ -9,11 +9,11 @@
 echo "<?php\n";
 ?>
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use yii\bootstrap\Html;
 use yii2tech\admin\widgets\ButtonContextMenu;
+
+/* @var $this \yii\web\View */
+/* @var $content string */
 <?= "?>" ?>
 <?= "<?php " ?> $this->beginContent($this->findViewFile('/layouts/overall')); ?>
 <div class="<?= "<?= " ?>str_replace('/', '-', $this->context->action->getUniqueId()) ?>">

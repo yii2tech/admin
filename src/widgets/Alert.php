@@ -9,6 +9,7 @@ namespace yii2tech\admin\widgets;
 
 use Yii;
 use yii\bootstrap\Widget;
+use yii\helpers\StringHelper;
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed
@@ -20,10 +21,17 @@ use yii\bootstrap\Widget;
  * Yii::$app->session->setFlash('info', 'This is the message');
  * ```
  *
- * Multiple messages could be set as follows:
+ * Multiple messages could be set as following:
  *
  * ```php
  * Yii::$app->session->setFlash('error', ['Error 1', 'Error 2']);
+ * ```
+ *
+ * Since 1.0.3 alert type is determined via wildcard match, so messages could be set as following:
+ *
+ * ```php
+ * Yii::$app->session->setFlash('saveSuccess', 'This is the success message');
+ * Yii::$app->session->setFlash('errorSave', 'This is the error message');
  * ```
  *
  * @see \yii\bootstrap\Alert
@@ -38,15 +46,16 @@ class Alert extends Widget
     /**
      * @var array the alert types configuration for the flash messages.
      * This array is setup as $key => $value, where:
-     * - $key is the name of the session flash variable
-     * - $value is the bootstrap alert type (i.e. danger, success, info, warning)
+     *
+     * - $key is the case-insensitive wildcard pattern for the name of the session flash variable.
+     * - $value is the bootstrap alert type (i.e. danger, success, info, warning).
      */
     public $alertTypes = [
-        'error' => 'alert-danger',
-        'danger' => 'alert-danger',
-        'success' => 'alert-success',
-        'info' => 'alert-info',
-        'warning' => 'alert-warning'
+        '*error*' => 'alert-danger',
+        '*danger*' => 'alert-danger',
+        '*success*' => 'alert-success',
+        '*warning*' => 'alert-warning',
+        '*' => 'alert-info',
     ];
     /**
      * @var array the options for rendering the close button tag.
@@ -65,23 +74,26 @@ class Alert extends Widget
 
         $alerts = [];
         foreach ($flashes as $type => $data) {
-            if (isset($this->alertTypes[$type])) {
-                $data = (array) $data;
-                foreach ($data as $i => $message) {
-                    /* initialize css class for each alert box */
-                    $this->options['class'] = $this->alertTypes[$type] . $appendCss;
+            foreach ($this->alertTypes as $pattern => $css) {
+                if (StringHelper::matchWildcard($pattern, $type, ['caseSensitive' => false])) {
+                    $data = (array) $data;
+                    foreach ($data as $i => $message) {
+                        /* initialize css class for each alert box */
+                        $this->options['class'] = $css . $appendCss;
 
-                    /* assign unique id to each alert box */
-                    $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
+                        /* assign unique id to each alert box */
+                        $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
 
-                    $alerts[] = \yii\bootstrap\Alert::widget([
-                        'body' => $message,
-                        'closeButton' => $this->closeButton,
-                        'options' => $this->options,
-                    ]);
+                        $alerts[] = \yii\bootstrap\Alert::widget([
+                            'body' => $message,
+                            'closeButton' => $this->closeButton,
+                            'options' => $this->options,
+                        ]);
+                    }
+
+                    $session->removeFlash($type);
+                    break;
                 }
-
-                $session->removeFlash($type);
             }
         }
 

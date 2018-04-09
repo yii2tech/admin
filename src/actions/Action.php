@@ -81,9 +81,8 @@ class Action extends \yii\base\Action
             return call_user_func($this->findModel, $id, $this);
         } elseif ($this->controller->hasMethod('findModel')) {
             return call_user_func([$this->controller, 'findModel'], $id, $this);
-        } else {
-            throw new InvalidConfigException('Either "' . get_class($this) . '::findModel" must be set or controller must declare method "findModel()".');
         }
+        throw new InvalidConfigException('Either "' . get_class($this) . '::$findModel" must be set or controller must declare method "findModel()".');
     }
 
     /**
@@ -137,6 +136,7 @@ class Action extends \yii\base\Action
         if ($actionId === 'index') {
             return $actionId;
         }
+
         if (strpos($actionId, '/') !== false) {
             $controllerId = StringHelper::dirname($actionId);
             if ($controllerId !== $this->controller->getUniqueId()) {
@@ -144,9 +144,11 @@ class Action extends \yii\base\Action
             }
             $actionId = StringHelper::basename($actionId);
         }
+
         if (!$this->actionExists($actionId)) {
             return 'index';
         }
+
         return $actionId;
     }
 

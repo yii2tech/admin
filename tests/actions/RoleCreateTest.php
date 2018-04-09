@@ -15,7 +15,7 @@ class RoleCreateTest extends TestCase
      */
     protected function setUp()
     {
-        if (!class_exists('yii2tech\ar\role\RoleBehavior')) {
+        if (!class_exists(\yii2tech\ar\role\RoleBehavior::class)) {
             $this->markTestSkipped('"yii2tech/ar-role" extension is required.');
         }
         parent::setUp();

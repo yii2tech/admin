@@ -19,7 +19,7 @@ class ModelControlBehaviorTest extends TestCase
         $this->assertNotEmpty($model);
         $this->assertEquals(Item::findOne(2), $model);
 
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $model = $behavior->findModel(999);
     }
 

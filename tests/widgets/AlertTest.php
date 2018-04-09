@@ -24,4 +24,42 @@ class AlertTest extends TestCase
         $this->assertContains($flashMessage, $output);
         $this->assertContains('alert-danger', $output);
     }
+
+    /**
+     * @return array test data.
+     */
+    public function dataProviderSelectAlertType()
+    {
+        return [
+            // direct :
+            ['error', 'alert-danger'],
+            ['danger', 'alert-danger'],
+            ['success', 'alert-success'],
+            ['info', 'alert-info'],
+            ['warning', 'alert-warning'],
+            // partial :
+            ['saveError', 'alert-danger'],
+            ['errorSave', 'alert-danger'],
+            // default :
+            ['unspecified', 'alert-info'],
+        ];
+    }
+
+    /**
+     * @depends testRenderAlert
+     * @dataProvider dataProviderSelectAlertType
+     *
+     * @param string $flashName
+     * @param string $expectedCssStyle
+     */
+    public function testSelectAlertType($flashName, $expectedCssStyle)
+    {
+        $flashMessage = 'Test flash message';
+        Yii::$app->session->addFlash($flashName, $flashMessage);
+
+        $output = Alert::widget();
+
+        $this->assertContains($flashMessage, $output);
+        $this->assertContains($expectedCssStyle, $output);
+    }
 }

@@ -36,7 +36,7 @@ class Generator extends \yii\gii\Generator
     /**
      * @var string login form model class
      */
-    public $loginModelClass = '\app\models\admin\LoginForm';
+    public $loginModelClass = 'app\models\admin\LoginForm';
     /**
      * {@inheritdoc}
      */

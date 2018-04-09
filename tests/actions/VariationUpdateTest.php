@@ -16,7 +16,7 @@ class VariationUpdateTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        if (!class_exists('yii2tech\ar\variation\VariationBehavior')) {
+        if (!class_exists(\yii2tech\ar\variation\VariationBehavior::class)) {
             $this->markTestSkipped('"yii2tech/ar-variation" extension is required.');
         }
     }
@@ -50,7 +50,7 @@ class VariationUpdateTest extends TestCase
 
     public function testMissingModel()
     {
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $response = $this->runAction(9999);
     }
 
