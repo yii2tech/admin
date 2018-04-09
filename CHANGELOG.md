@@ -1,8 +1,8 @@
 Yii 2 Admin pack extension Change Log
 =====================================
 
-1.0.3 under development
------------------------
+1.0.3, April 9, 2018
+--------------------
 
 - Enh #17: Widget `yii2tech\admin\widgets\Alert` now determines alert type using wildcard match (klimov-paul)
 
