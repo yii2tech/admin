@@ -8,10 +8,11 @@
 
 echo "<?php\n";
 ?>
-/* @var $this \yii\web\View */
 
 use yii2tech\admin\widgets\Nav;
 use yii\bootstrap\NavBar;
+
+/* @var $this \yii\web\View */
 
 $webUser = Yii::$app->user;
 

@@ -24,7 +24,7 @@ use yii2tech\admin\behaviors\ContextModelControlBehavior;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for [[<?= $generator->modelClass ?>]] model.
- * @see <?= $generator->modelClass . "\n" ?>
+ * @see \<?= $generator->modelClass . "\n" ?>
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
@@ -41,7 +41,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 <?php if (!empty($contexts)): ?>
     /**
      * Contexts configuration
-     * @see ContextModelControlBehavior::contexts
+     * @see ContextModelControlBehavior::$contexts
      */
     public $contexts = [
 <?php foreach ($contexts as $name => $class) : ?>
