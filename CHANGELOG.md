@@ -1,10 +1,10 @@
 Yii 2 Admin pack extension Change Log
 =====================================
 
-1.1.0 under development
------------------------
+1.1.0, April 9, 2018
+--------------------
 
-- Enh #18: Removed yii\base\Object::className() in favor of native PHP syntax ::class, which does not trigger autoloading (klimov-paul)
+- Enh #18: Removed `yii\base\Object::className()` in favor of native PHP syntax `::class`, which does not trigger autoloading (klimov-paul)
 
 
 1.0.3, April 9, 2018
