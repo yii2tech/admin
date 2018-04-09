@@ -31,12 +31,12 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * {@inheritdoc}
      */
-    public $modelClass = '<?= $generator->modelClass ?>';
+    public $modelClass = \<?= $generator->modelClass ?>::class;
 <?php if (!empty($generator->searchModelClass)): ?>
     /**
      * {@inheritdoc}
      */
-    public $searchModelClass = '<?= $generator->searchModelClass ?>';
+    public $searchModelClass = \<?= $generator->searchModelClass ?>::class;
 <?php endif ?>
 <?php if (!empty($contexts)): ?>
     /**
@@ -47,7 +47,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 <?php foreach ($contexts as $name => $class) : ?>
         // Specify actual contexts :
         '<?= $name ?>' => [
-            'class' => '<?= $class ?>',
+            'class' => \<?= $class ?>::class,
             'attribute' => '<?= lcfirst(StringHelper::basename($class)) ?>Id',
             'controller' => '<?= $name ?>',
             'required' => false,
@@ -65,7 +65,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             parent::behaviors(),
             [
                 'model' => [
-                    'class' => ContextModelControlBehavior::className(),
+                    'class' => ContextModelControlBehavior::class,
                     'contexts' => $this->contexts
                 ]
             ]

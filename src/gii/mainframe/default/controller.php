@@ -34,7 +34,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
@@ -48,7 +48,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -63,7 +63,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => \yii\web\ErrorAction::class,
             ],
         ];
     }

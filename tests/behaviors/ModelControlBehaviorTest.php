@@ -13,20 +13,20 @@ class ModelControlBehaviorTest extends TestCase
     public function testFindModel()
     {
         $behavior = new ModelControlBehavior();
-        $behavior->modelClass = Item::className();
+        $behavior->modelClass = Item::class;
 
         $model = $behavior->findModel(2);
         $this->assertNotEmpty($model);
         $this->assertEquals(Item::findOne(2), $model);
 
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $model = $behavior->findModel(999);
     }
 
     public function testNewModel()
     {
         $behavior = new ModelControlBehavior();
-        $behavior->modelClass = Item::className();
+        $behavior->modelClass = Item::class;
 
         $model = $behavior->newModel();
         $this->assertTrue($model instanceof $behavior->modelClass);
@@ -35,7 +35,7 @@ class ModelControlBehaviorTest extends TestCase
     public function testNewSearchModel()
     {
         $behavior = new ModelControlBehavior();
-        $behavior->searchModelClass = ItemSearch::className();
+        $behavior->searchModelClass = ItemSearch::class;
 
         $model = $behavior->newSearchModel();
         $this->assertTrue($model instanceof ItemSearch);
@@ -66,7 +66,7 @@ class ModelControlBehaviorTest extends TestCase
     public function testNewSearchModelAutoDetectSearchModel()
     {
         $behavior = new ModelControlBehavior();
-        $behavior->modelClass = Item::className();
+        $behavior->modelClass = Item::class;
 
         $model = $behavior->newSearchModel();
         $this->assertTrue($model instanceof Model);

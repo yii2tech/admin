@@ -16,7 +16,7 @@ class VariationCreateTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        if (!class_exists('yii2tech\ar\variation\VariationBehavior')) {
+        if (!class_exists(\yii2tech\ar\variation\VariationBehavior::class)) {
             $this->markTestSkipped('"yii2tech/ar-variation" extension is required.');
         }
     }
@@ -36,7 +36,7 @@ class VariationCreateTest extends TestCase
      */
     protected function runAction(array $config = [])
     {
-        $action = new VariationCreate('create', $this->createController(['modelClass' => Article::className()]), $config);
+        $action = new VariationCreate('create', $this->createController(['modelClass' => Article::class]), $config);
         return $action->run();
     }
 

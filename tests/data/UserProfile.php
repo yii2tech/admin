@@ -6,7 +6,7 @@ use yii\db\ActiveRecord;
 use yii2tech\ar\role\RoleBehavior;
 
 /**
- * @property integer $userId
+ * @property int $userId
  * @property string $address
  * @property string $bio
  *
@@ -29,7 +29,7 @@ class UserProfile extends ActiveRecord
     {
         return [
             'translations' => [
-                'class' => RoleBehavior::className(),
+                'class' => RoleBehavior::class,
                 'roleRelation' => 'user',
                 'isOwnerSlave' => true,
             ],
@@ -53,6 +53,6 @@ class UserProfile extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'userId']);
+        return $this->hasOne(User::class, ['id' => 'userId']);
     }
 }

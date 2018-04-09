@@ -34,7 +34,7 @@ class FlushCache extends Action
      * [
      *     'cache',
      *     'frontendCache' => [
-     *         'class' => 'yii\caching\DbCache',
+     *         'class' => \yii\caching\DbCache::class,
      *         'cacheTable' => '{{%frontendCache}}',
      *     ],
      *     'objectCache' => new \yii\caching\DbCache(['cacheTable' => '{{%objectCache}}']),
@@ -125,7 +125,7 @@ class FlushCache extends Action
      */
     private function isCacheClass($className)
     {
-        return is_subclass_of($className, Cache::className());
+        return is_subclass_of($className, Cache::class);
     }
 
     /**

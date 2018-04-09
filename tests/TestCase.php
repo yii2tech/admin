@@ -14,6 +14,9 @@ use yii2tech\tests\unit\admin\data\Session;
  */
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -25,6 +28,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
         FileHelper::createDirectory($testFilePath);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function tearDown()
     {
         $testFilePath = $this->getTestFilePath();
@@ -39,7 +45,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      * @param array $config The application configuration, if needed
      * @param string $appClass name of the application class to create
      */
-    protected function mockApplication($config = [], $appClass = '\yii\web\Application')
+    protected function mockApplication($config = [], $appClass = \yii\web\Application::class)
     {
         new $appClass(ArrayHelper::merge([
             'id' => 'testapp',
@@ -51,17 +57,17 @@ class TestCase extends \PHPUnit\Framework\TestCase
             ],
             'components' => [
                 'db' => [
-                    'class' => 'yii\db\Connection',
+                    'class' => \yii\db\Connection::class,
                     'dsn' => 'sqlite::memory:',
                 ],
                 'assetManager' => [
                     'basePath' => $this->getTestFilePath(),
                 ],
                 'session' => [
-                    'class' => Session::className(),
+                    'class' => Session::class,
                 ],
                 'user' => [
-                    'identityClass' => 'app\models\User',
+                    'identityClass' => \app\models\User::class,
                 ],
                 'request' => [
                     'hostInfo' => 'http://domain.com',
@@ -69,7 +75,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
                 'i18n' => [
                     'translations' => [
                         '*' => [
-                            'class' => 'yii\i18n\PhpMessageSource',
+                            'class' => \yii\i18n\PhpMessageSource::class,
                             'forceTranslation' => false,
                         ],
                     ],
@@ -100,7 +106,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function createController($config = [])
     {
-        return new Controller('test', Yii::$app, array_merge(['modelClass' => Item::className()], $config));
+        return new Controller('test', Yii::$app, array_merge(['modelClass' => Item::class], $config));
     }
 
     /**

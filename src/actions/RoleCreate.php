@@ -27,7 +27,7 @@ class RoleCreate extends Create
     {
         return [
             [
-                'class' => RoleBehavior::className()
+                'class' => RoleBehavior::class
             ]
         ];
     }

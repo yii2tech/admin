@@ -65,7 +65,7 @@ class ModelControlBehavior extends Behavior
     public function findModel($id)
     {
         if ($this->modelClass === null) {
-            throw new InvalidConfigException('"' . get_class($this) . '::modelClass" must be set.');
+            throw new InvalidConfigException('"' . get_class($this) . '::$modelClass" must be set.');
         }
 
         /* @var $modelClass ActiveRecordInterface */
@@ -82,9 +82,8 @@ class ModelControlBehavior extends Behavior
 
         if (isset($model)) {
             return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Object not found: {id}", ['id' => $id]));
         }
+        throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Object not found: {id}", ['id' => $id]));
     }
 
     /**
@@ -95,7 +94,7 @@ class ModelControlBehavior extends Behavior
     public function newModel()
     {
         if ($this->modelClass === null) {
-            throw new InvalidConfigException('"' . get_class($this) . '::modelClass" must be set.');
+            throw new InvalidConfigException('"' . get_class($this) . '::$modelClass" must be set.');
         }
         $modelClass = $this->modelClass;
         return new $modelClass();
@@ -111,7 +110,7 @@ class ModelControlBehavior extends Behavior
         $modelClass = $this->searchModelClass;
         if ($modelClass === null) {
             if ($this->modelClass === null) {
-                throw new InvalidConfigException('Either "' . get_class($this) . '::searchModelClass" or "' . get_class($this) . '::modelClass" must be set.');
+                throw new InvalidConfigException('Either "' . get_class($this) . '::$searchModelClass" or "' . get_class($this) . '::$modelClass" must be set.');
             }
 
             if (class_exists('yii2tech\ar\search\ActiveSearchModel')) {

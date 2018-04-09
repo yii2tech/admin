@@ -187,11 +187,11 @@ class ActionColumn extends \yii\grid\ActionColumn
     {
         if (is_callable($this->urlCreator)) {
             return call_user_func($this->urlCreator, $action, $model, $key, $index);
-        } else {
-            $params = is_array($key) ? $key : ['id' => (string) $key];
-            $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
-            $params = $params + Yii::$app->request->getQueryParams(); // preserve numeric keys
-            return Url::toRoute($params);
         }
+
+        $params = is_array($key) ? $key : ['id' => (string) $key];
+        $params[0] = $this->controller ? $this->controller . '/' . $action : $action;
+        $params = $params + Yii::$app->request->getQueryParams(); // preserve numeric keys
+        return Url::toRoute($params);
     }
 }

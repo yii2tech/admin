@@ -19,11 +19,11 @@ class ContextModelControlBehaviorTest extends TestCase
     {
         return new ContextModelControlBehavior(array_merge(
             [
-                'modelClass' => Item::className(),
-                'searchModelClass' => ItemSearch::className(),
+                'modelClass' => Item::class,
+                'searchModelClass' => ItemSearch::class,
                 'contexts' => [
                     'category' => [
-                        'class' => ItemCategory::className(),
+                        'class' => ItemCategory::class,
                         'attribute' => 'categoryId',
                     ],
                 ],
@@ -110,7 +110,7 @@ class ContextModelControlBehaviorTest extends TestCase
         $behavior = new ContextModelControlBehavior([
             'contexts' => [
                 'category' => [
-                    'class' => ItemCategory::className(),
+                    'class' => ItemCategory::class,
                     'attribute' => 'categoryId',
                     'required' => true,
                 ],
@@ -119,7 +119,7 @@ class ContextModelControlBehaviorTest extends TestCase
 
         Yii::$app->request->setQueryParams([]);
 
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $contextModels = $behavior->getContextModels();
     }
 
@@ -146,7 +146,7 @@ class ContextModelControlBehaviorTest extends TestCase
 
         Yii::$app->request->setQueryParams(['categoryId' => 1]);
 
-        $this->expectException('yii\web\NotFoundHttpException');
+        $this->expectException(\yii\web\NotFoundHttpException::class);
         $model = $behavior->findModel(2);
     }
 

@@ -114,7 +114,7 @@ class RoleBehavior extends Behavior
 
         $event->result = array_merge(
             $event->result,
-            call_user_func_array([ActiveForm::className(), 'validate'], $roleModels)
+            call_user_func_array([ActiveForm::class, 'validate'], $roleModels)
         );
     }
 }

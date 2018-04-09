@@ -9,7 +9,7 @@ namespace yii2tech\admin\behaviors;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use yii\db\ActiveRecordInterface;
 use yii\helpers\Inflector;
@@ -48,7 +48,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
      * ```php
      * [
      *     'user' => [
-     *         'class' => 'User',
+     *         'class' => User::class,
      *         'attribute' => 'userId',
      *         'url' => 'user/view',
      *     ]
@@ -77,8 +77,9 @@ class ContextModelControlBehavior extends ModelControlBehavior
             return current($this->contexts);
         }
         if (!isset($this->contexts[$name])) {
-            throw new InvalidParamException("Undefined context '{$name}'");
+            throw new InvalidArgumentException("Undefined context '{$name}'");
         }
+
         return $this->contexts[$name];
     }
 
@@ -112,14 +113,15 @@ class ContextModelControlBehavior extends ModelControlBehavior
         $contextModels = $this->getContextModels();
         if ($name === null) {
             if (empty($contextModels)) {
-                throw new InvalidParamException("There is no context model.");
+                throw new InvalidArgumentException("There is no context model.");
             }
             reset($contextModels);
             return current($contextModels);
         }
         if (!isset($contextModels[$name])) {
-            throw new InvalidParamException("Undefined context '{$name}'");
+            throw new InvalidArgumentException("Undefined context '{$name}'");
         }
+
         return $contextModels[$name];
     }
 
@@ -177,9 +179,8 @@ class ContextModelControlBehavior extends ModelControlBehavior
 
         if (isset($model)) {
             return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Context object not found: {id}", ['id' => $id]));
         }
+        throw new NotFoundHttpException(Yii::t('yii2tech-admin', "Context object not found: {id}", ['id' => $id]));
     }
 
     /**
@@ -259,7 +260,7 @@ class ContextModelControlBehavior extends ModelControlBehavior
                 if ($name !== null) {
                     $controllerId = $name;
                 } else {
-                    $controllerId = Inflector::camel2id(StringHelper::basename($model->className()));
+                    $controllerId = Inflector::camel2id(StringHelper::basename(get_class($model)));
                 }
             }
             $url = ["/{$controllerId}/view"];

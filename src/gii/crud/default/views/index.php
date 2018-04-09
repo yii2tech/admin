@@ -14,7 +14,7 @@ echo "<?php\n";
 ?>
 /**
  * @see \<?= $generator->controllerClass . "\n" ?>
-<?php if (is_subclass_of($generator->controllerClass, 'yii2tech\admin\CrudController')): ?>
+<?php if (is_subclass_of($generator->controllerClass, yii2tech\admin\CrudController::class)): ?>
  * @see \yii2tech\admin\actions\Index
 <?php endif ?>
  */
@@ -62,7 +62,7 @@ $this->params['contextMenuItems'] = [
 <?= "<?= " ?>GridView::widget([
     'dataProvider' => $dataProvider,
     <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n    'columns' => [\n" : "'columns' => [\n"; ?>
-        ['class' => 'yii\grid\SerialColumn'],
+        ['class' => \yii\grid\SerialColumn::class],
 
 <?php
 $count = 0;
@@ -87,7 +87,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
 ?>
 
         [
-            'class' => ActionColumn::className(),
+            'class' => ActionColumn::class,
         ],
     ],
 ]); ?>

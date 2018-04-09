@@ -25,8 +25,8 @@ class Controller extends \yii\web\Controller
     {
         return [
             'dataModel' => [
-                'class' => ModelControlBehavior::className(),
-                'modelClass' => Item::className(),
+                'class' => ModelControlBehavior::class,
+                'modelClass' => Item::class,
             ],
         ];
     }

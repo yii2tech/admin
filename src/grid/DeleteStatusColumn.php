@@ -103,8 +103,8 @@ class DeleteStatusColumn extends DataColumn
             }
             $options = array_merge(['prompt' => Yii::t('yii2tech-admin', 'Actual only')], $this->filterInputOptions);
             return Html::activeDropDownList($model, $this->attribute, $filterItems, $options) . $error;
-        } else {
-            return parent::renderFilterCellContent();
         }
+
+        return parent::renderFilterCellContent();
     }
 }

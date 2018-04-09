@@ -14,8 +14,8 @@ class FlushCacheTest extends TestCase
     {
         parent::setUp();
 
-        Yii::$app->set('firstCache', 'yii\caching\ArrayCache');
-        Yii::$app->set('secondCache', 'yii\caching\ArrayCache');
+        Yii::$app->set('firstCache', \yii\caching\ArrayCache::class);
+        Yii::$app->set('secondCache', \yii\caching\ArrayCache::class);
     }
 
     /**

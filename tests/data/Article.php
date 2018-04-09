@@ -26,11 +26,11 @@ class Article extends ActiveRecord
     {
         return [
             'translations' => [
-                'class' => VariationBehavior::className(),
+                'class' => VariationBehavior::class,
                 'variationsRelation' => 'translations',
                 'defaultVariationRelation' => 'defaultTranslation',
                 'variationOptionReferenceAttribute' => 'languageId',
-                'optionModelClass' => Language::className(),
+                'optionModelClass' => Language::class,
                 'defaultVariationOptionReference' => 1,
                 'variationAttributeDefaultValueMap' => [
                     'title' => 'name',
@@ -55,7 +55,7 @@ class Article extends ActiveRecord
      */
     public function getTranslations()
     {
-        return $this->hasMany(ArticleTranslation::className(), ['articleId' => 'id']);
+        return $this->hasMany(ArticleTranslation::class, ['articleId' => 'id']);
     }
 
     /**

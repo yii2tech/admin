@@ -62,16 +62,16 @@ class CrudController extends Controller
     {
         return [
             'model' => [
-                'class' => ModelControlBehavior::className(),
+                'class' => ModelControlBehavior::class,
                 'modelClass' => $this->modelClass,
                 'searchModelClass' => $this->searchModelClass,
             ],
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => $this->accessRules(),
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -102,21 +102,21 @@ class CrudController extends Controller
     {
         return [
             'index' => [
-                'class' => 'yii2tech\admin\actions\Index',
+                'class' => actions\Index::class,
             ],
             'view' => [
-                'class' => 'yii2tech\admin\actions\View',
+                'class' => actions\View::class,
             ],
             'create' => [
-                'class' => 'yii2tech\admin\actions\Create',
+                'class' => actions\Create::class,
                 'scenario' => $this->createScenario,
             ],
             'update' => [
-                'class' => 'yii2tech\admin\actions\Update',
+                'class' => actions\Update::class,
                 'scenario' => $this->updateScenario,
             ],
             'delete' => [
-                'class' => 'yii2tech\admin\actions\Delete',
+                'class' => actions\Delete::class,
             ],
         ];
     }

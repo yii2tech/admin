@@ -27,7 +27,7 @@ class VariationUpdate extends Update
     {
         return [
             [
-                'class' => VariationBehavior::className()
+                'class' => VariationBehavior::class
             ]
         ];
     }
