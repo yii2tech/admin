@@ -5,6 +5,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
 
 # faster builds on new travis setup not using sudo
 sudo: false
@@ -20,6 +21,7 @@ install:
   - travis_retry composer install --prefer-dist --no-interaction
   - travis_retry composer require "yii2tech/ar-variation" --prefer-dist --no-interaction
   - travis_retry composer require "yii2tech/ar-role" --prefer-dist --no-interaction
+  - travis_retry composer require "phpunit/phpunit:^5.0|^6.0" --update-with-dependencies
 
 script:
-  - phpunit $PHPUNIT_FLAGS
+  - vendor/bin/phpunit $PHPUNIT_FLAGS
